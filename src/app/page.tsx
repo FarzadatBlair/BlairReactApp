@@ -1,6 +1,9 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 
 const Splash: React.FC = () => {
+  const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       {/* Welcome Text */}
@@ -22,22 +25,51 @@ const Splash: React.FC = () => {
         />
       </div>
 
-      {/* Buttons */}
-      <div className="flex flex-col space-y-4 w-3/4 max-w-md">
-        <button className="bg-brown-700 text-white py-3 rounded-lg font-bold">
-          Create an account
-        </button>
+      {/* Conditional Rendering */}
+      {!isLogin ? (
+        // Signup View
+        <div className="flex flex-col space-y-4 w-3/4 max-w-md">
+          <button className="bg-brown-700 text-white py-3 rounded-full font-bold">
+            Create an account
+          </button>
 
-        <div className="text-center text-sm text-brown-500 mt-10 px-8">
-          Already registered {' '}
-          <a href="/login" className="text-pink-600 underline">
+          <div className="text-center text-sm text-brown-500 mt-10 px-8">
+            Already registered?{' '}
+            <button
+              onClick={() => setIsLogin(true)}
+              className="text-pink-600 underline"
+            >
               Log in
-          </a>
+            </button>
+          </div>
         </div>
-        {/* <button className="bg-brown-700 text-white py-3 rounded-lg font-bold">
-          Already registered? Log in
-        </button> */}
-      </div>
+      ) : (
+        // Login View
+        <div className="flex flex-col space-y-4 w-3/4 max-w-md">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+          <button className="bg-brown-700 text-white py-3 rounded-full font-bold">
+            Sign in
+          </button>
+          <div className="text-center text-sm text-brown-500 mt-10 px-8">
+            Don't have an account?{' '}
+            <button
+              onClick={() => setIsLogin(false)}
+              className="text-pink-600 underline"
+            >
+              Sign up
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Terms & Privacy */}
       <div className="text-center text-sm text-brown-500 mt-10 px-8">
