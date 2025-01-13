@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,12 +18,41 @@
 
 body {
   background: rgb(216, 202, 175);
-  font-family: "Inter", "Arial", sans-serif;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-size: 1rem;
 }
 
-h1{
-  font-family: "Gentium", sans-serif;
+p {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+}
+
+h1 {
+  font-family: 'Gentium', sans-serif;
   font-size: 2.5rem;
-  
+}
+
+h2 {
+  font-family: 'Gentium', sans-serif;
+  font-size: 2.0rem;
+}
+
+h3 {
+  font-family: 'Gentium', sans-serif;
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-family: 'Gentium', sans-serif;
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-family: 'Gentium', sans-serif;
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-family: 'Gentium', sans-serif;
+  font-size: 0.75rem;
 }
