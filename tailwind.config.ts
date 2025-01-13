@@ -17,6 +17,10 @@ export default {
           500: '#514134',
           900: '#30241D',
         },
+        brown: {
+          500: '#5A2D1B',
+          700: '#3E1F12',
+        },
         background: '#FFFBF2',
       },
       fontFamily: {
