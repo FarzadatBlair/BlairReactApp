@@ -1,0 +1,30 @@
+@import url(./gentium.css);
+@import url(./inter.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* :root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+body {
+  background: rgb(216, 202, 175);
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 1rem;
+}
+
+h1{
+  font-family: "Gentium", sans-serif;
+  font-size: 2.5rem;
+  
+}
