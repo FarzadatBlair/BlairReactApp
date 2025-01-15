@@ -8,6 +8,7 @@ import { supabase } from '../utils/supabase';
 import welcomeImage from '@img/splashImage.jpeg';
 
 import GenericPage from '@components/GenericPage';
+import Button from '@/components/Button';
 
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
@@ -30,12 +31,13 @@ const Splash: React.FC = () => {
         router.push('/success'); // Navigate to the success page
       }
     } catch (_err) {
+      //! _err is not used
       setError('An unexpected error occurred. Please try again.'); // Catch unexpected errors
     }
   };
 
   return (
-    <GenericPage bgColTailwind="secondary">
+    <GenericPage bgCol="secondary">
       {/* Welcome Text */}
       <div className="mb-8">
         <h1 className="text-brown">

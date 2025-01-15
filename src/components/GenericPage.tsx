@@ -9,7 +9,7 @@ interface GenericPageProps {
   /** The content to be rendered inside the page layout */
   children: ReactNode;
   /** Optional Tailwind background color class name (without the 'bg-' prefix) */
-  bgColTailwind?: string;
+  bgCol?: string;
   className?: string;
 }
 
@@ -19,27 +19,25 @@ interface GenericPageProps {
  * @component
  * @example
  * ```tsx
- * <GenericPage bgColTailwind="gray-100">
+ * <GenericPage bgCol="gray-100">
  *   <YourContent />
  * </GenericPage>
  * ```
  *
  * @param {Object} props - Component props
  * @param {ReactNode} props.children - The content to be rendered inside the page layout
- * @param {string} [props.bgColTailwind='background'] - Tailwind background color class name
+ * @param {string} [props.bgCol='background'] - Tailwind background color class name
  * @returns {JSX.Element} A full-height, centered page layout with configurable background
  */
 const GenericPage: FC<GenericPageProps> = ({
   children,
-  bgColTailwind,
+  bgCol = 'background', // Set a default that exists in Tailwind
   className,
 }) => {
-  const bgCol = `bg-${bgColTailwind ? bgColTailwind : 'background'}`;
-
   return (
     <div
       className={clsx(
-        bgCol,
+        `bg-${bgCol}`,
         'flex min-h-screen flex-col items-center justify-center px-6',
         className,
       )}

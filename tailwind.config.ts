@@ -21,7 +21,9 @@ export default {
           500: '#5A2D1B',
           700: '#3E1F12',
         },
-        background: '#FFFBF2',
+        background: {
+          DEFAULT: '#FFFBF2',
+        },
         secondary: {
           DEFAULT: '#FFD2C5',
         },
