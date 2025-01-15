@@ -1,11 +1,9 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Import Next.js router
-import { createClient } from '@supabase/supabase-js'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
+import {supabase} from '../utils/supabase';
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+
 
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
@@ -13,8 +11,6 @@ const Splash: React.FC = () => {
   const [password, setPassword] = useState(''); // State for password
   const [error, setError] = useState(''); // State for error messages
   const router = useRouter(); // Next.js router for navigation
-
-
 
   const handleLogin = async () => {
     setError(''); // Clear any previous errors
@@ -98,12 +94,12 @@ const Splash: React.FC = () => {
             Continue
           </button>
           <div className="text-center text-sm text-brown-500 mt-10 px-8">
-            <a
-              href="/forgot-password"
+            <button
+              onClick={() => router.push('/resetPassword')} // Navigate to ResetPassword.tsx
               className="text-pink-600 underline"
             >
               Forgot Password
-            </a>{' '}
+            </button>{' '}
             |{' '}
             <button
               onClick={() => setIsLogin(false)}
