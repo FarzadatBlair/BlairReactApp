@@ -9,8 +9,6 @@ const ResetPassword: React.FC = () => {
   const router = useRouter(); // Next.js router for navigation
 
   const handleResetPassword = () => {
-    // Simulate sending reset password email
-    // Replace with actual logic using Supabase or your backend
     supabase.auth.resetPasswordForEmail(email);
     console.log(`Password reset email sent to: ${email}`);
     setSubmitted(true);
@@ -20,7 +18,7 @@ const ResetPassword: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-100">
       {!submitted ? (
         <div className="w-full max-w-md p-6 rounded-md">
-          <h2 className="text-brown">Reset password</h2>
+          <h2 className="text-brown">Reset your password</h2>
           <p className="mt-2 text-sm text-gray-600">
             Enter the email associated with your Blair account to receive a password reset link.
           </p>
@@ -38,7 +36,7 @@ const ResetPassword: React.FC = () => {
             Reset password
           </button>
           <button
-            onClick={() => console.log('Go back to previous page')}
+            onClick={() => router.push('./')}
             className="mt-4 text-sm text-brown-600 underline"
           >
             Go back
@@ -46,7 +44,7 @@ const ResetPassword: React.FC = () => {
         </div>
       ) : (
         <div className="w-full max-w-md p-6 rounded-md">
-          <h1 className="text-2xl font-semibold text-brown-700">Reset password</h1>
+          <h1 className="text-brown-700">Reset email sent</h1>
           <p className="mt-2 text-sm text-gray-600">
             We’ve sent an email with instructions to reset your password to{' '}
             <span className="font-semibold">{email}</span>.
