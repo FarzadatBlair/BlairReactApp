@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Import Next.js router
-import {supabase} from '../../utils/supabase';
+import { supabase } from '../../utils/supabase';
 
 const ResetPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,46 +17,50 @@ const ResetPassword: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-100">
+    <div className="bg-100 flex min-h-screen flex-col items-center justify-center">
       {!submitted ? (
-        <div className="w-full max-w-md p-6 rounded-md">
+        <div className="w-full max-w-md rounded-md p-6">
           <h2 className="text-brown">Reset password</h2>
           <p className="mt-2 text-sm text-gray-600">
-            Enter the email associated with your Blair account to receive a password reset link.
+            Enter the email associated with your Blair account to receive a
+            password reset link.
           </p>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-full mt-4 p-3 border border-gray-300 rounded-lg"
+            className="mt-4 w-full rounded-lg border border-gray-300 p-3"
           />
           <button
             onClick={handleResetPassword}
-            className="w-full mt-4 py-3 bg-brown-700 text-white rounded-full font-bold"
+            className="mt-4 w-full rounded-full bg-brown-700 py-3 font-bold text-white"
           >
             Reset password
           </button>
           <button
             onClick={() => console.log('Go back to previous page')}
-            className="mt-4 text-sm text-brown-600 underline"
+            className="text-brown-600 mt-4 text-sm underline"
           >
             Go back
           </button>
         </div>
       ) : (
-        <div className="w-full max-w-md p-6 rounded-md">
-          <h1 className="text-2xl font-semibold text-brown-700">Reset password</h1>
+        <div className="w-full max-w-md rounded-md p-6">
+          <h1 className="text-2xl font-semibold text-brown-700">
+            Reset password
+          </h1>
           <p className="mt-2 text-sm text-gray-600">
-            We’ve sent an email with instructions to reset your password to{' '}
+            We&apos;ve sent an email with instructions to reset your password to{' '}
             <span className="font-semibold">{email}</span>.
           </p>
           <p className="mt-2 text-sm text-gray-600">
-            It may take a couple of minutes to arrive. Make sure to check your spam folder!
+            It may take a couple of minutes to arrive. Make sure to check your
+            spam folder!
           </p>
           <button
             onClick={() => router.push('./')}
-            className="w-full mt-4 py-3 bg-brown-700 text-white rounded-full font-bold"
+            className="mt-4 w-full rounded-full bg-brown-700 py-3 font-bold text-white"
           >
             Back to log in
           </button>
