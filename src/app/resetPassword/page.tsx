@@ -20,7 +20,7 @@ const ResetPassword: React.FC = () => {
     <div className="bg-100 flex min-h-screen flex-col items-center justify-center">
       {!submitted ? (
         <div className="w-full max-w-md rounded-md p-6">
-          <h2 className="text-brown">Reset password</h2>
+          <h2 className="text-primary-900">Reset password</h2>
           <p className="mt-2 text-sm text-gray-600">
             Enter the email associated with your Blair account to receive a
             password reset link.
@@ -40,7 +40,7 @@ const ResetPassword: React.FC = () => {
           </button>
           <button
             onClick={() => console.log('Go back to previous page')}
-            className="text-brown-600 mt-4 text-sm underline"
+            className="text-primary-900-600 mt-4 text-sm underline"
           >
             Go back
           </button>

@@ -40,10 +40,10 @@ const Splash: React.FC = () => {
     <GenericPage bgCol="secondary">
       {/* Welcome Text */}
       <div className="mb-8">
-        <h1 className="text-brown">
+        <h1 className="text-primary-900">
           Welcome to <span className="italic text-white">Blair</span>
         </h1>
-        <p className="text-brown mt-2">
+        <p className="mt-2 text-primary-900">
           Your partner in navigating midlife and beyond.
         </p>
       </div>
