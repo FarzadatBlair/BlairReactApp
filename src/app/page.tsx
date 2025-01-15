@@ -57,15 +57,12 @@ const Splash: React.FC = () => {
       {!isLogin ? (
         // Signup View
         <div className="flex w-3/4 max-w-md flex-col space-y-4">
-          <button className="rounded-full bg-brown-700 py-3 font-bold text-white">
-            Create an account
-          </button>
-
-          <div className="mt-10 px-8 text-center text-sm text-brown-500">
+          <Button>Create an account</Button>
+          <div className="mt-10 px-8 text-center text-sm text-primary-900">
             Already registered?{' '}
             <button
               onClick={() => setIsLogin(true)}
-              className="text-pink-600 underline"
+              className="font-bold underline"
             >
               Log in
             </button>
@@ -90,20 +87,15 @@ const Splash: React.FC = () => {
           />
           {error && <p className="text-sm text-red-500">{error}</p>}{' '}
           {/* Error message */}
-          <button
-            onClick={handleLogin}
-            className="rounded-full bg-brown-700 py-3 font-bold text-white"
-          >
-            Continue
-          </button>
-          <div className="mt-10 px-8 text-center text-sm text-brown-500">
-            <Link href="/forgot-password" className="text-pink-600 underline">
+          <Button onClick={handleLogin}>Continue</Button>
+          <div className="mt-10 px-8 text-center text-sm text-primary-900">
+            <Link href="/forgot-password" className="font-bold underline">
               Forgot Password
             </Link>{' '}
             |{' '}
             <button
               onClick={() => setIsLogin(false)}
-              className="text-pink-600 underline"
+              className="font-bold underline"
             >
               Create Account
             </button>
@@ -112,13 +104,13 @@ const Splash: React.FC = () => {
       )}
 
       {/* Terms & Privacy */}
-      <div className="mt-10 px-8 text-center text-sm text-brown-500">
+      <div className="mt-10 px-8 text-center text-sm text-primary-900">
         By continuing, I agree to Blair&apos;s{' '}
-        <Link href="/terms" className="text-pink-600 underline">
+        <Link href="/terms" className="font-bold underline">
           Terms of Service
         </Link>{' '}
         and authorize Blair to receive my medical information. See our{' '}
-        <Link href="/privacy" className="text-pink-600 underline">
+        <Link href="/privacy" className="font-bold underline">
           Privacy Policy
         </Link>{' '}
         to learn more about our privacy practices.

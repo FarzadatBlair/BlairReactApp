@@ -1,14 +1,16 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, MouseEvent } from 'react';
 import clsx from 'clsx';
 
 interface ButtonProps {
   children?: ReactNode;
   className?: string;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button: FC<ButtonProps> = ({ children, className }) => {
+const Button: FC<ButtonProps> = ({ children, className, onClick }) => {
   return (
     <button
+      onClick={onClick}
       className={clsx(
         'w-full rounded-full bg-primary py-3 text-background',
         className,

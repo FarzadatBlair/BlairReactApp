@@ -34,7 +34,7 @@ const ResetPassword: React.FC = () => {
           />
           <button
             onClick={handleResetPassword}
-            className="mt-4 w-full rounded-full bg-brown-700 py-3 font-bold text-white"
+            className="mt-4 w-full rounded-full bg-primary py-3 font-bold text-white"
           >
             Reset password
           </button>
@@ -47,7 +47,7 @@ const ResetPassword: React.FC = () => {
         </div>
       ) : (
         <div className="w-full max-w-md rounded-md p-6">
-          <h1 className="text-2xl font-semibold text-brown-700">
+          <h1 className="text-2xl font-semibold text-primary-900">
             Reset password
           </h1>
           <p className="mt-2 text-sm text-gray-600">
@@ -60,7 +60,7 @@ const ResetPassword: React.FC = () => {
           </p>
           <button
             onClick={() => router.push('./')}
-            className="mt-4 w-full rounded-full bg-brown-700 py-3 font-bold text-white"
+            className="mt-4 w-full rounded-full bg-primary py-3 font-bold text-white"
           >
             Back to log in
           </button>
