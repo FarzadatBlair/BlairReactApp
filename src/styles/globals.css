@@ -17,13 +17,13 @@
 } */
 
 body {
-  background: rgb(255, 210, 197);
+  /* background: rgb(255, 210, 197); */
   font-family: 'Inter', 'Arial', sans-serif;
   font-size: 1rem;
 }
 
 p {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1rem;
 }
 
@@ -34,7 +34,7 @@ h1 {
 
 h2 {
   font-family: 'Gentium', sans-serif;
-  font-size: 2.0rem;
+  font-size: 2rem;
 }
 
 h3 {

@@ -22,6 +22,9 @@ export default {
           700: '#3E1F12',
         },
         background: '#FFFBF2',
+        secondary: {
+          DEFAULT: '#FFD2C5',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { supabase } from '../utils/supabase';
 import welcomeImage from '@img/splashImage.jpeg';
 
+import GenericPage from '@components/GenericPage';
+
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
   const [email, setEmail] = useState(''); // State for email
@@ -33,7 +35,7 @@ const Splash: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
+    <GenericPage bgColTailwind="secondary">
       {/* Welcome Text */}
       <div className="mb-8">
         <h1 className="text-brown">
@@ -119,7 +121,7 @@ const Splash: React.FC = () => {
         </Link>{' '}
         to learn more about our privacy practices.
       </div>
-    </div>
+    </GenericPage>
   );
 };
 

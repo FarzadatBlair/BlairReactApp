@@ -19,7 +19,11 @@ export default function RootLayout({
         <meta name="description" content="Blair Health" />
         <title>Blair Health</title>
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="bg-gray-100">
+        <div className="mx-auto min-h-screen max-w-md shadow-xl">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
