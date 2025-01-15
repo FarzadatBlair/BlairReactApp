@@ -12,7 +12,7 @@ const Button: FC<ButtonProps> = ({ children, className, onClick }) => {
     <button
       onClick={onClick}
       className={clsx(
-        'w-full rounded-full bg-primary py-3 text-background',
+        'w-full rounded-full bg-primary py-3 text-background transition hover:bg-primary-900 active:scale-95',
         className,
       )}
     >

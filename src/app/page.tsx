@@ -20,91 +20,104 @@ const Splash: React.FC = () => {
   const handleLogin = async () => {
     setError(''); // Clear any previous errors
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
+      //! do something with data
+      console.log(data);
+      console.log(error);
+
       if (error) {
-        setError(error.message); // Display error message
+        if (error.message === 'Invalid login credentials') {
+          setError('The email and/or password is incorrect.');
+        } else {
+          setError(error.message);
+        }
       } else {
         router.push('/success'); // Navigate to the success page
       }
-    } catch (_err) {
-      //! _err is not used
-      setError('An unexpected error occurred. Please try again.'); // Catch unexpected errors
+    } catch (err) {
+      setError(`An unexpected error occurred. ${err}`); // Catch unexpected errors
     }
   };
 
   return (
-    <GenericPage bgCol="secondary">
-      {/* Welcome Text */}
-      <div className="mb-8">
-        <h1 className="text-primary-900">
-          Welcome to <span className="italic text-white">Blair</span>
-        </h1>
-        <p className="mt-2 text-primary-900">
-          Your partner in navigating midlife and beyond.
-        </p>
-      </div>
-
-      {/* Graphic */}
-      <div className="mb-10">
-        <Image src={welcomeImage} alt="Illustration" className="h-auto w-80" />
-      </div>
-
-      {/* Conditional Rendering */}
-      {!isLogin ? (
-        // Signup View
-        <div className="flex w-3/4 max-w-md flex-col space-y-4">
-          <Button>Create an account</Button>
-          <div className="mt-10 px-8 text-center text-sm text-primary-900">
-            Already registered?{' '}
-            <button
-              onClick={() => setIsLogin(true)}
-              className="font-bold underline"
-            >
-              Log in
-            </button>
-          </div>
+    <GenericPage bgCol="secondary" className="pt-20">
+      <div className="mb-10 flex flex-1 flex-col space-y-6">
+        {/* Welcome Text */}
+        <div className="">
+          <h1 className="text-primary-900">
+            Welcome to <span className="italic text-white">Blair</span>
+          </h1>
+          <p className="text-primary-900">
+            Your partner in navigating midlife and beyond.
+          </p>
         </div>
-      ) : (
-        // Login View
-        <div className="flex w-3/4 max-w-md flex-col space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 p-3"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 p-3"
-          />
-          {error && <p className="text-sm text-red-500">{error}</p>}{' '}
-          {/* Error message */}
-          <Button onClick={handleLogin}>Continue</Button>
-          <div className="mt-10 px-8 text-center text-sm text-primary-900">
-            <Link href="/forgot-password" className="font-bold underline">
-              Forgot Password
-            </Link>{' '}
-            |{' '}
-            <button
-              onClick={() => setIsLogin(false)}
-              className="font-bold underline"
-            >
-              Create Account
-            </button>
-          </div>
+
+        {/* Graphic */}
+        <div className="my-24">
+          <Image src={welcomeImage} alt="Illustration" className="w-full" />
         </div>
-      )}
+
+        {/* Conditional Rendering */}
+        <div className="flex w-full flex-col">
+          {!isLogin ? (
+            // Signup View
+            <div className="space-y-4">
+              <Button>Create an account</Button>
+              <div className="text-center text-primary-900">
+                Already registered?{' '}
+                <button
+                  onClick={() => setIsLogin(true)}
+                  className="font-bold underline"
+                >
+                  Log in
+                </button>
+              </div>
+            </div>
+          ) : (
+            // Login View
+            <div className="">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-secondary-100 w-full rounded-lg px-4 py-2 text-primary-900 placeholder-primary-900/50"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-secondary-100 mt-4 w-full rounded-lg px-4 py-2 text-primary-900 placeholder-primary-900/50"
+              />
+              {error && <p className="text-error mt-2">{error}</p>}{' '}
+              {/* Error message */}
+              <Button onClick={handleLogin} className="mt-6">
+                Continue
+              </Button>
+              <div className="mt-4 px-8 text-center text-primary-900">
+                <Link href="/forgot-password" className="font-bold underline">
+                  Forgot Password
+                </Link>{' '}
+                |{' '}
+                <button
+                  onClick={() => setIsLogin(false)}
+                  className="font-bold underline"
+                >
+                  Create Account
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Terms & Privacy */}
-      <div className="mt-10 px-8 text-center text-sm text-primary-900">
+      <div className="mt-auto text-center text-sm text-primary-900">
         By continuing, I agree to Blair&apos;s{' '}
         <Link href="/terms" className="font-bold underline">
           Terms of Service

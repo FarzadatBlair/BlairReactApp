@@ -25,8 +25,12 @@ export default {
           DEFAULT: '#FFFBF2',
         },
         secondary: {
-          DEFAULT: '#FFD2C5',
+          DEFAULT: '#FFD2C5', // default is 300
+          100: '#FFF1E7',
+          300: '#FFD2C5',
+          500: '#D98973',
         },
+        error: '#C9156F',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

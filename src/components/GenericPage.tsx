@@ -37,7 +37,7 @@ const GenericPage: FC<GenericPageProps> = ({
   return (
     <div
       className={clsx(
-        'flex min-h-screen flex-col items-center justify-start px-6 py-16',
+        'flex min-h-screen flex-col px-6 py-16',
         {
           'bg-background': bgCol === 'default',
           'bg-secondary': bgCol === 'secondary',
