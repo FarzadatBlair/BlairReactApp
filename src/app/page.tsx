@@ -4,16 +4,8 @@ import { useRouter } from 'next/navigation'; // Import Next.js router
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { createClient } from '@supabase/supabase-js';
-// import { Auth } from '@supabase/auth-ui-react';
-// import { ThemeSupa } from '@supabase/auth-ui-shared';
-
+import { supabase } from '../utils/supabase';
 import welcomeImage from '@img/splashImage.jpeg';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-);
 
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
