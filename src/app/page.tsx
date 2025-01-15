@@ -1,11 +1,19 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Import Next.js router
-import { createClient } from '@supabase/supabase-js'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
+import Image from 'next/image';
+import Link from 'next/link';
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+import { createClient } from '@supabase/supabase-js';
+// import { Auth } from '@supabase/auth-ui-react';
+// import { ThemeSupa } from '@supabase/auth-ui-shared';
+
+import welcomeImage from '@img/splashImage.jpeg';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+);
 
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
@@ -13,8 +21,6 @@ const Splash: React.FC = () => {
   const [password, setPassword] = useState(''); // State for password
   const [error, setError] = useState(''); // State for error messages
   const router = useRouter(); // Next.js router for navigation
-
-
 
   const handleLogin = async () => {
     setError(''); // Clear any previous errors
@@ -29,15 +35,15 @@ const Splash: React.FC = () => {
       } else {
         router.push('/success'); // Navigate to the success page
       }
-    } catch (err) {
+    } catch (_err) {
       setError('An unexpected error occurred. Please try again.'); // Catch unexpected errors
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex min-h-screen flex-col items-center justify-center">
       {/* Welcome Text */}
-      <div className="text-center mb-8">
+      <div className="mb-8">
         <h1 className="text-brown">
           Welcome to <span className="italic text-white">Blair</span>
         </h1>
@@ -48,22 +54,18 @@ const Splash: React.FC = () => {
 
       {/* Graphic */}
       <div className="mb-10">
-        <img
-          src="./img/splashImage.jpeg" // Replace with the actual path to your image
-          alt="Illustration"
-          className="w-80 h-auto"
-        />
+        <Image src={welcomeImage} alt="Illustration" className="h-auto w-80" />
       </div>
 
       {/* Conditional Rendering */}
       {!isLogin ? (
         // Signup View
-        <div className="flex flex-col space-y-4 w-3/4 max-w-md">
-          <button className="bg-brown-700 text-white py-3 rounded-full font-bold">
+        <div className="flex w-3/4 max-w-md flex-col space-y-4">
+          <button className="rounded-full bg-brown-700 py-3 font-bold text-white">
             Create an account
           </button>
 
-          <div className="text-center text-sm text-brown-500 mt-10 px-8">
+          <div className="mt-10 px-8 text-center text-sm text-brown-500">
             Already registered?{' '}
             <button
               onClick={() => setIsLogin(true)}
@@ -75,35 +77,33 @@ const Splash: React.FC = () => {
         </div>
       ) : (
         // Login View
-        <div className="flex flex-col space-y-4 w-3/4 max-w-md">
+        <div className="flex w-3/4 max-w-md flex-col space-y-4">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full rounded-lg border border-gray-300 p-3"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg"
+            className="w-full rounded-lg border border-gray-300 p-3"
           />
-          {error && <p className="text-red-500 text-sm">{error}</p>} {/* Error message */}
+          {error && <p className="text-sm text-red-500">{error}</p>}{' '}
+          {/* Error message */}
           <button
             onClick={handleLogin}
-            className="bg-brown-700 text-white py-3 rounded-full font-bold"
+            className="rounded-full bg-brown-700 py-3 font-bold text-white"
           >
             Continue
           </button>
-          <div className="text-center text-sm text-brown-500 mt-10 px-8">
-            <a
-              href="/forgot-password"
-              className="text-pink-600 underline"
-            >
+          <div className="mt-10 px-8 text-center text-sm text-brown-500">
+            <Link href="/forgot-password" className="text-pink-600 underline">
               Forgot Password
-            </a>{' '}
+            </Link>{' '}
             |{' '}
             <button
               onClick={() => setIsLogin(false)}
@@ -116,15 +116,15 @@ const Splash: React.FC = () => {
       )}
 
       {/* Terms & Privacy */}
-      <div className="text-center text-sm text-brown-500 mt-10 px-8">
-        By continuing, I agree to Blair's{' '}
-        <a href="/terms" className="text-pink-600 underline">
+      <div className="mt-10 px-8 text-center text-sm text-brown-500">
+        By continuing, I agree to Blair&apos;s{' '}
+        <Link href="/terms" className="text-pink-600 underline">
           Terms of Service
-        </a>{' '}
+        </Link>{' '}
         and authorize Blair to receive my medical information. See our{' '}
-        <a href="/privacy" className="text-pink-600 underline">
+        <Link href="/privacy" className="text-pink-600 underline">
           Privacy Policy
-        </a>{' '}
+        </Link>{' '}
         to learn more about our privacy practices.
       </div>
     </div>
