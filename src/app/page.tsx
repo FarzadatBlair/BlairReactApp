@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { supabase } from '../utils/supabase';
 import welcomeImage from '@img/splashImage.jpeg';
 
-import GenericPage from '@components/GenericPage';
-import Button from '@/components/Button';
+import GenericPage from '@components/layout/GenericPage';
+import Button from '@components/common/Button';
 
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
@@ -48,8 +48,8 @@ const Splash: React.FC = () => {
       <div className="mb-10 flex flex-1 flex-col space-y-6">
         {/* Welcome Text */}
         <div className="">
-          <h1 className="text-primary-900">
-            Welcome to <span className="italic text-white">Blair</span>
+          <h1 className="mb-2">
+            Welcome to <span className="text-secondary-500 italic">Blair</span>
           </h1>
           <p className="text-primary-900">
             Your partner in navigating midlife and beyond.
@@ -66,7 +66,9 @@ const Splash: React.FC = () => {
           {!isLogin ? (
             // Signup View
             <div className="space-y-4">
-              <Button>Create an account</Button>
+              <Button onClick={() => router.push('/create-account')}>
+                Create an account
+              </Button>
               <div className="text-center text-primary-900">
                 Already registered?{' '}
                 <button
@@ -100,7 +102,7 @@ const Splash: React.FC = () => {
                 Continue
               </Button>
               <div className="mt-4 px-8 text-center text-primary-900">
-                <Link href="/forgot-password" className="font-bold underline">
+                <Link href="/reset-password" className="font-bold underline">
                   Forgot Password
                 </Link>{' '}
                 |{' '}
