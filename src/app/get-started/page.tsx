@@ -50,10 +50,35 @@ const GetStarted = () => {
     if (step === 1) {
       setStep(2);
     } else {
-      // TODO: Handle final form submission
-      console.log(formData);
+      // Upsert formData into the 'profiles' table in the 'public' schema
+      try {
+        const { data: user } = await supabase.auth.getUser(); // Get the authenticated user's ID
+        const userId = user?.user?.id;
+  
+        if (!userId) {
+          console.error('User not authenticated');
+          return;
+        }
+  
+        const { data, error } = await supabase
+          .from('profiles')
+          .upsert({
+            ...formData,
+            user_id: userId, // Ensure the user_id matches your schema
+          });
+  
+        if (error) {
+          console.error('Error upserting data:', error);
+          return;
+        }
+  
+        console.log('Data successfully upserted:', data);
+      } catch (err) {
+        console.error('Unexpected error:', err);
+      }
     }
   };
+  
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
