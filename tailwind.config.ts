@@ -30,7 +30,12 @@ export default {
           300: '#FFD2C5',
           500: '#D98973',
         },
-        error: '#C9156F',
+        error: {
+          DEFAULT: '#C9156F',
+          100: '#FAD1E6',
+          500: '#C9156F',
+          700: '#8B0E4D',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

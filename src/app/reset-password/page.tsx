@@ -5,6 +5,7 @@ import { supabase } from '../../utils/supabase';
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
+import Input from '@/components/common/Input';
 
 const ResetPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -28,12 +29,12 @@ const ResetPassword: React.FC = () => {
           </p>
 
           <div className="mt-6 flex flex-col space-y-4">
-            <input
+            <Input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="mt-4 w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
+              // className="mt-4 w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
             />
             <Button onClick={handleResetPassword}>Reset password</Button>
             <button

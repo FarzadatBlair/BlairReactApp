@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'; // Import Next.js router
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
+import Input from '@components/common/Input';
 
 const ChangePassword = () => {
   const [password, setPassword] = useState('');
@@ -39,18 +40,18 @@ const ChangePassword = () => {
         <div className="flex flex-col">
           <h1 className="mb-2">Enter a new password</h1>
           <p>Please enter a new password.</p>
-          <input
+          <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter a new password"
-            className="mt-4 w-full rounded-lg border-2 border-primary-200 px-4 py-2 placeholder-primary-900/50"
+            className="mt-4"
           />
           <Button onClick={handlePasswordChange} className="mt-6">
             Set new password
           </Button>
           {message && <p className="mt-4 text-green-600">{message}</p>}
-          {error && <p className="text-error mt-4">{error}</p>}
+          {error && <p className="mt-4 text-error">{error}</p>}
         </div>
       ) : (
         <div className="flex flex-col">

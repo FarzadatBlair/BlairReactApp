@@ -5,6 +5,10 @@ import { supabase } from '../../utils/supabase';
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
+import ButtonLink from '@/components/common/ButtonLink';
+import Input from '@components/common/Input';
+
+import { HEALTH_CARD_FORMATS, PROVINCES } from '@/utils/constants';
 
 const GetStarted = () => {
   const router = useRouter();
@@ -16,9 +20,11 @@ const GetStarted = () => {
     gender: '',
     address: '',
     province: '',
-    healthcareProvince: '',
+    healthcareProvince: '' as keyof typeof HEALTH_CARD_FORMATS, //! create new type for this
     healthcareNumber: '',
+    isHealthcareNumberValid: true,
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     // Check current auth status
@@ -58,10 +64,41 @@ const GetStarted = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === 'healthcareNumber') {
+      const isValid = validateHealthcareNumber(value);
+      setFormData((prev) => ({
+        ...prev,
+        isHealthcareNumberValid: isValid,
+      }));
+    }
+  };
+
+  const validateHealthcareNumber = (number: string) => {
+    const regex = HEALTH_CARD_FORMATS[formData.healthcareProvince]?.regex;
+    const healthCardName =
+      HEALTH_CARD_FORMATS[formData.healthcareProvince]?.name;
+    if (regex) {
+      const isValid = regex.test(number);
+      if (!isValid) {
+        setErrorMessage(
+          `Invalid ${healthCardName} format. Example: ${HEALTH_CARD_FORMATS[formData.healthcareProvince]?.example}`,
+        );
+      }
+      return isValid;
+    }
+    return true;
   };
 
   const handleBack = () => {
@@ -74,49 +111,39 @@ const GetStarted = () => {
         <h1 className="mb-2">What&apos;s your healthcare coverage plan?</h1>
         <p className="">Enter the province of your healthcare plan</p>
         <div className="mt-4 flex w-full flex-col space-y-4">
-          <select
+          <Input
+            type="select"
             name="healthcareProvince"
             value={formData.healthcareProvince}
             onChange={handleChange}
-            className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900"
-          >
-            <option value="">Select Province</option>
-            <option value="AB">Alberta</option>
-            <option value="BC">British Columbia</option>
-            <option value="MB">Manitoba</option>
-            <option value="NB">New Brunswick</option>
-            <option value="NL">Newfoundland and Labrador</option>
-            <option value="NT">Northwest Territories</option>
-            <option value="NS">Nova Scotia</option>
-            <option value="NU">Nunavut</option>
-            <option value="ON">Ontario</option>
-            <option value="PE">Prince Edward Island</option>
-            <option value="QC">Quebec</option>
-            <option value="SK">Saskatchewan</option>
-            <option value="YT">Yukon</option>
-          </select>
-          <input
+            placeholder="Select Province"
+            options={PROVINCES}
+            className="w-full"
+          />
+          <Input
             type="text"
             name="healthcareNumber"
             value={formData.healthcareNumber}
             onChange={handleChange}
-            placeholder="Provincial health care number"
-            className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
+            onBlur={handleBlur}
+            placeholder={
+              HEALTH_CARD_FORMATS[
+                formData.healthcareProvince as keyof typeof HEALTH_CARD_FORMATS
+              ]?.name || 'Enter healthcare number'
+            }
+            disabled={!formData.healthcareProvince}
+            error={!formData.isHealthcareNumberValid}
+            errorMessage={errorMessage}
           />
           <Button onClick={handleSubmit} className="mt-6">
-            Continue
+            Submit
           </Button>
           <div className="mt-4 text-center">
-            <button onClick={handleBack} className="font-bold underline">
-              Back
-            </button>
+            <ButtonLink onClick={handleBack}>Back</ButtonLink>
             {' | '}
-            <button
-              onClick={handleSignOut}
-              className="text-error font-bold underline"
-            >
+            <ButtonLink onClick={handleSignOut} variant="secondary">
               Sign Out
-            </button>
+            </ButtonLink>
           </div>
         </div>
       </GenericPage>
@@ -127,66 +154,61 @@ const GetStarted = () => {
     <GenericPage className="flex flex-col">
       <h1 className="mb-6">Tell us about yourself</h1>
       <div className="flex w-full flex-col space-y-4">
-        <input
+        <Input
           type="text"
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
           placeholder="First Name"
-          className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
         />
-        <input
+        <Input
           type="text"
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
           placeholder="Last Name"
-          className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
         />
-        <input
+        <Input
           type="date"
           name="dob"
           value={formData.dob}
           onChange={handleChange}
           placeholder="Date of Birth"
-          className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
         />
-        <select
+        <Input
+          type="select"
           name="gender"
-          value={formData.gender}
           onChange={handleChange}
-          className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900"
-        >
-          <option value="">Select Gender</option>
-          <option value="M">Male</option>
-          <option value="F">Female</option>
-        </select>
-        <input
+          value={formData.gender}
+          placeholder="Select gender 2"
+          options={[
+            { value: 'M', label: 'Male' },
+            { value: 'F', label: 'Female' },
+          ]}
+        />
+        <Input
           type="text"
           name="address"
           value={formData.address}
           onChange={handleChange}
           placeholder="Address"
-          className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
         />
-        <input
-          type="text"
+        <Input
+          type="select"
           name="province"
           value={formData.province}
           onChange={handleChange}
           placeholder="Province"
-          className="w-full rounded-lg border-2 border-primary-200 px-4 py-2 text-primary-900 placeholder-primary-900/50"
+          options={PROVINCES}
+          className="w-full"
         />
         <Button onClick={handleSubmit} className="mt-6">
           Continue
         </Button>
         <div className="mt-4 text-center">
-          <button
-            onClick={handleSignOut}
-            className="text-error font-bold underline"
-          >
+          <ButtonLink onClick={handleSignOut} variant="secondary">
             Sign Out
-          </button>
+          </ButtonLink>
         </div>
       </div>
     </GenericPage>

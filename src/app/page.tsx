@@ -9,6 +9,8 @@ import welcomeImage from '@img/splashImage.jpeg';
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
+import ButtonLink from '@/components/common/ButtonLink';
+import Input from '@components/common/Input';
 
 const Splash: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
@@ -49,7 +51,7 @@ const Splash: React.FC = () => {
         {/* Welcome Text */}
         <div className="">
           <h1 className="mb-2">
-            Welcome to <span className="text-secondary-500 italic">Blair</span>
+            Welcome to <span className="italic text-secondary-500">Blair</span>
           </h1>
           <p className="text-primary-900">
             Your partner in navigating midlife and beyond.
@@ -71,32 +73,29 @@ const Splash: React.FC = () => {
               </Button>
               <div className="text-center text-primary-900">
                 Already registered?{' '}
-                <button
-                  onClick={() => setIsLogin(true)}
-                  className="font-bold underline"
-                >
-                  Log in
-                </button>
+                <ButtonLink onClick={() => setIsLogin(true)}>Log in</ButtonLink>
               </div>
             </div>
           ) : (
             // Login View
             <div className="">
-              <input
+              <Input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-secondary-100 w-full rounded-lg px-4 py-2 text-primary-900 placeholder-primary-900/50"
+                color="secondary"
+                className="mt-4"
               />
-              <input
+              <Input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-secondary-100 mt-4 w-full rounded-lg px-4 py-2 text-primary-900 placeholder-primary-900/50"
+                color="secondary"
+                className="mt-4"
               />
-              {error && <p className="text-error mt-2">{error}</p>}{' '}
+              {error && <p className="mt-2 text-error">{error}</p>}{' '}
               {/* Error message */}
               <Button onClick={handleLogin} className="mt-6">
                 Continue
@@ -106,12 +105,9 @@ const Splash: React.FC = () => {
                   Forgot Password
                 </Link>{' '}
                 |{' '}
-                <button
-                  onClick={() => setIsLogin(false)}
-                  className="font-bold underline"
-                >
+                <ButtonLink onClick={() => setIsLogin(false)}>
                   Create Account
-                </button>
+                </ButtonLink>
               </div>
             </div>
           )}
