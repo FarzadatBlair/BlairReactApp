@@ -1,34 +1,33 @@
 [
-    {
-      "title": "Have you ever been diagnosed with POI by a medical professional?",
-      "desc": "Premature ovarian insufficiency (POI) happens when your ovaries stop working before you reach 40. It affects about 1% of the female population.",
-      "type": "multiple_choice",
-      "options": [
-        "Yes, a medical professional has diagnosed me with POI.",
-        "No, I have never been officially diagnosed with POI by a medical professional."
-      ]
-    },
-    {
-      "title": "Are you currently using any treatment for your menopausal symptoms?",
-      "desc": "Select all that apply.",
-      "type": "multi_select",
-      "options": [
-        "I use estrogen, progesterone, and/or testosterone therapy that I can get from a local drug store.",
-        "I use compounded hormone therapy.",
-        "I use treatment without hormones (i.e. non-hormonal therapy)."
-      ],
-      "otherField": true
-    },
-    {
-      "title": "Have you ever been diagnosed with POI by a medical professional? This is intentionally a very long question title so we can see how it looks on a screen like this.",
-      "desc": "Select all that apply.",
-      "type": "multiple_choice",
-      "options": [
-        "I use estrogen, progesterone, and/or testosterone therapy that I can get from a local drug store.",
-        "I use compounded hormone therapy.",
-        "I use treatment without hormones (i.e. non-hormonal therapy)."
-      ],
-      "specialField": "None of the above"
-    }
-  ]
-  
+  {
+    "title": "Have you ever been diagnosed with POI by a medical professional?",
+    "desc": "Premature ovarian insufficiency (POI) happens when your ovaries stop working before you reach 40. It affects about 1% of the female population.",
+    "type": "multiple_choice",
+    "options": [
+      "Yes, a medical professional has diagnosed me with POI.",
+      "No, I have never been officially diagnosed with POI by a medical professional."
+    ]
+  },
+  {
+    "title": "Are you currently using any treatment for your menopausal symptoms?",
+    "desc": "Select all that apply.",
+    "type": "multi_select",
+    "options": [
+      "I use estrogen, progesterone, and/or testosterone therapy that I can get from a local drug store.",
+      "I use compounded hormone therapy.",
+      "I use treatment without hormones (i.e. non-hormonal therapy)."
+    ],
+    "otherField": true
+  },
+  {
+    "title": "Have you ever been diagnosed with POI by a medical professional? This is intentionally a very long question title so we can see how it looks on a screen like this.",
+    "desc": "Select all that apply.",
+    "type": "multiple_choice",
+    "options": [
+      "I use estrogen, progesterone, and/or testosterone therapy that I can get from a local drug store.",
+      "I use compounded hormone therapy.",
+      "I use treatment without hormones (i.e. non-hormonal therapy)."
+    ],
+    "specialField": "None of the above"
+  }
+]

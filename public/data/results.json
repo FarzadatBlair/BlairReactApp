@@ -1,4 +1,5 @@
-[{
+[
+  {
     "title": "You may be perimenopausal.",
     "desc": "Stopping a medication that is regulating your periods would let us see what your natural cycle is like. However, based on your answers, you are likely in perimenopause, the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. Stopping a medication that is regulating your periods would let us see what your natural cycle is like. However, this is not necessarily required to treat menopausal symptoms or begin treatment for your symptoms.",
     "symptoms": [
@@ -9,9 +10,9 @@
       "Irregular periods"
     ],
     "nextSteps": [
-        "Learn More: Explore resources to understand your symptoms.",
-        "Talk to a Specialist: Get advice on managing symptoms and treatment options.",
-        "Track Symptoms: Keep a log to spot patterns and share with your provider."
-      ]
-  }]
-
+      "Learn More: Explore resources to understand your symptoms.",
+      "Talk to a Specialist: Get advice on managing symptoms and treatment options.",
+      "Track Symptoms: Keep a log to spot patterns and share with your provider."
+    ]
+  }
+]

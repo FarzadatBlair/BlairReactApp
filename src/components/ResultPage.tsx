@@ -1,5 +1,5 @@
-import React from "react";
-import Button from "@/components/common/Button";
+import React from 'react';
+import Button from '@/components/common/Button';
 
 type Result = {
   title: string;
@@ -16,33 +16,38 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
   return (
     <div>
       {/* Header Section */}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-semibold text-[#5c4033]">Assessment complete!</h1>
-        <p className="text-lg font-medium text-[#5c4033] mt-2">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-semibold text-[#5c4033]">
+          Assessment complete!
+        </h1>
+        <p className="mt-2 text-lg font-medium text-[#5c4033]">
           {/* You are currently in */}
-           <span className="font-bold">{result.title}</span>
+          <span className="font-bold">{result.title}</span>
         </p>
-        <p className="text-[#7d5e50] mt-4">{result.desc}</p>
+        <p className="mt-4 text-[#7d5e50]">{result.desc}</p>
       </div>
 
       {/* Menopause Journey Card */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8 w-full max-w-lg">
-        <h2 className="text-xl font-semibold text-[#5c4033] mb-4">Your Menopause Journey</h2>
-        <p className="text-[#7d5e50] mb-6">{result.desc}</p>
+      <div className="mb-8 w-full max-w-lg rounded-lg bg-white p-6 shadow-md">
+        <h2 className="mb-4 text-xl font-semibold text-[#5c4033]">
+          Your Menopause Journey
+        </h2>
+        <p className="mb-6 text-[#7d5e50]">{result.desc}</p>
 
         {/* Duration */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="mb-6 flex items-center gap-4">
           <div className="text-2xl text-[#f57c00]">⏰</div>
           <div>
             <h3 className="font-semibold text-[#5c4033]">Duration</h3>
             <p className="text-[#7d5e50]">
-              Perimenopause typically lasts 4-8 years, but can be shorter or longer for some women.
+              Perimenopause typically lasts 4-8 years, but can be shorter or
+              longer for some women.
             </p>
           </div>
         </div>
 
         {/* Common Symptoms */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="mb-6 flex items-center gap-4">
           <div className="text-2xl text-[#f57c00]">📋</div>
           <div>
             <h3 className="font-semibold text-[#5c4033]">Common Symptoms</h3>
@@ -58,7 +63,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
         <div className="flex items-center gap-4">
           <div className="text-2xl text-[#f57c00]">👍</div>
           <div>
-            <h3 className="font-semibold text-[#5c4033]">Tips for this Stage</h3>
+            <h3 className="font-semibold text-[#5c4033]">
+              Tips for this Stage
+            </h3>
             <ul className="list-disc pl-5 text-[#7d5e50]">
               <li>Maintain a healthy diet and exercise routine</li>
               <li>Practice stress-reduction techniques</li>
@@ -71,8 +78,10 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
 
       {/* Next Steps Section */}
       <div className="w-full max-w-lg">
-        <h2 className="text-xl font-semibold text-[#5c4033] mb-4">Next steps</h2>
-        <p className="text-[#7d5e50] mb-6">
+        <h2 className="mb-4 text-xl font-semibold text-[#5c4033]">
+          Next steps
+        </h2>
+        <p className="mb-6 text-[#7d5e50]">
           Thank you for taking this important step in your menopause journey.
         </p>
         {/* <div className="bg-white rounded-lg shadow-md p-6 mb-6 flex items-center gap-4">
@@ -93,7 +102,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
         <div className="text-center mt-4">
           <span className="text-[#7d5e50]">OR</span>
         </div> */}
-        <button className="w-full py-2 px-4 bg-white text-[#6d4c41] rounded-lg font-semibold mt-4 border border-[#6d4c41] hover:bg-[#fbe9e7]">
+        <button className="mt-4 w-full rounded-lg border border-[#6d4c41] bg-white px-4 py-2 font-semibold text-[#6d4c41] hover:bg-[#fbe9e7]">
           Take me home
         </button>
       </div>

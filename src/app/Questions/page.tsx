@@ -1,7 +1,7 @@
 'use client';
-import React, { useState } from "react";
-import questions from "@data/questions.json"; // Import the JSON file with questions
-import QuestionPage from "@components/QuestionPage"; // Import the QuestionPage component
+import React, { useState } from 'react';
+import questions from '@data/questions.json'; // Import the JSON file with questions
+import QuestionPage from '@components/QuestionPage'; // Import the QuestionPage component
 import GenericPage from '@components/layout/GenericPage';
 
 const QuestionsPage: React.FC = () => {
@@ -23,7 +23,7 @@ const QuestionsPage: React.FC = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
-      console.log("All questions completed", answers);
+      console.log('All questions completed', answers);
       // Handle final submission logic here, e.g., send answers to an API
     }
   };
@@ -34,13 +34,13 @@ const QuestionsPage: React.FC = () => {
       <QuestionPage
         title={currentQuestion.title}
         desc={currentQuestion.desc}
-        type={currentQuestion.type as "multiple_choice" | "multi_select"}
+        type={currentQuestion.type as 'multiple_choice' | 'multi_select'}
         options={currentQuestion.options}
         specialField={currentQuestion.specialField}
         otherField={currentQuestion.otherField}
         onContinue={handleContinue} // Pass the handler for the "Continue" button
       />
-          </GenericPage>
+    </GenericPage>
   );
 };
 
