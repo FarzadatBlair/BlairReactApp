@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "@/components/common/Button";
 
 interface QuestionPageProps {
   title: string;
@@ -56,10 +57,10 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-      <div className="max-w-md w-full bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">{title}</h2>
-        {desc && <p className="text-sm text-gray-600 mb-6">{desc}</p>}
+    // <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
+      <div>
+        <h1 className="mb-4">{title}</h1>
+        {desc && <p>{desc}</p>}
 
         <div className="space-y-4">
           {options.map((option, index) => (
@@ -111,12 +112,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
         </div>
 
         <div className="mt-6 flex justify-between">
-          <button
+          <Button
             onClick={handleContinue}
-            className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
           >
             Continue
-          </button>
+          </Button>
           <button
             onClick={() => window.history.back()}
             className="text-sm text-gray-500 hover:underline"
@@ -135,7 +135,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           </a>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

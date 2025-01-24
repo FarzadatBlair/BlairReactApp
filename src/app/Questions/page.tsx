@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from "react";
-import questions from "./questions.json"; // Import the JSON file with questions
-import QuestionPage from "./QuestionPage"; // Import the QuestionPage component
+import questions from "@data/questions.json"; // Import the JSON file with questions
+import QuestionPage from "@components/QuestionPage"; // Import the QuestionPage component
 import GenericPage from '@components/layout/GenericPage';
 
 const QuestionsPage: React.FC = () => {
