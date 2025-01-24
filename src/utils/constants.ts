@@ -1,3 +1,4 @@
+// https://www.microfocus.com/documentation/idol/IDOL_12_12/EductionGrammars_12.12_Documentation/PII/Content/PII/PII_Examples_Health.htm
 export const HEALTH_CARD_FORMATS = {
   AB: {
     name: 'AHCIP card number',
@@ -66,7 +67,9 @@ export const HEALTH_CARD_FORMATS = {
   },
 };
 
-export const PROVINCES = [
+export type ProvinceCode = keyof typeof HEALTH_CARD_FORMATS;
+
+export const PROVINCES: { value: ProvinceCode; label: string }[] = [
   { value: 'AB', label: 'Alberta' },
   { value: 'BC', label: 'British Columbia' },
   { value: 'MB', label: 'Manitoba' },
