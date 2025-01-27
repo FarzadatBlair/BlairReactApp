@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'; // Import Next.js router
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { supabase } from '../utils/supabase';
+import { supabase } from '@utils/supabase';
 import welcomeImage from '@img/splashImage.jpeg';
 
 import GenericPage from '@components/layout/GenericPage';
@@ -38,7 +38,7 @@ const Splash: React.FC = () => {
           setError(error.message);
         }
       } else {
-        router.push('/main'); // Navigate to the success page
+        router.push('/success'); // Navigate to the success page
       }
     } catch (err) {
       setError(`An unexpected error occurred. ${err}`); // Catch unexpected errors
