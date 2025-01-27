@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../../utils/supabase';
+import { supabase } from '@utils/supabase/supabase';
 // import { User } from '@supabase/supabase-js';
 
 import GenericPage from '@components/layout/GenericPage';

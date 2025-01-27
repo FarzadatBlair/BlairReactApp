@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'; // Import Next.js router
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { supabase } from '@utils/supabase';
+import { supabase } from '@utils/supabase/supabase';
 import welcomeImage from '@img/splashImage.jpeg';
 
 import GenericPage from '@components/layout/GenericPage';

@@ -1,7 +1,8 @@
 'use client';
 import React, { act, useState } from "react";
-import TopHeader from "@/components/common/TopHeader";
+import TopHeader from "@/components/ui/TopHeader";
 import { Home, Heart, BookOpen, User, Book } from "lucide-react";
+import NavBar from "@/components/ui/NavBar";
 
 export default function Layout({ children, pageTitle }: { children: React.ReactNode; pageTitle: string }) {
 
@@ -9,15 +10,15 @@ export default function Layout({ children, pageTitle }: { children: React.ReactN
 
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gray-50">
+    <div className="flex flex-col justify-between bg-gray-50">
       {/* TopHeader receives the variant */}
       <TopHeader variant={activeTab} />
 
       {/* Main Content */}
       <main className="flex-grow">{children}</main>
 
-      {/* Bottom Navigation Bar */}
-      <div className="flex justify-around p-4 bg-white shadow-md">
+      <NavBar />
+      {/* <div className="flex justify-around p-4 bg-white shadow-md">
         <button
           onClick={() => setActiveTab("Home")}
           className={`text-sm ${
@@ -54,7 +55,7 @@ export default function Layout({ children, pageTitle }: { children: React.ReactN
           <User className="w-6 h-6 mb-1" />
           Profile
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Import Next.js router
-import { supabase } from '../../utils/supabase';
+import { supabase } from '@utils/supabase/supabase';
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
