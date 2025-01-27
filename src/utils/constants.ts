@@ -81,3 +81,5 @@ export const PROVINCES = [
   { value: 'SK', label: 'Saskatchewan' },
   { value: 'YT', label: 'Yukon' },
 ];
+
+export const QUESTION_TITLE_CHAR_LIMIT = 30;
