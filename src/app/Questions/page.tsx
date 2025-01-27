@@ -1,17 +1,32 @@
 'use client';
-import React, { useState } from 'react';
-import questions from '@data/questions.json'; // Import the JSON file with questions
-import QuestionPage from '@components/QuestionPage'; // Import the QuestionPage component
-import GenericPage from '@components/layout/GenericPage';
+import React, { useEffect, useState } from 'react';
+import QuestionPage from '@components/QuestionPage';
+import { fetchQuestions } from '@/utils/fetchQuestions';
+import { Question } from '@/types/question';
 
 const QuestionsPage: React.FC = () => {
+  const [questions, setQuestions] = useState<Question[]>([]); // Use Question[] for proper typing
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current question index
   const [answers, setAnswers] = useState<Record<number, any>>({}); // Store answers for all questions
+  const [loading, setLoading] = useState(true); // Track loading state
+  const [error, setError] = useState<string | null>(null); // Track error state
 
-  // Get the current question based on the index
-  const currentQuestion = questions[currentIndex];
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const data: Question[] = await fetchQuestions(); // Ensure fetched data matches the Question type
+        setQuestions(data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load questions. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Handle the "Continue" button click
+    loadQuestions();
+  }, []);
+
   const handleContinue = (answer: any) => {
     // Save the answer for the current question
     setAnswers((prev) => ({
@@ -28,19 +43,30 @@ const QuestionsPage: React.FC = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
+  if (!questions.length) {
+    return <div>No questions available.</div>;
+  }
+
+  const currentQuestion = questions[currentIndex];
+
   return (
-    <GenericPage className="flex flex-col">
-      {/* Render the current question */}
-      <QuestionPage
-        title={currentQuestion.title}
-        desc={currentQuestion.desc}
-        type={currentQuestion.type as 'multiple_choice' | 'multi_select'}
-        options={currentQuestion.options}
-        specialField={currentQuestion.specialField}
-        otherField={currentQuestion.otherField}
-        onContinue={handleContinue} // Pass the handler for the "Continue" button
-      />
-    </GenericPage>
+    <QuestionPage
+      title={currentQuestion.title}
+      desc={currentQuestion.desc}
+      type={currentQuestion.type}
+      options={currentQuestion.options}
+      specialField={currentQuestion.specialField}
+      otherField={currentQuestion.otherField}
+      onContinue={handleContinue}
+    />
   );
 };
 

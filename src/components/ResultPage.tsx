@@ -1,4 +1,5 @@
 import React from 'react';
+import GenericPage from '@components/layout/GenericPage';
 import Button from '@/components/common/Button';
 
 type Result = {
@@ -14,7 +15,7 @@ type ResultPageProps = {
 
 const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
   return (
-    <div>
+    <GenericPage>
       {/* Header Section */}
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-semibold text-[#5c4033]">
@@ -106,7 +107,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
           Take me home
         </button>
       </div>
-    </div>
+    </GenericPage>
   );
 };
 

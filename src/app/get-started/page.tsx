@@ -31,6 +31,8 @@ const GetStarted = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session?.user) {
         router.replace('/');
+        const nothing = 0; // eslint will error this so i will come to it
+        //! USE redirect FROM next/navigation INSTEAD
       }
     });
 

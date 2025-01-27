@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import Button from '@/components/common/Button';
+import GenericPage from './layout/GenericPage';
+import QuestionOption from '@/components/common/QuestionOption';
+import ButtonLink from '@/components/common/ButtonLink';
+import Input from '@/components/common/Input';
+import { QUESTION_TITLE_CHAR_LIMIT } from '@/utils/constants';
+import clsx from 'clsx';
 
 interface QuestionPageProps {
   title: string;
@@ -60,68 +66,72 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     onContinue(answer);
   };
 
+  // Check if "Continue" button should be disabled
+  const isContinueDisabled =
+    type === 'multi_select'
+      ? selected.length === 0 && !otherValue.trim() // No options or other field selected
+      : !selected && !otherValue.trim(); // No option or other value in single-choice mode
+
   return (
-    <div>
-      <h1 className="mb-4">{title}</h1>
+    <GenericPage>
+      {/* THE WIDTH IS 5/6 TO PREVENT AWKWARD LINE BREAKING */}
+      <div className="mb-4">
+        <h1
+          className={clsx(
+            title.length > QUESTION_TITLE_CHAR_LIMIT && 'text-[2.5rem]',
+          )}
+        >
+          {title}
+        </h1>
+      </div>
       {desc && <p>{desc}</p>}
 
-      <div className="space-y-4">
+      <div className="mt-4 space-y-4">
         {options.map((option, index) => (
-          <div
+          <QuestionOption
             key={index}
-            className={`cursor-pointer rounded-lg border p-4 ${
+            option={option}
+            isSelected={
               type === 'multi_select'
                 ? selected.includes(option)
-                  ? 'border-black bg-gray-200'
-                  : 'border-gray-300'
                 : selected === option
-                  ? 'border-black bg-gray-200'
-                  : 'border-gray-300'
-            } hover:border-black`}
+            }
+            isMultiSelect={type === 'multi_select'}
             onClick={() => handleOptionChange(option)}
-          >
-            <span className="text-sm">{option}</span>
-          </div>
+          />
         ))}
 
         {specialField && (
-          <div
-            className={`cursor-pointer rounded-lg border p-4 ${
+          <QuestionOption
+            option={specialField}
+            isSelected={
               type === 'multi_select'
                 ? selected.includes(specialField)
-                  ? 'border-black bg-gray-200'
-                  : 'border-gray-300'
                 : selected === specialField
-                  ? 'border-black bg-gray-200'
-                  : 'border-gray-300'
-            } hover:border-black`}
+            }
+            isMultiSelect={type === 'multi_select'}
             onClick={handleSpecialField}
-          >
-            <span className="text-sm">{specialField}</span>
-          </div>
+          />
         )}
 
         {otherField && (
           <div className="mt-4">
-            <input
+            <Input
               type="text"
               placeholder="Other (please specify)"
               value={otherValue}
               onChange={(e) => setOtherValue(e.target.value)}
-              className="w-full rounded-lg border p-3"
+              className="rounded-3xl"
             />
           </div>
         )}
       </div>
 
-      <div className="mt-6 flex justify-between">
-        <Button onClick={handleContinue}>Continue</Button>
-        <button
-          onClick={() => window.history.back()}
-          className="text-sm text-gray-500 hover:underline"
-        >
-          Go back
-        </button>
+      <div className="mt-6 flex flex-col justify-between">
+        <Button onClick={handleContinue} disabled={isContinueDisabled}>
+          Continue
+        </Button>
+        <ButtonLink onClick={() => window.history.back()}>Go back</ButtonLink>
       </div>
 
       <div className="mt-6 text-center text-xs text-gray-500">
@@ -133,7 +143,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           Privacy Policy
         </a>
       </div>
-    </div>
+    </GenericPage>
   );
 };
 
