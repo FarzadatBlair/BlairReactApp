@@ -1,10 +1,12 @@
 'use client';
+
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import Next.js router
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { supabase } from '@utils/supabase/supabase';
+import { login } from '@/utils/actions';
+
 import welcomeImage from '@img/splashImage.jpeg';
 
 import GenericPage from '@components/layout/GenericPage';
@@ -12,36 +14,27 @@ import Button from '@components/common/Button';
 import ButtonLink from '@/components/common/ButtonLink';
 import Input from '@components/common/Input';
 
-const Splash: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(false); // State to toggle between signup and login views
-  const [email, setEmail] = useState(''); // State for email
-  const [password, setPassword] = useState(''); // State for password
-  const [error, setError] = useState(''); // State for error messages
-  const router = useRouter(); // Next.js router for navigation
+//TODO: HAVE THIS PAGE GO IN A /welcome ROUTE AND AUTO REDIRECT TO HOME PAGE IF LOGGED IN, NEEDS SERVER COMPONENT CHECK
+
+const WelcomePage: React.FC = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string>('');
+  const router = useRouter();
 
   const handleLogin = async () => {
     setError(''); // Clear any previous errors
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    const result = await login({ email, password });
 
-      //! do something with data
-      console.log(data);
-      console.log(error);
-
-      if (error) {
-        if (error.message === 'Invalid login credentials') {
-          setError('The email and/or password is incorrect.');
-        } else {
-          setError(error.message);
-        }
+    if (!result.success) {
+      if (result.error === 'Invalid login credentials') {
+        setError('The email and/or password is incorrect.');
       } else {
-        router.push('/success'); // Navigate to the success page
+        setError(result.error || 'An unexpected error occurred.');
       }
-    } catch (err) {
-      setError(`An unexpected error occurred. ${err}`); // Catch unexpected errors
+    } else {
+      router.push('/get-started');
     }
   };
 
@@ -130,4 +123,4 @@ const Splash: React.FC = () => {
   );
 };
 
-export default Splash;
+export default WelcomePage;

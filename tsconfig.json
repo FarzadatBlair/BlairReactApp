@@ -27,7 +27,7 @@
       "@data/*": ["./public/data/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"],
-      "@supabase/*": ["./src/@supabase/supabase/*"],
+      "@supabase/*": ["./src/@supabase/supabase/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
