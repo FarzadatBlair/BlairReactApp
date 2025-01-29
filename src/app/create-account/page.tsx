@@ -1,8 +1,9 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '../../utils/supabase';
-// import { User } from '@supabase/supabase-js';
+import { supabase } from '@utils/supabase/supabase';
+import { signup } from '@/utils/actions';
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
@@ -41,21 +42,12 @@ const GetStarted = () => {
     setError('');
     setIsLoading(true);
 
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+    const result = await signup({ email, password });
 
-      if (error) {
-        setError(error.message);
-      } else if (data.user) {
-        console.log(data.user);
-      }
-    } catch (err) {
-      setError(`An unexpected error occurred. ${err}`);
-    } finally {
-      setIsLoading(false);
+    setIsLoading(false);
+
+    if (!result.success) {
+      setError(result.error || 'An unexpected error occurred.');
     }
   };
 
@@ -75,7 +67,6 @@ const GetStarted = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          // className="mt-4"
         />
       </div>
       {error && <p className="mt-2 text-error">{error}</p>}
