@@ -6,7 +6,8 @@
     "options": [
       "Yes, a medical professional has diagnosed me with POI.",
       "No, I have never been officially diagnosed with POI by a medical professional."
-    ]
+    ],
+    "otherField": false
   },
   {
     "title": "Are you currently using any treatment for your menopausal symptoms?",
@@ -28,6 +29,7 @@
       "I use compounded hormone therapy.",
       "I use treatment without hormones (i.e. non-hormonal therapy)."
     ],
-    "specialField": "None of the above"
+    "specialField": "None of the above",
+    "otherField": false
   }
 ]
