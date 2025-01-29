@@ -7,7 +7,7 @@ export default async function GetStartedPage() {
   const { data, error } = await supabase.auth.getUser();
 
   if (error || !data?.user) {
-    redirect('/');
+    redirect('/create-account');
   }
 
   return <GetStarted />;
