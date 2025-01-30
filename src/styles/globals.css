@@ -21,6 +21,7 @@ body {
   /* background: rgb(255, 210, 197); */
   font-family: 'Inter', 'Arial', sans-serif;
   font-size: 1rem;
+  @apply: text-primary;
 }
 
 p {
