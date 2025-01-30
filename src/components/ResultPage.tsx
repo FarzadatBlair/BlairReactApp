@@ -4,7 +4,7 @@ import Button from '@/components/common/Button';
 
 type Result = {
   title: string;
-  desc: string;
+  description: string;
   symptoms: string[];
   nextSteps: string[];
 };
@@ -13,10 +13,9 @@ type ResultPageProps = {
   result: Result;
 };
 
-
 const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
   return (
-    <GenericPage bgCol='default'>
+    <GenericPage bgCol="default">
       {/* Header Section */}
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-semibold text-[#5c4033]">
@@ -26,7 +25,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
           {/* You are currently in */}
           <span className="font-bold">{result.title}</span>
         </p>
-        <p className="mt-4 text-[#7d5e50]">{result.desc}</p>
+        <p className="mt-4 text-[#7d5e50]">{result.description}</p>
       </div>
 
       {/* Menopause Journey Card */}
@@ -34,7 +33,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
         <h2 className="mb-4 text-xl font-semibold text-[#5c4033]">
           Your Menopause Journey
         </h2>
-        <p className="mb-6 text-[#7d5e50]">{result.desc}</p>
+        <p className="mb-6 text-[#7d5e50]">{result.description}</p>
 
         {/* Duration */}
         <div className="mb-6 flex items-center gap-4">
