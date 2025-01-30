@@ -7,7 +7,7 @@ import { Question } from '@/types/question';
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]); // Use Question[] for proper typing
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current question index
-  const [answers, setAnswers] = useState<Record<number, any>>({}); // Store answers for all questions
+  const [answers, setAnswers] = useState<Record<number, string[]>>({}); // Store answers as string[]
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState<string | null>(null); // Track error state
 
@@ -27,11 +27,15 @@ const QuestionsPage: React.FC = () => {
     loadQuestions();
   }, []);
 
-  const handleContinue = (answer: any) => {
+  const handleContinue = (answer: string[]) => {
+    // For MC questions, ensure answer is a single element array
+    const finalAnswer =
+      questions[currentIndex].type === 'MC' ? [answer[0]] : answer;
+
     // Save the answer for the current question
     setAnswers((prev) => ({
       ...prev,
-      [currentIndex]: answer,
+      [currentIndex]: finalAnswer,
     }));
 
     // Move to the next question or handle the end of the questionnaire
@@ -60,11 +64,9 @@ const QuestionsPage: React.FC = () => {
   return (
     <QuestionPage
       title={currentQuestion.title}
-      desc={currentQuestion.desc}
+      description={currentQuestion.description}
       type={currentQuestion.type}
       options={currentQuestion.options}
-      specialField={currentQuestion.specialField}
-      otherField={currentQuestion.otherField}
       onContinue={handleContinue}
     />
   );

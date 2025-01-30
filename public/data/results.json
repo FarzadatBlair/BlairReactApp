@@ -2,7 +2,7 @@
   {
     "id": 0,
     "title": "You may be perimenopausal.",
-    "desc": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
+    "description": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -19,7 +19,7 @@
   {
     "id": 1,
     "title": "You are likely in perimenopause or menopause.",
-    "desc": "Based on your answers, you are likely in perimenopause or menopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
+    "description": "Based on your answers, you are likely in perimenopause or menopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",

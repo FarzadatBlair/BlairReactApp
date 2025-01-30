@@ -2,40 +2,34 @@ import React, { useState } from 'react';
 import Button from '@/components/common/Button';
 import GenericPage from './layout/GenericPage';
 import QuestionOption from '@/components/common/QuestionOption';
-import ButtonLink from '@/components/common/ButtonLink';
 import Input from '@/components/common/Input';
-import { QUESTION_TITLE_CHAR_LIMIT } from '@/utils/constants';
-import clsx from 'clsx';
+import { Options } from '@/types/question';
 
 interface QuestionPageProps {
   title: string;
-  desc?: string;
-  type: 'multiple_choice' | 'multi_select';
-  options: string[];
-  specialField?: string;
-  otherField?: boolean;
-  onContinue: (answer: any) => void;
+  description?: string;
+  type: 'MC' | 'MS';
+  options: Options[];
+  onContinue: (answer: string[]) => void;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
   title,
-  desc,
+  description,
   type,
   options,
-  specialField,
-  otherField,
   onContinue,
 }) => {
-  const [selected, setSelected] = useState<any>(
-    type === 'multi_select' ? [] : null,
-  );
+  // For both MC and MS, 'selected' is always a string array
+  const [selected, setSelected] = useState<string[]>([]); // Initially empty or containing one empty string for MC
   const [otherValue, setOtherValue] = useState('');
 
   const handleOptionChange = (option: string) => {
-    if (type === 'multiple_choice') {
-      setSelected(option);
+    if (type === 'MC') {
+      // For MC, ensure selected is always an array with one element
+      setSelected([option]);
     } else {
-      // Toggle the selection for multi-select
+      // For MS, 'selected' is an array, add/remove the option
       setSelected((prev: string[]) =>
         prev.includes(option)
           ? prev.filter((o) => o !== option)
@@ -44,105 +38,50 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
     }
   };
 
-  const handleSpecialField = () => {
-    if (type === 'multi_select') {
-      setSelected((prev: string[]) =>
-        prev.includes(specialField!)
-          ? prev.filter((o) => o !== specialField)
-          : [...prev, specialField],
-      );
-    } else {
-      setSelected(specialField);
-    }
-  };
-
   const handleContinue = () => {
     const answer =
-      otherField && otherValue
-        ? type === 'multi_select'
-          ? [...selected, otherValue]
-          : otherValue
+      selected.includes('Other') && otherValue
+        ? [...selected.filter((o) => o !== 'Other'), otherValue]
         : selected;
     onContinue(answer);
   };
 
-  // Check if "Continue" button should be disabled
-  const isContinueDisabled =
-    type === 'multi_select'
-      ? selected.length === 0 && !otherValue.trim() // No options or other field selected
-      : !selected && !otherValue.trim(); // No option or other value in single-choice mode
-
   return (
     <GenericPage>
-      {/* THE WIDTH IS 5/6 TO PREVENT AWKWARD LINE BREAKING */}
       <div className="mb-4">
-        <h1
-          className={clsx(
-            title.length > QUESTION_TITLE_CHAR_LIMIT && 'text-[2.5rem]',
-          )}
-        >
-          {title}
-        </h1>
+        <h1>{title}</h1>
       </div>
-      {desc && <p>{desc}</p>}
+      {description && <p>{description}</p>}
 
-      <div className="mt-4 space-y-4">
+      <div className="mt-4 flex flex-col space-y-4">
         {options.map((option, index) => (
           <QuestionOption
             key={index}
-            option={option}
-            isSelected={
-              type === 'multi_select'
-                ? selected.includes(option)
-                : selected === option
-            }
-            isMultiSelect={type === 'multi_select'}
-            onClick={() => handleOptionChange(option)}
+            option={option.label}
+            isSelected={selected.includes(option.label)}
+            isMultiSelect={type === 'MS'}
+            onClick={() => handleOptionChange(option.label)}
           />
         ))}
 
-        {specialField && (
-          <QuestionOption
-            option={specialField}
-            isSelected={
-              type === 'multi_select'
-                ? selected.includes(specialField)
-                : selected === specialField
-            }
-            isMultiSelect={type === 'multi_select'}
-            onClick={handleSpecialField}
+        {/* Handle "Other" field separately */}
+        {options.some((o) => o.special === 'text') && (
+          <Input
+            type="text"
+            placeholder="Other (please specify)"
+            value={otherValue}
+            onChange={(e) => setOtherValue(e.target.value)}
           />
         )}
-
-        {otherField && (
-          <div className="mt-4">
-            <Input
-              type="text"
-              placeholder="Other (please specify)"
-              value={otherValue}
-              onChange={(e) => setOtherValue(e.target.value)}
-              className="rounded-3xl"
-            />
-          </div>
-        )}
       </div>
 
-      <div className="mt-6 flex flex-col justify-between">
-        <Button onClick={handleContinue} disabled={isContinueDisabled}>
-          Continue
-        </Button>
-        <ButtonLink onClick={() => window.history.back()}>Go back</ButtonLink>
-      </div>
-
-      <div className="mt-6 text-center text-xs text-gray-500">
-        <a href="/terms" className="hover:underline">
-          Terms of Service
-        </a>{' '}
-        |{' '}
-        <a href="/privacy" className="hover:underline">
-          Privacy Policy
-        </a>
-      </div>
+      <Button
+        onClick={handleContinue}
+        disabled={selected.length === 0 && !otherValue.trim()}
+        className="mt-4"
+      >
+        Continue
+      </Button>
     </GenericPage>
   );
 };

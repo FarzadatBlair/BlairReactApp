@@ -1,18 +1,16 @@
+import { supabase } from './supabase/supabase';
 import { Question } from '@/types/question';
 
 export const fetchQuestions = async (): Promise<Question[]> => {
-  const minDelay = 100; // Minimum delay in milliseconds
-  const maxDelay = 500; // Maximum delay in milliseconds
+  const { data, error } = await supabase
+    .schema('menopause_assessment')
+    .from('questions')
+    .select('*');
 
-  // Simulate network delay
-  const delay = Math.random() * (maxDelay - minDelay) + minDelay;
-
-  await new Promise((resolve) => setTimeout(resolve, delay)); // Delay for the simulated time
-
-  // Fetch questions from the JSON file
-  const res = await fetch('/data/questions.json');
-  if (!res.ok) {
+  if (error) {
+    console.error('Error fetching questions:', error);
     throw new Error('Failed to fetch questions');
   }
-  return res.json();
+
+  return data;
 };

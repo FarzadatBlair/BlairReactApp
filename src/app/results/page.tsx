@@ -22,7 +22,7 @@ const Page: React.FC = () => {
           <Card>
             <CardSections
               title="Your Menopause Journey"
-              bodytext={result.desc}
+              bodytext={result.description}
               custom={<img src="./img/graphic.png" alt="Doctor" />}
             />
           </Card>

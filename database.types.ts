@@ -33,7 +33,7 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: 'user_healthcare_user_ id_fkey';
+            foreignKeyName: 'user_healthcare_user_id_fkey';
             columns: ['user_id'];
             isOneToOne: true;
             referencedRelation: 'users';
