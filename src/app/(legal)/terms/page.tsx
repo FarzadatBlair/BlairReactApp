@@ -1,7 +1,7 @@
 'use client';
 import GenericPage from '@components/layout/GenericPage';
 
-const TermsOfService = () => {
+const TermsOfServicePage = () => {
   return (
     <GenericPage className="p-6">
       <h1 className="mb-2">Terms of Service</h1>
@@ -46,4 +46,4 @@ const TermsOfService = () => {
   );
 };
 
-export default TermsOfService;
+export default TermsOfServicePage;

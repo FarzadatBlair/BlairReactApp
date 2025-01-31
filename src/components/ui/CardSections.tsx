@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface CardSectionProps {
   title?: string;
@@ -16,11 +16,13 @@ const CardSections: React.FC<CardSectionProps> = ({
   custom,
 }) => {
   return (
-<>
+    <>
       {/* Title & Icon Row */}
       <div className="flex items-center gap-2">
         {icon && <div className="text-2xl text-secondary-500">{icon}</div>}
-        {title && <h5 className="text-primary font-sans font-black">{title}</h5>}
+        {title && (
+          <h5 className="font-sans font-black text-primary">{title}</h5>
+        )}
       </div>
 
       {/* Body Content */}
@@ -37,7 +39,7 @@ const CardSections: React.FC<CardSectionProps> = ({
 
       {/* Custom Content */}
       {custom && <div>{custom}</div>}
-</>
+    </>
   );
 };
 

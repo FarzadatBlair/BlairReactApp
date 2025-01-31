@@ -7,7 +7,7 @@ import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
 import Input from '@components/common/Input';
 
-const ChangePassword = () => {
+const ChangePasswordPage = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -69,4 +69,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ChangePasswordPage;

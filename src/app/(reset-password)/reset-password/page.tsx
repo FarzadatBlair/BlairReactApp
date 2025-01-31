@@ -7,7 +7,7 @@ import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
 import Input from '@/components/common/Input';
 
-const ResetPassword: React.FC = () => {
+const ResetPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter(); // Next.js router for navigation
@@ -65,4 +65,4 @@ const ResetPassword: React.FC = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordPage;

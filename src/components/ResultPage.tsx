@@ -13,10 +13,9 @@ type ResultPageProps = {
   result: Result;
 };
 
-
 const ResultPage: React.FC<ResultPageProps> = ({ result }) => {
   return (
-    <GenericPage bgCol='default'>
+    <GenericPage bgCol="default">
       {/* Header Section */}
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-semibold text-[#5c4033]">

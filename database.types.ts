@@ -1,5 +1,3 @@
-// supabase gen types typescript --project-id ddbanypuqbecvgqdrgki > database.types.ts
-
 export type Json =
   | string
   | number
@@ -17,26 +15,26 @@ export type Database = {
           healthcare_number: string;
           healthcare_province: string;
           updated_at: string | null;
-          'user_ id': string;
+          user_id: string;
         };
         Insert: {
           created_at?: string | null;
           healthcare_number: string;
           healthcare_province: string;
           updated_at?: string | null;
-          'user_ id': string;
+          user_id: string;
         };
         Update: {
           created_at?: string | null;
           healthcare_number?: string;
           healthcare_province?: string;
           updated_at?: string | null;
-          'user_ id'?: string;
+          user_id?: string;
         };
         Relationships: [
           {
             foreignKeyName: 'user_healthcare_user_ id_fkey';
-            columns: ['user_ id'];
+            columns: ['user_id'];
             isOneToOne: true;
             referencedRelation: 'users';
             referencedColumns: ['user_id'];

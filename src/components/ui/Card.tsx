@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface CardProps {
   children: React.ReactNode;
@@ -6,7 +6,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children }) => {
   return (
-    <div className="w-full flex flex-col space-y-2 rounded-lg bg-white p-6 shadow-md">
+    <div className="flex w-full flex-col space-y-2 rounded-lg bg-white p-6 shadow-md">
       {React.Children.map(children, (child, index) => (
         <>
           {child}

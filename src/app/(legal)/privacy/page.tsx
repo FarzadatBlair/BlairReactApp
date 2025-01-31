@@ -1,7 +1,7 @@
 'use client';
 import GenericPage from '@components/layout/GenericPage';
 
-const PrivacyPolicy = () => {
+const PrivacyPolicyPage = () => {
   return (
     <GenericPage className="p-6">
       <h1 className="mb-2">Privacy Policy</h1>
@@ -45,4 +45,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default PrivacyPolicyPage;
