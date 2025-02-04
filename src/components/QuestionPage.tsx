@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@/components/common/Button';
 import GenericPage from './layout/GenericPage';
 import QuestionOption from '@/components/common/QuestionOption';
@@ -20,30 +20,64 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   options,
   onContinue,
 }) => {
-  // For both MC and MS, 'selected' is always a string array
-  const [selected, setSelected] = useState<string[]>([]); // Initially empty or containing one empty string for MC
+  const [selected, setSelected] = useState<string[]>([]);
   const [otherValue, setOtherValue] = useState('');
 
+  // Reset selections when a new question is displayed
+  useEffect(() => {
+    setSelected([]);
+    setOtherValue('');
+  }, [title]);
+
   const handleOptionChange = (option: string) => {
+    const optionMeta = options.find((o) => o.label === option);
+    if (!optionMeta) return;
+
+    const isNoneOption = optionMeta.special === 'none-above';
+    const isFreeTextOption = optionMeta.special === 'free-text';
+
+    // Handle single-choice (MC) questions
     if (type === 'MC') {
-      // For MC, ensure selected is always an array with one element
       setSelected([option]);
-    } else {
-      // For MS, 'selected' is an array, add/remove the option
-      setSelected((prev: string[]) =>
-        prev.includes(option)
-          ? prev.filter((o) => o !== option)
-          : [...prev, option],
-      );
+      if (isFreeTextOption) setOtherValue('');
+      return;
     }
+
+    // Handle multi-select (MS) questions
+    setSelected((prev) => {
+      if (isNoneOption) {
+        return [option]; // Selecting "None of the above" clears all others
+      } else {
+        return prev.includes(option)
+          ? prev.filter((o) => o !== option) // Deselect if already selected
+          : [
+              ...prev.filter(
+                (o) =>
+                  options.find((opt) => opt.label === o)?.special !==
+                  'none-above',
+              ),
+              option,
+            ]; // Remove "None of the above" if selecting anything else
+      }
+    });
+
+    if (isFreeTextOption) setOtherValue('');
   };
 
   const handleContinue = () => {
-    const answer =
-      selected.includes('Other') && otherValue
-        ? [...selected.filter((o) => o !== 'Other'), otherValue]
-        : selected;
-    onContinue(answer);
+    let finalAnswer = selected;
+
+    if (otherValue.trim()) {
+      finalAnswer = [
+        ...selected.filter(
+          (o) =>
+            options.find((opt) => opt.label === o)?.special !== 'free-text',
+        ),
+        otherValue,
+      ];
+    }
+
+    onContinue(finalAnswer);
   };
 
   return (
@@ -64,8 +98,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           />
         ))}
 
-        {/* Handle "Other" field separately */}
-        {options.some((o) => o.special === 'text') && (
+        {/* Render input box only if "Other" is selected */}
+        {selected.some(
+          (o) =>
+            options.find((opt) => opt.label === o)?.special === 'free-text',
+        ) && (
           <Input
             type="text"
             placeholder="Other (please specify)"

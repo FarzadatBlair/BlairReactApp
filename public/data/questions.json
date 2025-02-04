@@ -1,21 +1,23 @@
 [
   {
+    "id": "Q-001",
     "category": "Master",
-    "title": "Have you ever been diagnosed with POI by a medical professional?",
+    "title": "Have you ever been diagnosed with POI by a medical PROFESSIONAL?",
     "description": "Premature ovarian insufficiency (POI) happens when your ovaries stop working before you reach 40. It affects about 1% of the female population.",
     "type": "MC",
     "options": [
       {
         "label": "Yes, a medical professional has diagnosed me with POI.",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "No, I have never been officially diagnosed with POI by a medical professional.",
-        "special": false
+        "special": "not-special"
       }
     ]
   },
   {
+    "id": "Q-002",
     "category": "Master",
     "title": "What symptoms do you experience?",
     "description": "Select all that apply.",
@@ -23,43 +25,44 @@
     "options": [
       {
         "label": "Hot flashes",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Night sweats",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Vaginal dryness or vaginal itch",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Poor sleep",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Low libido",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Brain fog",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Worsening mood, anxiety, and/or irritability",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "I get other symptoms I believe are related to menopause",
-        "special": "text"
+        "special": "free-text"
       },
       {
         "label": "I'm not bothered by these symptoms",
-        "special": "none"
+        "special": "none-above"
       }
     ]
   },
   {
+    "id": "Q-003",
     "category": "Master",
     "title": "Are you currently using any treatment for your menopausal symptoms?",
     "description": "Select all that apply.",
@@ -67,19 +70,19 @@
     "options": [
       {
         "label": "I use estrogen, progesterone, and/or testosterone therapy that I can get from a local drug store.",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "I use compounded hormone therapy.",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "I use treatment without hormones (i.e. non-hormonal therapy).",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "I am not using any treatment for my menopausal symptoms.",
-        "special": "none"
+        "special": "none-above"
       }
     ]
   }
