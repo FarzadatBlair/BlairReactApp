@@ -5,6 +5,7 @@ import { fetchQuestions } from '@/utils/fetchQuestions';
 import { Question } from '@/types/question';
 import { supabase } from '@utils/supabase/supabase';
 import flowData from '@data/flow.json';
+import { useQuestionStore } from '@/store/useQuestionStore';
 
 interface FlowStep {
   from: string;
@@ -21,12 +22,14 @@ const QuestionsPage: React.FC = () => {
   const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(
     null,
   );
-  const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const flow = flowData as unknown as FlowStep[];
+
+  // Zustand store
+  const { answers, setAnswer, resetAnswers } = useQuestionStore();
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -56,12 +59,13 @@ const QuestionsPage: React.FC = () => {
     setSubmitError(null);
     if (!currentQuestionId) return;
 
-    console.log('ANSWERS BEFORE:', answers);
+    console.log('ANSWERS BEFORE:', useQuestionStore.getState().answers);
 
-    // Store answer locally
-    setAnswers((prev) => ({ ...prev, [currentQuestionId]: answer }));
+    // Store answer in Zustand store
+    setAnswer(currentQuestionId, answer);
 
-    console.log('ANSWERS AFTER:', answers);
+    const updatedAnswers = useQuestionStore.getState().answers;
+    console.log('ANSWERS AFTER:', updatedAnswers);
 
     // Find the next step in the flow
     const nextStep = flow.find((step) => {
@@ -95,8 +99,10 @@ const QuestionsPage: React.FC = () => {
     }
 
     if (nextStep['is-end']) {
+      console.log('FINAL STEP REACHED - SUBMITTING FINAL ANSWERS');
       try {
-        await submitAnswersToSupabase(answers);
+        await submitAnswersToSupabase(updatedAnswers);
+        resetAnswers();
       } catch (err) {
         setSubmitError(
           `Submission error: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
@@ -174,39 +180,27 @@ const QuestionsPage: React.FC = () => {
 
         let assessment_id = existingAssessment?.assessment_id;
         if (!assessment_id) {
-          // Create a new assessment entry if one does not exist
-          const { data: newAssessment, error: createError } = await supabase
+          await supabase
             .schema('menopause_assessment')
             .from(tableName)
             .insert([
-              {
-                user_id,
-                assessment_id: crypto.randomUUID(),
-                ...updateData, // Insert all answers at once
-              },
+              { user_id, assessment_id: crypto.randomUUID(), ...updateData },
             ])
             .select('assessment_id')
             .single();
-
-          if (createError) throw createError;
         } else {
-          // If assessment exists, update it with all new answers at once
-          const { error: updateError } = await supabase
+          await supabase
             .schema('menopause_assessment')
             .from(tableName)
-            .update(updateData) // Update all columns in one query
+            .update(updateData)
             .eq('user_id', user_id)
             .eq('assessment_id', assessment_id);
-
-          if (updateError) throw updateError;
         }
       }
 
-      // Reset state after successful submission
-      setAnswers({});
-      setCurrentQuestionId(null);
+      resetAnswers();
     } catch (err) {
-      throw new Error(
+      setSubmitError(
         `Failed to submit answers: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
       );
     }
