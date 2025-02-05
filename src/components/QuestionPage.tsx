@@ -81,13 +81,13 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   };
 
   return (
-    <GenericPage>
-      <div className="mb-4">
+    <div className="flex min-h-screen w-full flex-grow flex-col space-y-4 bg-background px-6 py-16 text-primary-900">
+      <div>
         <h1>{title}</h1>
       </div>
       {description && <p>{description}</p>}
 
-      <div className="mt-4 flex flex-col space-y-4">
+      <div className="flex flex-grow flex-col space-y-4">
         {options.map((option, index) => (
           <QuestionOption
             key={index}
@@ -112,14 +112,15 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
         )}
       </div>
 
-      <Button
-        onClick={handleContinue}
-        disabled={selected.length === 0 && !otherValue.trim()}
-        className="mt-4"
-      >
-        Continue
-      </Button>
-    </GenericPage>
+      <div>
+        <Button
+          onClick={handleContinue}
+          disabled={selected.length === 0 && !otherValue.trim()}
+        >
+          Continue
+        </Button>
+      </div>
+    </div>
   );
 };
 

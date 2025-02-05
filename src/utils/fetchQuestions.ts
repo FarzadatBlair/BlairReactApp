@@ -7,7 +7,7 @@ export const fetchQuestions = async (mockDelay = 100): Promise<Question[]> => {
     const { data: questionsData, error: questionsError } = await supabase
       .schema('menopause_assessment')
       .from('questions')
-      .select('id'); // Fetch only question IDs
+      .select('id');
 
     if (questionsError) {
       console.error('❌ Error fetching questions:', questionsError);
@@ -27,8 +27,8 @@ export const fetchQuestions = async (mockDelay = 100): Promise<Question[]> => {
       throw new Error('Failed to fetch options');
     }
 
-    // 3. Fetch questions.json as a network request (instead of fs)
-    const response = await fetch('/data/questions.json'); // Ensure the file is inside the public/ folder
+    // 3. Fetch questions.json as a network request
+    const response = await fetch('/data/questions.json');
     if (!response.ok) throw new Error('Failed to fetch questions.json');
 
     const cmsQuestions: Question[] = await response.json();

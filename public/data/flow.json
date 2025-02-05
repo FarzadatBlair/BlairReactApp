@@ -1,0 +1,74 @@
+[
+  {
+    "from": "",
+    "to": "Q-001",
+    "includes": [],
+    "excludes": [],
+    "is-start": true,
+    "is-end": false,
+    "notes": "START -> first question POI"
+  },
+  {
+    "from": "Q-001",
+    "to": "",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true,
+    "notes": "has POI -> end"
+  },
+  {
+    "from": "Q-001",
+    "to": "Q-002",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false,
+    "notes": "no POI -> symptoms"
+  },
+  {
+    "from": "Q-002",
+    "to": "Q-002.5",
+    "includes": [4],
+    "excludes": [],
+    "is-start": false,
+    "is-end": false,
+    "notes": "has low libido -> libido q"
+  },
+  {
+    "from": "Q-002",
+    "to": "Q-003",
+    "includes": [],
+    "excludes": [4],
+    "is-start": false,
+    "is-end": false,
+    "notes": "no low libido -> menopausal treatment q"
+  },
+  {
+    "from": "Q-002.5",
+    "to": "Q-003",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": false,
+    "notes": "low libido -> menopausal treatment q"
+  },
+  {
+    "from": "Q-003",
+    "to": "Q-004",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": false,
+    "notes": "menopausal treatment -> period or no"
+  },
+  {
+    "from": "Q-004",
+    "to": "",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true,
+    "notes": "TEMP END FOR NOW -> END"
+  }
+]
