@@ -125,6 +125,19 @@
   {
     "from": "Q-MRP",
     "to": "",
+    "to-result": "R0",
+    "includes": [0, 1],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [100]
+    }
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
     "to-result": "R1",
     "includes": [0, 1],
     "excludes": [],
@@ -196,8 +209,8 @@
   {
     "from": "Q-004",
     "to": "Q-0Hy",
-    "includes": [2],
-    "excludes": [1],
+    "includes": [1],
+    "excludes": [0],
     "is-start": false,
     "is-end": false
   },

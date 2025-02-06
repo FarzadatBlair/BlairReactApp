@@ -2,20 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import QuestionPage from '@components/QuestionPage';
 import { fetchQuestions } from '@/utils/fetchQuestions';
-import { Question } from '@/types/question';
+import { Question, FlowStep } from '@/types/question';
+// import { FlowStep } from '@/types/flow';
 import { supabase } from '@utils/supabase/supabase';
 import flowData from '@data/flow.json';
 import { useQuestionStore } from '@/store/useQuestionStore';
-
-interface FlowStep {
-  from: string;
-  to: string;
-  includes: number[];
-  excludes: number[];
-  'is-start': boolean;
-  'is-end': boolean;
-  note: string;
-}
+import { getNextStep, getFinalResult } from '@/utils/flowManager';
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -29,7 +21,7 @@ const QuestionsPage: React.FC = () => {
   const flow = flowData as unknown as FlowStep[];
 
   // Zustand store
-  const { answers, setAnswer, resetAnswers } = useQuestionStore();
+  const { setAnswer, resetAnswers } = useQuestionStore();
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -59,51 +51,51 @@ const QuestionsPage: React.FC = () => {
     setSubmitError(null);
     if (!currentQuestionId) return;
 
-    console.log('ANSWERS BEFORE:', useQuestionStore.getState().answers);
+    console.log(
+      `Handling continue for question: ${currentQuestionId}, selected answers:`,
+      answer,
+    );
 
-    // Store answer in Zustand store
     setAnswer(currentQuestionId, answer);
-
     const updatedAnswers = useQuestionStore.getState().answers;
-    console.log('ANSWERS AFTER:', updatedAnswers);
+    console.log(`Updated answers state:`, updatedAnswers);
 
-    // Find the next step in the flow
-    const nextStep = flow.find((step) => {
-      if (step.from !== currentQuestionId) return false;
+    if (!Array.isArray(questions)) {
+      console.error('Error: `questions` is not an array!', questions);
+      setSubmitError('Internal error: Unable to process questions.');
+      return;
+    }
 
-      // Convert answer labels to indices
-      const selectedIndices = answer
-        .map((ans) =>
-          questions
-            .find((q) => q.id === currentQuestionId)
-            ?.options.findIndex((opt) => opt.label === ans),
-        )
-        .filter((i) => i !== -1); // Remove invalid indices
-
-      // Modify the includes condition to check if at least one option is present
-      const matchesIncludes =
-        step.includes.length === 0 ||
-        step.includes.some((inc) => selectedIndices.includes(inc));
-      const matchesExcludes = step.excludes.every(
-        (exc) => !selectedIndices.includes(exc),
-      );
-
-      return matchesIncludes && matchesExcludes;
-    });
-
+    const nextStep = getNextStep(flow, questions, currentQuestionId, answer);
     if (!nextStep) {
       setSubmitError(
         `Error: No valid next step found from ${currentQuestionId}`,
       );
+      console.log(`No valid next step found from ${currentQuestionId}`);
       return;
     }
 
-    if (nextStep['is-end']) {
-      console.log('FINAL STEP REACHED - SUBMITTING FINAL ANSWERS');
+    if (nextStep.to === '') {
+      console.log(`Reached final step, determining result...`);
       try {
-        await submitAnswersToSupabase(updatedAnswers);
+        const result = await getFinalResult(
+          flow,
+          questions,
+          currentQuestionId,
+          answer,
+        );
+        if (!result) {
+          console.log(
+            `Failed to determine result for question: ${currentQuestionId}`,
+          );
+          throw new Error('Failed to determine result.');
+        }
+
+        console.log(`Final result determined: ${result}`);
+        await submitFinalResultToSupabase(result, updatedAnswers);
         resetAnswers();
       } catch (err) {
+        console.log(`Submission error:`, err);
         setSubmitError(
           `Submission error: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
         );
@@ -114,94 +106,35 @@ const QuestionsPage: React.FC = () => {
     setCurrentQuestionId(nextStep.to);
   };
 
-  const submitAnswersToSupabase = async (
-    finalAnswers: Record<string, string[]>,
+  const submitFinalResultToSupabase = async (
+    result: string,
+    answers: Record<string, string[]>,
   ) => {
-    console.log('FINAL ANSWERS', finalAnswers);
+    console.log(`Submitting final result: ${result}`);
+
     try {
-      // Get authenticated user
       const { data: user, error: authError } = await supabase.auth.getUser();
       if (authError || !user?.user?.id)
         throw new Error('User not authenticated');
 
       const user_id = user.user.id;
+      console.log(`User ID for result submission: ${user_id}`);
 
-      // Group answers by table
-      const tableData: Record<string, Record<string, any>> = {
-        meno_assess_user_master: {},
-        meno_assess_user_period: {},
-      };
+      const { error } = await supabase
+        .from('meno_assess_results') // Ensure this matches the actual table name in Supabase
+        .insert([{ user_id, result, answers: JSON.stringify(answers) }]);
 
-      for (const [questionId, answer] of Object.entries(finalAnswers)) {
-        switch (questionId) {
-          case 'Q-001':
-            tableData.meno_assess_user_master['has_poi'] =
-              answer.includes('Yes');
-            break;
-          case 'Q-002':
-            tableData.meno_assess_user_master['master_symptoms'] =
-              answer.length > 0 ? answer : [];
-            break;
-          case 'Q-002.5':
-            tableData.meno_assess_user_master['sexual_function_issues'] =
-              answer.length > 0 ? answer : [];
-            break;
-          case 'Q-003':
-            tableData.meno_assess_user_master['treatment_status'] =
-              answer.length > 0 ? answer : [];
-            break;
-          case 'Q-004':
-            tableData.meno_assess_user_period['has_period'] = answer.includes(
-              'Yes, I still get periods.',
-            );
-            break;
-          default:
-            throw new Error(`Unhandled question ID: ${questionId}`);
-        }
+      if (error) {
+        console.error('Supabase insert error:', error);
+        throw new Error(`Supabase insert failed: ${error.message}`);
       }
 
-      // Process each table
-      for (const [tableName, updateData] of Object.entries(tableData)) {
-        if (Object.keys(updateData).length === 0) continue; // Skip empty updates
-
-        // Check if user already has an entry
-        const { data: existingAssessment, error: fetchError } = await supabase
-          .schema('menopause_assessment')
-          .from(tableName)
-          .select('assessment_id')
-          .eq('user_id', user_id)
-          .maybeSingle();
-
-        if (fetchError && fetchError.code !== 'PGRST116') {
-          throw new Error(
-            `Failed to fetch assessment from ${tableName}: ${fetchError.message}`,
-          );
-        }
-
-        let assessment_id = existingAssessment?.assessment_id;
-        if (!assessment_id) {
-          await supabase
-            .schema('menopause_assessment')
-            .from(tableName)
-            .insert([
-              { user_id, assessment_id: crypto.randomUUID(), ...updateData },
-            ])
-            .select('assessment_id')
-            .single();
-        } else {
-          await supabase
-            .schema('menopause_assessment')
-            .from(tableName)
-            .update(updateData)
-            .eq('user_id', user_id)
-            .eq('assessment_id', assessment_id);
-        }
-      }
-
+      console.log(`Final result ${result} submitted successfully.`);
       resetAnswers();
     } catch (err) {
+      console.error(`Failed to submit result:`, err);
       setSubmitError(
-        `Failed to submit answers: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
+        `Failed to submit result: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
       );
     }
   };
