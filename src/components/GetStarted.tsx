@@ -138,7 +138,7 @@ const GetStarted = () => {
 
         // Redirect or notify success
         console.log('Data submitted successfully!');
-        // router.replace('/dashboard');
+        router.push('/');
       } catch (err) {
         console.error('Error submitting data:', err);
         setErrorMessage('An error occurred. Please try again.');
