@@ -11,11 +11,12 @@
   {
     "from": "Q-001",
     "to": "",
+    "to-result": "R-POI",
     "includes": [0],
     "excludes": [1],
     "is-start": false,
     "is-end": true,
-    "notes": "has POI -> end"
+    "notes": "has POI -> end, no calculation"
   },
   {
     "from": "Q-001",
@@ -64,11 +65,572 @@
   },
   {
     "from": "Q-004",
+    "to": "Q-0PR",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-0PR",
+    "to": "Q-spotting",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-0PR",
+    "to": "Q-0MR",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-0MR",
     "to": "",
-    "includes": [],
+    "to-result": "R1",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-spotting",
+    "to": "",
+    "to-result": "R1",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-spotting",
+    "to": "",
+    "to-result": "R3",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-0MR",
+    "to": "Q-MRP",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
+    "to-result": "R1",
+    "includes": [0, 1],
     "excludes": [],
     "is-start": false,
     "is-end": true,
-    "notes": "TEMP END FOR NOW -> END"
+    "calculation": {
+      "func": "ageLessThan",
+      "params": [45]
+    }
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
+    "to-result": "R2",
+    "includes": [0, 1],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [44]
+    }
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
+    "to-result": "R1",
+    "includes": [3],
+    "excludes": [0, 1],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageLessThan",
+      "params": [45]
+    }
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
+    "to-result": "R2",
+    "includes": [3],
+    "excludes": [0, 1],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [44]
+    }
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
+    "to-result": "R1",
+    "includes": [2],
+    "excludes": [0, 1, 3],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-MRP",
+    "to": "",
+    "to-result": "R2",
+    "includes": [4],
+    "excludes": [0, 1, 2, 3],
+    "is-start": false,
+    "is-end": true
+  },
+
+  {
+    "from": "Q-004",
+    "to": "Q-0Hy",
+    "includes": [2],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+
+  {
+    "from": "Q-0Hy",
+    "to": "Q-NH-statements",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+
+  {
+    "from": "Q-NH-statements",
+    "to": "Q-NH-last-period",
+    "includes": [0, 1, 2],
+    "excludes": [3],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-NH-last-period",
+    "to": "",
+    "to-result": "R4",
+    "includes": [0],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-NH-last-period",
+    "to": "",
+    "to-result": "R5",
+    "includes": [1],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-NH-last-period",
+    "to": "",
+    "to-result": "R6",
+    "includes": [2],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-NH-statements",
+    "to": "Q-NH-MSP",
+    "includes": [3],
+    "excludes": [0, 1, 2],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-NH-MSP",
+    "to": "Q-NH-SP",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-NH-SP",
+    "to": "Q-NH-Tell",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-NH-Tell",
+    "to": "",
+    "to-result": "RTell",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-NH-MSP",
+    "to": "Q-NH-MRP",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-NH-MRP",
+    "to": "",
+    "to-result": "R1",
+    "includes": [0, 1, 2, 3],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageLessThan",
+      "params": [45]
+    }
+  },
+  {
+    "from": "Q-NH-MRP",
+    "to": "",
+    "to-result": "R2",
+    "includes": [0, 1, 2, 3],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [44]
+    }
+  },
+  {
+    "from": "Q-NH-MRP",
+    "to": "",
+    "to-result": "R2",
+    "includes": [4],
+    "excludes": [0, 1, 2, 3],
+    "is-start": false,
+    "is-end": true
+  },
+
+  {
+    "from": "Q-0Hy",
+    "to": "Q-OvHy",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+
+  {
+    "from": "Q-OvHy",
+    "to": "Q-OvIn-PeHy",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvIn-PeHy",
+    "to": "",
+    "to-result": "R7",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageLessThan",
+      "params": [53]
+    }
+  },
+  {
+    "from": "Q-OvIn-PeHy",
+    "to": "",
+    "to-result": "R9",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [52]
+    }
+  },
+
+  {
+    "from": "Q-OvIn-PeHy",
+    "to": "Q-OvIn-statements",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvIn-statements",
+    "to": "Q-OvIn-last-period",
+    "includes": [0],
+    "excludes": [1, 2, 3],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvIn-last-period",
+    "to": "",
+    "to-result": "R8",
+    "includes": [0],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvIn-last-period",
+    "to": "",
+    "to-result": "R9",
+    "includes": [1, 2],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvIn-statements",
+    "to": "Q-OvIn-medical-treatment",
+    "includes": [1],
+    "excludes": [0, 2, 3],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvIn-medical-treatment",
+    "to": "",
+    "to-result": "R9",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvIn-statements",
+    "to": "",
+    "to-result": "R7",
+    "includes": [2],
+    "excludes": [0, 1, 3],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageLessThan",
+      "params": [53]
+    }
+  },
+  {
+    "from": "Q-OvIn-statements",
+    "to": "",
+    "to-result": "R9",
+    "includes": [2],
+    "excludes": [0, 1, 3],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [52]
+    }
+  },
+  {
+    "from": "Q-OvIn-statements",
+    "to": "Q-OvIn-surgical-procedure",
+    "includes": [3],
+    "excludes": [0, 1, 2],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvIn-surgical-procedure",
+    "to": "",
+    "to-result": "R7",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageLessThan",
+      "params": [53]
+    }
+  },
+  {
+    "from": "Q-OvIn-surgical-procedure",
+    "to": "",
+    "to-result": "R9",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true,
+    "calculation": {
+      "func": "ageGreaterThan",
+      "params": [52]
+    }
+  },
+  {
+    "from": "Q-OvIn-surgical-procedure",
+    "to": "Q-OvIn-Tell",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvIn-Tell",
+    "to": "",
+    "to-result": "RTell",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+
+  {
+    "from": "Q-OvHy",
+    "to": "Q-OvOut-PeHy",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-PeHy",
+    "to": "Q-OvOut-ovaries-removal",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-ovaries-removal",
+    "to": "",
+    "to-result": "R10",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-ovaries-removal",
+    "to": "",
+    "to-result": "R11",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-PeHy",
+    "to": "Q-OvOut-statements",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-statements",
+    "to": "Q-OvOut-last-period",
+    "includes": [0],
+    "excludes": [],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-last-period",
+    "to": "",
+    "to-result": "R10",
+    "includes": [0, 1],
+    "excludes": [2],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-last-period",
+    "to": "",
+    "to-result": "R11",
+    "includes": [2],
+    "excludes": [0, 1],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-statements",
+    "to": "Q-OvOut-medical-treatment",
+    "includes": [1],
+    "excludes": [],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-medical-treatment",
+    "to": "",
+    "to-result": "R10",
+    "includes": [0, 1],
+    "excludes": [2],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-medical-treatment",
+    "to": "",
+    "to-result": "R11",
+    "includes": [2],
+    "excludes": [0, 1],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-statements",
+    "to": "",
+    "to-result": "R10",
+    "includes": [2],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-statements",
+    "to": "Q-OvOut-SP",
+    "includes": [3],
+    "excludes": [],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-SP",
+    "to": "",
+    "to-result": "R10",
+    "includes": [0],
+    "excludes": [1],
+    "is-start": false,
+    "is-end": true
+  },
+  {
+    "from": "Q-OvOut-SP",
+    "to": "Q-OvOut-Tell",
+    "includes": [1],
+    "excludes": [0],
+    "is-start": false,
+    "is-end": false
+  },
+  {
+    "from": "Q-OvOut-Tell",
+    "to": "",
+    "to-result": "RTell",
+    "includes": [],
+    "excludes": [],
+    "is-start": false,
+    "is-end": true
   }
 ]
