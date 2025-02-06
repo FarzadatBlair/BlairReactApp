@@ -3,9 +3,9 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs/promises';
 import path from 'path';
 
-// Load environment variables
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+// Load environment variables safely
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
   throw new Error('Missing Supabase environment variables. Check .env file.');
@@ -19,154 +19,98 @@ const QUESTIONS_FILE_PATH = path.join(
   'public/data/questions.json',
 );
 
+// Type Definitions
+interface Question {
+  id: string;
+  category: string;
+  title: string;
+  type: string;
+  options: Option[];
+}
+
+interface Option {
+  label: string;
+  special?: 'free-text' | 'none-above' | 'not-special';
+}
+
 const syncQuestionsToSupabase = async () => {
-  let hasError = false; // Track if any errors occur
+  console.log(`🚀 Starting data synchronization...`);
+  const startTime = Date.now();
 
   try {
+    console.log(`📂 Reading questions from file: ${QUESTIONS_FILE_PATH}`);
     const jsonData = await fs.readFile(QUESTIONS_FILE_PATH, 'utf-8');
-    const questions = JSON.parse(jsonData);
+    const questions: Question[] = JSON.parse(jsonData);
+    console.log(`✅ Loaded ${questions.length} questions from JSON file.`);
 
-    for (const question of questions) {
-      // Check if the question already exists in Supabase
-      const { data: existingQuestion, error: fetchError } = await supabase
+    // Prepare upsert data for questions
+    const questionRecords = questions.map((question) => ({
+      id: question.id,
+      category: question.category,
+      title: question.title,
+      type: question.type,
+      updated_at: new Date(),
+      created_at: new Date(), // `upsert` ensures `created_at` is only set on insert
+    }));
+
+    console.log(
+      `🔄 Upserting ${questionRecords.length} questions into Supabase...`,
+    );
+    const { error: questionError } = await supabase
+      .schema('menopause_assessment')
+      .from('questions')
+      .upsert(questionRecords, { onConflict: 'id' });
+
+    if (questionError) {
+      throw new Error(`❌ Error upserting questions: ${questionError.message}`);
+    }
+    console.log(`✅ Questions successfully synced to Supabase.`);
+
+    // Prepare upsert data for question options
+    const optionRecords: {
+      question_id: string;
+      sequence: number;
+      label: string;
+      special: 'free-text' | 'none-above' | 'not-special';
+      updated_at: Date;
+      created_at: Date;
+    }[] = [];
+
+    console.log(`📦 Processing question options...`);
+    questions.forEach((question) => {
+      question.options.forEach((option, index) => {
+        optionRecords.push({
+          question_id: question.id,
+          sequence: index + 1, // Ensure sequence is assigned correctly
+          label: option.label,
+          special: option.special || 'not-special',
+          updated_at: new Date(),
+          created_at: new Date(),
+        });
+      });
+    });
+
+    console.log(
+      `🔄 Upserting ${optionRecords.length} question options into Supabase...`,
+    );
+    if (optionRecords.length > 0) {
+      const { error: optionError } = await supabase
         .schema('menopause_assessment')
-        .from('questions')
-        .select('id')
-        .eq('id', question.id)
-        .single();
+        .from('question_options')
+        .upsert(optionRecords, { onConflict: 'question_id, label' });
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error(
-          `❌ Error fetching question ${question.id}: ${fetchError.message}`,
-        );
-        hasError = true;
-        continue;
-      }
-
-      if (existingQuestion) {
-        // Update existing question
-        const { error: updateError } = await supabase
-          .schema('menopause_assessment')
-          .from('questions')
-          .update({
-            category: question.category,
-            title: question.title,
-            type: question.type,
-            updated_at: new Date(),
-          })
-          .eq('id', existingQuestion.id);
-
-        if (updateError) {
-          console.error(
-            `❌ Error updating question ${question.id}: ${updateError.message}`,
-          );
-          hasError = true;
-          continue;
-        }
-      } else {
-        // Insert new question
-        const { error: insertError } = await supabase
-          .schema('menopause_assessment')
-          .from('questions')
-          .insert([
-            {
-              id: question.id,
-              category: question.category,
-              title: question.title,
-              type: question.type,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ]);
-
-        if (insertError) {
-          console.error(
-            `❌ Error inserting question ${question.id}: ${insertError.message}`,
-          );
-          hasError = true;
-          continue;
-        }
-      }
-
-      // **Assign sequence manually for each question**
-      let sequenceNumber = 1;
-
-      // Insert or update options for this question
-      for (const option of question.options) {
-        const specialValue = option.special as
-          | 'free-text'
-          | 'none-above'
-          | 'not-special';
-
-        const { data: existingOption, error: fetchOptionError } = await supabase
-          .schema('menopause_assessment')
-          .from('question_options')
-          .select('id')
-          .eq('question_id', question.id)
-          .eq('label', option.label)
-          .single();
-
-        if (fetchOptionError && fetchOptionError.code !== 'PGRST116') {
-          console.error(
-            `❌ Error fetching option for question ${question.id}: ${fetchOptionError.message}`,
-          );
-          hasError = true;
-          continue;
-        }
-
-        if (existingOption) {
-          // Update existing option
-          const { error: updateOptionError } = await supabase
-            .schema('menopause_assessment')
-            .from('question_options')
-            .update({
-              special: specialValue,
-              updated_at: new Date(),
-            })
-            .eq('id', existingOption.id);
-
-          if (updateOptionError) {
-            console.error(
-              `❌ Error updating option for question ${question.id}: ${updateOptionError.message}`,
-            );
-            hasError = true;
-          }
-        } else {
-          // Insert new option with manually assigned sequence number
-          const { error: insertOptionError } = await supabase
-            .schema('menopause_assessment')
-            .from('question_options')
-            .insert([
-              {
-                question_id: question.id,
-                sequence: sequenceNumber, // Assign the correct sequence number manually
-                label: option.label,
-                special: specialValue,
-                created_at: new Date(),
-                updated_at: new Date(),
-              },
-            ]);
-
-          if (insertOptionError) {
-            console.error(
-              `❌ Error inserting option for question ${question.id}: ${insertOptionError.message}`,
-            );
-            hasError = true;
-          }
-        }
-
-        sequenceNumber++; // Increment sequence manually for next option
+      if (optionError) {
+        throw new Error(`❌ Error upserting options: ${optionError.message}`);
       }
     }
+    console.log(`✅ Question options successfully synced to Supabase.`);
 
-    if (hasError) {
-      console.error('❌ Errors occurred during sync.');
-      process.exit(1); // Exit with failure status
-    } else {
-      console.log('✅ Questions and options synced successfully.');
-    }
+    const endTime = Date.now();
+    console.log(
+      `🎉 Sync completed in ${(endTime - startTime) / 1000} seconds.`,
+    );
   } catch (error) {
-    console.error('❌ Error syncing questions:', error);
+    console.error('❌ Error syncing data:', error);
     process.exit(1); // Ensure the script exits on failure
   }
 };
