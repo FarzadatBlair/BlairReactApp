@@ -64,19 +64,12 @@ const TopHeader: React.FC<TopHeaderProps> = ({ variant }) => {
       case 'Home':
         return (
           <>
-            <h2>Welcome Meredith!</h2>
+            <h2>Welcome, Meredith!</h2>
 
             <p className="text-sm text-gray-600">
               Essential resources to help you understand, manage, and navigate
               menopausal changes with confidence.
             </p>
-            <div className="mt-4">
-              <input
-                type="text"
-                placeholder="Search articles, podcasts, and interviews"
-                className="w-full rounded-md border border-gray-300 p-2"
-              />
-            </div>
           </>
         );
 
@@ -86,7 +79,7 @@ const TopHeader: React.FC<TopHeaderProps> = ({ variant }) => {
   };
 
   return (
-    <header className="bg-peach-100 rounded-md p-4 shadow-md">
+    <header className="rounded-md bg-secondary-100 p-4 shadow-md">
       {renderContent()}
     </header>
   );

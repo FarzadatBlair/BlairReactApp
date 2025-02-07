@@ -1,29 +1,24 @@
 'use client';
-import React, { act, useState } from 'react';
+
+// import React, { useState } from 'react';
 import TopHeader from '@/components/ui/TopHeader';
-import { Home, Heart, BookOpen, User, Book } from 'lucide-react';
 import NavBar from '@/components/ui/NavBar';
 
-export default function Layout({
-  children,
-  pageTitle,
-}: {
-  children: React.ReactNode;
-  pageTitle: string;
-}) {
-  const [activeTab, setActiveTab] = useState<
-    'Get Care' | 'Learn' | 'Profile' | 'Home'
-  >('Home');
+export default function Layout({ children }: { children: React.ReactNode }) {
+  // const [activeTab, setActiveTab] = useState<
+  //   'Get Care' | 'Learn' | 'Profile' | 'Home'
+  // >('Home');
+  //TODO: Implement activeTab state without passing prop into layout.tsx
 
   return (
-    <div className="flex flex-col justify-between bg-secondary-300">
+    <div className="flex flex-col justify-between">
       {/* TopHeader receives the variant */}
-      <TopHeader variant={activeTab} />
+      <TopHeader variant={'Home'} />
 
       {/* Main Content */}
-      <main className="flex-grow bg-secondary-100">{children}</main>
+      <main className="flex-grow bg-background">{children}</main>
 
-      <NavBar className="bg-secondary-100" />
+      <NavBar className="" />
     </div>
   );
 }

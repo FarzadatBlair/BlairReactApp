@@ -47,6 +47,7 @@ const MenopauseAssessment: React.FC = () => {
     };
 
     loadQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleContinue = async (answer: string[]) => {
@@ -136,6 +137,7 @@ const MenopauseAssessment: React.FC = () => {
       console.log(`Created assessment_id: ${assessment_id}`);
 
       //TODO: fix any type
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updatesByTable: Record<string, Record<string, any>> = {
         meno_assess_user_master: {},
         meno_assess_user_period: {},
