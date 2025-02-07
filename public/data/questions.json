@@ -237,8 +237,8 @@
     "id": "Q-NH-statements",
     "category": "no_hysterectomy",
     "title": "Which of these statements apply to you?",
-    "description": "Check all that apply",
-    "type": "MS",
+    "description": "",
+    "type": "MC",
     "options": [
       {
         "label": "My periods stopped naturally",
