@@ -60,6 +60,7 @@ export const fetchQuestions = async (mockDelay = 100): Promise<Question[]> => {
           description: cmsQuestion.description ?? '',
           type: cmsQuestion.type,
           options: linkedOptions,
+          column: cmsQuestion.column, // Include the column property from the JSON file
         };
       })
       .filter(Boolean) as Question[];

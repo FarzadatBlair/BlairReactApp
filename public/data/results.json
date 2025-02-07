@@ -1,15 +1,5 @@
 [
   {
-    "id": "R-POI",
-    "title": "YOU HAVE POI!!!",
-    "desc": "You're cooked.",
-    "symptoms": ["P", "O", "I"],
-    "nextSteps": [
-      "Do not get healthcare on this app.",
-      "You can still access our resources."
-    ]
-  },
-  {
     "id": "R1",
     "title": "You may be perimenopausal.",
     "desc": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",

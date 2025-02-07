@@ -11,6 +11,7 @@ export interface Question {
   description?: string;
   type: 'MC' | 'MS';
   options: Options[];
+  column: string;
 }
 
 export type CalculationFunction =

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import QuestionPage from '@components/QuestionPage';
 import { fetchQuestions } from '@/utils/fetchQuestions';
 import { Question, FlowStep } from '@/types/question';
-// import { FlowStep } from '@/types/flow';
 import { supabase } from '@utils/supabase/supabase';
 import flowData from '@data/flow.json';
 import { useQuestionStore } from '@/store/useQuestionStore';
@@ -92,7 +91,7 @@ const QuestionsPage: React.FC = () => {
         }
 
         console.log(`Final result determined: ${result}`);
-        await submitFinalResultToSupabase(result, updatedAnswers);
+        await submitUserResponses(updatedAnswers, result);
         resetAnswers();
       } catch (err) {
         console.log(`Submission error:`, err);
@@ -106,11 +105,11 @@ const QuestionsPage: React.FC = () => {
     setCurrentQuestionId(nextStep.to);
   };
 
-  const submitFinalResultToSupabase = async (
-    result: string,
+  const submitUserResponses = async (
     answers: Record<string, string[]>,
+    result: string,
   ) => {
-    console.log(`Submitting final result: ${result}`);
+    console.log(`Submitting user responses with final result: ${result}`);
 
     try {
       const { data: user, error: authError } = await supabase.auth.getUser();
@@ -120,21 +119,70 @@ const QuestionsPage: React.FC = () => {
       const user_id = user.user.id;
       console.log(`User ID for result submission: ${user_id}`);
 
-      const { error } = await supabase
-        .from('meno_assess_results') // Ensure this matches the actual table name in Supabase
-        .insert([{ user_id, result, answers: JSON.stringify(answers) }]);
+      // Create assessment entry first
+      const { data: newAssessment, error: createError } = await supabase
+        .schema('menopause_assessment')
+        .from('assess_results_user')
+        .insert([{ user_id, result_id: result }])
+        .select('id')
+        .single();
 
-      if (error) {
-        console.error('Supabase insert error:', error);
-        throw new Error(`Supabase insert failed: ${error.message}`);
+      if (createError) throw createError;
+      const assessment_id = newAssessment.id;
+
+      console.log(`Created assessment_id: ${assessment_id}`);
+
+      const updatesByTable: Record<string, Record<string, any>> = {
+        meno_assess_user_master: {},
+        meno_assess_user_period: {},
+        meno_assess_user_no_hysterectomy: {},
+        meno_assess_user_ovaries_in: {},
+        meno_assess_user_ovaries_out: {},
+      };
+
+      // Map answers to the correct table and column
+      Object.entries(answers).forEach(([questionId, answer]) => {
+        const question = questions.find((q) => q.id === questionId);
+        if (!question) return;
+
+        const { category, column, type } = question;
+        if (!category || !column) return;
+
+        const tableName = `meno_assess_user_${category.toLowerCase()}`;
+
+        // Convert MC (single-choice) answers to Boolean
+        if (type === 'MC') {
+          updatesByTable[tableName][column] = answer[0] === 'Yes';
+        } else {
+          updatesByTable[tableName][column] = answer;
+        }
+      });
+
+      // Insert Data into Supabase
+      for (const [tableName, updateData] of Object.entries(updatesByTable)) {
+        if (Object.keys(updateData).length < 2) continue; // Ensure we have data
+
+        updateData.user_id = user_id;
+        updateData.assessment_id = assessment_id;
+
+        console.log(`Inserting into ${tableName}:`, updateData);
+
+        const { error } = await supabase
+          .schema('menopause_assessment')
+          .from(`${tableName}`)
+          .insert([updateData]);
+
+        if (error) {
+          console.error(`Supabase Insert Error in ${tableName}:`, error);
+          throw error;
+        }
       }
 
-      console.log(`Final result ${result} submitted successfully.`);
-      resetAnswers();
+      console.log('User responses successfully saved.');
     } catch (err) {
-      console.error(`Failed to submit result:`, err);
+      console.error('Error submitting responses:', err);
       setSubmitError(
-        `Failed to submit result: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
+        `Failed to submit responses: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
       );
     }
   };
