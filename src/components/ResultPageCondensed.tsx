@@ -4,7 +4,7 @@ import Button from '@/components/common/Button';
 
 type Result = {
   title: string;
-  desc: string;
+  description: string;
   symptoms: string[];
   nextSteps: string[];
 };
@@ -21,7 +21,7 @@ const ResultPageCondensed: React.FC<ResultPageProps> = ({ result }) => {
         <h1>
           <span>{result.title}</span>
         </h1>
-        <p className="mt-4 text-left">{result.desc}</p>
+        <p className="mt-4 text-left">{result.description}</p>
       </div>
 
       {/* Common Symptoms */}

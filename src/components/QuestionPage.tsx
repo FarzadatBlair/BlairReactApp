@@ -1,149 +1,126 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@/components/common/Button';
 import GenericPage from './layout/GenericPage';
 import QuestionOption from '@/components/common/QuestionOption';
-import ButtonLink from '@/components/common/ButtonLink';
 import Input from '@/components/common/Input';
-import { QUESTION_TITLE_CHAR_LIMIT } from '@/utils/constants';
-import clsx from 'clsx';
+import { Options } from '@/types/question';
 
 interface QuestionPageProps {
   title: string;
-  desc?: string;
-  type: 'multiple_choice' | 'multi_select';
-  options: string[];
-  specialField?: string;
-  otherField?: boolean;
-  onContinue: (answer: any) => void;
+  description?: string;
+  type: 'MC' | 'MS';
+  options: Options[];
+  onContinue: (answer: string[]) => void;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
   title,
-  desc,
+  description,
   type,
   options,
-  specialField,
-  otherField,
   onContinue,
 }) => {
-  const [selected, setSelected] = useState<any>(
-    type === 'multi_select' ? [] : null,
-  );
+  const [selected, setSelected] = useState<string[]>([]);
   const [otherValue, setOtherValue] = useState('');
 
-  const handleOptionChange = (option: string) => {
-    if (type === 'multiple_choice') {
-      setSelected(option);
-    } else {
-      // Toggle the selection for multi-select
-      setSelected((prev: string[]) =>
-        prev.includes(option)
-          ? prev.filter((o) => o !== option)
-          : [...prev, option],
-      );
-    }
-  };
+  // Reset selections when a new question is displayed
+  useEffect(() => {
+    setSelected([]);
+    setOtherValue('');
+  }, [title]);
 
-  const handleSpecialField = () => {
-    if (type === 'multi_select') {
-      setSelected((prev: string[]) =>
-        prev.includes(specialField!)
-          ? prev.filter((o) => o !== specialField)
-          : [...prev, specialField],
-      );
-    } else {
-      setSelected(specialField);
+  const handleOptionChange = (option: string) => {
+    const optionMeta = options.find((o) => o.label === option);
+    if (!optionMeta) return;
+
+    const isNoneOption = optionMeta.special === 'none-above';
+    const isFreeTextOption = optionMeta.special === 'free-text';
+
+    // Handle single-choice (MC) questions
+    if (type === 'MC') {
+      setSelected([option]);
+      if (isFreeTextOption) setOtherValue('');
+      return;
     }
+
+    // Handle multi-select (MS) questions
+    setSelected((prev) => {
+      if (isNoneOption) {
+        return [option]; // Selecting "None of the above" clears all others
+      } else {
+        return prev.includes(option)
+          ? prev.filter((o) => o !== option) // Deselect if already selected
+          : [
+              ...prev.filter(
+                (o) =>
+                  options.find((opt) => opt.label === o)?.special !==
+                  'none-above',
+              ),
+              option,
+            ]; // Remove "None of the above" if selecting anything else
+      }
+    });
+
+    if (isFreeTextOption) setOtherValue('');
   };
 
   const handleContinue = () => {
-    const answer =
-      otherField && otherValue
-        ? type === 'multi_select'
-          ? [...selected, otherValue]
-          : otherValue
-        : selected;
-    onContinue(answer);
+    let finalAnswer = selected;
+
+    if (otherValue.trim()) {
+      finalAnswer = [
+        ...selected.filter(
+          (o) =>
+            options.find((opt) => opt.label === o)?.special !== 'free-text',
+        ),
+        otherValue,
+      ];
+    }
+
+    onContinue(finalAnswer);
   };
 
-  // Check if "Continue" button should be disabled
-  const isContinueDisabled =
-    type === 'multi_select'
-      ? selected.length === 0 && !otherValue.trim() // No options or other field selected
-      : !selected && !otherValue.trim(); // No option or other value in single-choice mode
-
   return (
-    <GenericPage>
-      {/* THE WIDTH IS 5/6 TO PREVENT AWKWARD LINE BREAKING */}
-      <div className="mb-4">
-        <h1
-          className={clsx(
-            title.length > QUESTION_TITLE_CHAR_LIMIT && 'text-[2.5rem]',
-          )}
-        >
-          {title}
-        </h1>
+    <div className="flex min-h-screen w-full flex-grow flex-col space-y-4 bg-background px-6 py-16 text-primary-900">
+      <div>
+        <h1>{title}</h1>
       </div>
-      {desc && <p>{desc}</p>}
+      {description && <p>{description}</p>}
 
-      <div className="mt-4 space-y-4">
+      <div className="flex flex-grow flex-col space-y-4">
         {options.map((option, index) => (
           <QuestionOption
             key={index}
-            option={option}
-            isSelected={
-              type === 'multi_select'
-                ? selected.includes(option)
-                : selected === option
-            }
-            isMultiSelect={type === 'multi_select'}
-            onClick={() => handleOptionChange(option)}
+            option={option.label}
+            isSelected={selected.includes(option.label)}
+            isMultiSelect={type === 'MS'}
+            onClick={() => handleOptionChange(option.label)}
           />
         ))}
 
-        {specialField && (
-          <QuestionOption
-            option={specialField}
-            isSelected={
-              type === 'multi_select'
-                ? selected.includes(specialField)
-                : selected === specialField
-            }
-            isMultiSelect={type === 'multi_select'}
-            onClick={handleSpecialField}
+        {/* Render input box only if "Other" is selected */}
+        {selected.some(
+          (o) =>
+            options.find((opt) => opt.label === o)?.special === 'free-text',
+        ) && (
+          <Input
+            type="text"
+            placeholder="Other (please specify)"
+            value={otherValue}
+            onChange={(e) => setOtherValue(e.target.value)}
           />
         )}
-
-        {otherField && (
-          <div className="mt-4">
-            <Input
-              type="text"
-              placeholder="Other (please specify)"
-              value={otherValue}
-              onChange={(e) => setOtherValue(e.target.value)}
-              className="rounded-3xl"
-            />
-          </div>
-        )}
       </div>
 
-      <div className="mt-6 flex flex-col justify-between">
-        <Button onClick={handleContinue} disabled={isContinueDisabled}>
+      <div>
+        <Button
+          onClick={handleContinue}
+          disabled={selected.length === 0 && !otherValue.trim()}
+        >
           Continue
         </Button>
-        <ButtonLink onClick={() => window.history.back()}>Go back</ButtonLink>
       </div>
-
-      <div className="mt-6 text-center text-xs text-gray-500">
-        <a href="/terms" className="hover:underline">
-          Terms of Service
-        </a>{' '}
-        |{' '}
-        <a href="/privacy" className="hover:underline">
-          Privacy Policy
-        </a>
-      </div>
-    </GenericPage>
+    </div>
   );
 };
 

@@ -1,55 +1,56 @@
 [
   {
     "id": "Q-001",
-    "category": "Master",
+    "category": "master",
     "title": "Have you ever been diagnosed with POI by a medical professional?",
     "description": "Premature ovarian insufficiency (POI) happens when your ovaries stop working before you reach 40. It affects about 1% of the female population.",
     "type": "MC",
     "options": [
       {
         "label": "Yes, a medical professional has diagnosed me with POI.",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "No, I have never been officially diagnosed with POI by a medical professional.",
-        "special": false
+        "special": "not-special"
       }
-    ]
+    ],
+    "column": "has_poi"
   },
   {
     "id": "Q-002",
-    "category": "Master",
+    "category": "master",
     "title": "What symptoms do you experience?",
     "description": "Select all that apply.",
     "type": "MS",
     "options": [
       {
         "label": "Hot flashes",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Night sweats",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Vaginal dryness or vaginal itch",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Poor sleep",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Low libido",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Brain fog",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Worsening mood, anxiety, and/or irritability",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "I get other symptoms I believe are related to menopause",
@@ -59,562 +60,586 @@
         "label": "I'm not bothered by these symptoms",
         "special": "none-above"
       }
-    ]
+    ],
+    "column": "master_symptoms"
   },
   {
     "id": "Q-002.5",
-    "category": "Master",
+    "category": "master",
     "title": "How has your sexual function changed?",
     "description": "Select all that apply.",
     "type": "MS",
     "options": [
       {
         "label": "Low libido (i.e., lower interest in sexual activity)",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Pain with sex",
-        "special": false
+        "special": "not-special"
       },
       {
         "label": "Difficulty reaching orgasm",
-        "special": false
+        "special": "not-special"
       }
-    ]
+    ],
+    "column": "sexual_function_issues"
   },
-
   {
     "id": "Q-003",
-    "category": "Master",
+    "category": "master",
     "title": "Which treatments are you getting for menopausal symptoms? ",
     "description": "Select all that apply.",
     "type": "MS",
     "options": [
       {
-        "label": "I use estrogen, progesterone and/or testosterone therapy I can get from a local drug store",
-        "special": false
+        "label": "I use estrogen, progesterone, and/or testosterone therapy that I can get from a local drug store.",
+        "special": "not-special"
       },
       {
-        "label": "I use compounded hormone therapy",
-        "special": false
+        "label": "I use compounded hormone therapy.",
+        "special": "not-special"
       },
       {
-        "label": "I use treatment without hormones (i.e., non-hormonal therapy)",
-        "special": false
+        "label": "I use treatment without hormones (i.e. non-hormonal therapy).",
+        "special": "not-special"
+      },
+      {
+        "label": "I am not using any treatment for my menopausal symptoms.",
+        "special": "none-above"
+      }
+    ],
+    "column": "treatment_status"
+  },
+  {
+    "id": "Q-004",
+    "category": "period",
+    "title": "Do you still get a period?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes, I still get periods.",
+        "special": "not-special"
+      },
+      {
+        "label": "No, I don't get periods anymore.",
+        "special": "not-special"
+      }
+    ],
+    "column": "has_period"
+  },
+  {
+    "id": "Q-0PR",
+    "category": "period",
+    "title": "Are your periods regular?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "period_regular"
+  },
+  {
+    "id": "Q-spotting",
+    "category": "period",
+    "title": "Do you experience spotting between periods and/or particularly heavy bleeding with your periods?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "spotting"
+  },
+  {
+    "id": "Q-0MR",
+    "category": "period",
+    "title": "Do you use medication to regulate them? ",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "uses_medication"
+  },
+  {
+    "id": "Q-MRP",
+    "category": "period",
+    "title": "Which medication do you use to regulate your periods?",
+    "description": "",
+    "type": "MS",
+    "options": [
+      {
+        "label": "Lupron, Orilissa, Myfembree",
+        "special": "not-special"
+      },
+      {
+        "label": "Visanne",
+        "special": "not-special"
+      },
+      {
+        "label": "Mirena IUD",
+        "special": "not-special"
+      },
+      {
+        "label": "Birth control pill, patch or ring",
+        "special": "not-special"
+      },
+      {
+        "label": "Hormone Replacement Therapy/Menopausal Hormone Therapy",
+        "special": "not-special"
+      }
+    ],
+    "column": "medication_to_regulate"
+  },
+
+  {
+    "id": "Q-0Hy",
+    "category": "no_hysterectomy",
+    "title": "Have you had a hysterectomy? (i.e., removal of your uterus)",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "had_hysterectomy"
+  },
+
+  {
+    "id": "Q-NH-statements",
+    "category": "no_hysterectomy",
+    "title": "Which of these statements apply to you?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "My periods stopped naturally",
+        "special": "not-special"
+      },
+      {
+        "label": "My periods stopped because my ovaries were removed",
+        "special": "not-special"
+      },
+      {
+        "label": "My periods stopped because I received a medical treatment that put me into menopause (e.g., chemotherapy, radiation therapy)",
+        "special": "not-special"
       },
       {
         "label": "None of the above",
         "special": "none-above"
       }
-      ]
-    },
-    {
-      "id": "Q-004",
-      "category": "",
-      "title": "Do you still get a period?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    },
-    {
-      "id": "Q-0PR",
-      "category": "Period",
-      "title": "Are your periods regular?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
+    ],
+    "column": "nh_statements"
+  },
+  {
+    "id": "Q-NH-last-period",
+    "category": "no_hysterectomy",
+    "title": "When was your last period?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Less than 1 year ago",
+        "special": "not-special"
+      },
+      {
+        "label": "1-10 years ago",
+        "special": "not-special"
+      },
 
-      ]
-    },
-    {
-      "id": "Q-spotting",
-      "category": "Period",
-      "title": "Do you experience spotting between periods and/or particularly heavy bleeding with your periods?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
+      {
+        "label": "More than 10 years ago",
+        "special": "not-special"
+      }
+    ],
+    "column": "last_period"
+  },
+  {
+    "id": "Q-NH-MSP",
+    "category": "no_hysterectomy",
+    "title": "Do you take medication that stops your period?",
+    "description": "e.g., Mirena IUD, birth control pill, Lupron, Orilissa, Myfembree, Hormone Replacement Therapy (HRT)/Menopausal Hormone Therapy (MHT))",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "takes_meds"
+  },
+  {
+    "id": "Q-NH-SP",
+    "category": "no_hysterectomy",
+    "title": "Did you have a surgical procedure",
+    "description": "(i.e., endometrial ablation) that stopped your periods?",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "had_surgery"
+  },
+  {
+    "id": "Q-NH-Tell",
+    "category": "no_hysterectomy",
+    "title": "Tell us about your periods and when they stopped: ",
+    "description": "You are no longer getting a period, don’t take medication that stops your periods. You also didn’t have a surgical procedure to stop your periods.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Other",
+        "special": "free-text"
+      }
+    ],
+    "column": "other_tell"
+  },
+  {
+    "id": "Q-NH-MRP",
+    "category": "no_hysterectomy",
+    "title": "Which medication do you use to regulate your periods?",
+    "description": "",
+    "type": "MS",
+    "options": [
+      {
+        "label": "Lupron, Orilissa, Myfembree",
+        "special": "not-special"
+      },
+      {
+        "label": "Visanne",
+        "special": "not-special"
+      },
+      {
+        "label": "Mirena IUD",
+        "special": "not-special"
+      },
+      {
+        "label": "Birth control pill, patch or ring",
+        "special": "not-special"
+      },
+      {
+        "label": "Hormone Replacement Therapy/Menopausal Hormone Therapy",
+        "special": "not-special"
+      }
+    ],
+    "column": "medication_to_regulate"
+  },
+  {
+    "id": "Q-OvHy",
+    "category": "ovaries_in",
+    "title": "Did you have your ovaries removed at the time of your hysterectomy?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes (ovaries out)",
+        "special": "not-special"
+      },
+      {
+        "label": "No (ovaries in)",
+        "special": "not-special"
+      }
+    ],
+    "column": "ovaries_removed"
+  },
+  {
+    "id": "Q-OvIn-PeHy",
+    "category": "ovaries_in",
+    "title": "Were you getting periods leading up to your hysterectomy?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "had_periods"
+  },
+  {
+    "id": "Q-OvIn-statements",
+    "category": "ovaries_in",
+    "title": "Which of these statements apply to you? ",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "My periods stopped naturally before my hysterectomy",
+        "special": "not-special"
+      },
+      {
+        "label": "My periods stopped because of a medical treatment that put me into menopause (e.g., chemotherapy, radiation therapy)",
+        "special": "not-special"
+      },
+      {
+        "label": "My periods stopped because I was using a medication that stopped them leading up to my hysterectomy  (e.g., birth control, Mirena IUD, Myfembree, Lupron, Orilissa, Visanne)",
+        "special": "not-special"
+      },
+      {
+        "label": "None of the above",
+        "special": "none-above"
+      }
+    ],
+    "column": "ov_in_statements"
+  },
+  {
+    "id": "Q-OvIn-last-period",
+    "category": "ovaries_in",
+    "title": "When was your last period?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Less than 1 year ago",
+        "special": "not-special"
+      },
+      {
+        "label": "1-10 years ago",
+        "special": "not-special"
+      },
 
-      ]
-    },
-    {
-      "id": "Q-0MR",
-      "category": "Period",
-      "title": "Do you use medication to regulate them? ",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    },
-    {
-      "id": "Q-MRP",
-      "category": "Period",
-      "title": "Which medication do you use to regulate your periods?",
-      "description": "",
-      "type": "MS",
-      "options": [
-        {
-          "label": "Lupron, Orilissa, Myfembree",
-          "special": false
-        },
-        {
-          "label": "Visanne",
-          "special": false
-        },
-        {
-          "label": "Mirena IUD",
-          "special": false
-        },
-        {
-          "label": "Birth control pill, patch or ring",
-          "special": false
-        },
-        {
-          "label": "Hormone Replacement Therapy/Menopausal Hormone Therapy",
-          "special": false
-        }
-      ]
-    },
+      {
+        "label": "More than 10 years ago",
+        "special": "not-special"
+      }
+    ],
+    "column": "last_period"
+  },
+  {
+    "id": "Q-OvIn-medical-treatment",
+    "category": "ovaries_in",
+    "title": "When was the medical treatment (e.g., chemotherapy, radiation therapy)  that stopped your periods and put  you into menopause?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Less than 1 year ago",
+        "special": "not-special"
+      },
+      {
+        "label": "1-10 years ago",
+        "special": "not-special"
+      },
 
+      {
+        "label": "More than 10 years ago",
+        "special": "not-special"
+      }
+    ],
+    "column": "medical_treatment"
+  },
+  {
+    "id": "Q-OvIn-surgical-procedure",
+    "category": "ovaries_in",
+    "title": "Did you have a surgical procedure (e.g.,  endometrial ablation, uterine artery embolization) that stopped your periods?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "had_surgery"
+  },
+  {
+    "id": "Q-OvIn-Tell",
+    "category": "ovaries_in",
+    "title": " Tell us about your periods and when they stopped: ",
+    "description": "You have told us the following about yourself: \nYou have had a hysterectomy\nYou were not getting periods before your hysterectomy\nYou haven’t received any treatments (medications or surgery)  that stopped your periods \nIf any of this is incorrect, please re-take the assessment",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Other",
+        "special": "free-text"
+      }
+    ],
+    "column": "other_tell"
+  },
+  {
+    "id": "Q-OvOut-PeHy",
+    "category": "ovaries_out",
+    "title": "Were you getting periods leading up to your hysterectomy and removal of your ovaries? ",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "had_periods"
+  },
+  {
+    "id": "Q-OvOut-ovaries-removal",
+    "category": "ovaries_out",
+    "title": "How long ago was your hysterectomy and removal of your ovaries?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "< 10 years ago",
+        "special": "not-special"
+      },
+      {
+        "label": "> 10 years ago",
+        "special": "not-special"
+      }
+    ],
+    "column": "ov_removal_time"
+  },
+  {
+    "id": "Q-OvOut-statements",
+    "category": "ovaries_out",
+    "title": "Which of these statements apply to you? ",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "My periods stopped naturally before my hysterectomy",
+        "special": "not-special"
+      },
+      {
+        "label": "My periods stopped because of a medical treatment that put me into menopause (e.g., chemotherapy, radiation therapy)",
+        "special": "not-special"
+      },
+      {
+        "label": "My periods stopped because I was using a medication that stopped them leading up to my hysterectomy  (e.g., birth control, Mirena IUD, Myfembree, Lupron, Orilissa, Visanne)",
+        "special": "not-special"
+      },
+      {
+        "label": "None of the above",
+        "special": "none-above"
+      }
+    ],
+    "column": "ov_out_statements"
+  },
+  {
+    "id": "Q-OvOut-last-period",
+    "category": "ovaries_out",
+    "title": "When was your last period?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Less than 1 year ago",
+        "special": "not-special"
+      },
+      {
+        "label": "1-10 years ago",
+        "special": "not-special"
+      },
 
-    {
-      "id": "Q-0Hy",
-      "category": "",
-      "title": "Have you had a hysterectomy? (i.e., removal of your uterus)",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    },
+      {
+        "label": "More than 10 years ago",
+        "special": "not-special"
+      }
+    ],
+    "column": "last_period"
+  },
+  {
+    "id": "Q-OvOut-medical-treatment",
+    "category": "ovaries_out",
+    "title": "When was the medical treatment (e.g., chemotherapy, radiation therapy)  that stopped your periods and put  you into menopause?",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Less than 1 year ago",
+        "special": "not-special"
+      },
+      {
+        "label": "1-10 years ago",
+        "special": "not-special"
+      },
 
-    {
-      "id": "Q-NH-statements",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "Which of these statements apply to you?",
-      "description": "Check all that apply",
-      "type": "MS",
-      "options": [
-        {
-          "label": "My periods stopped naturally",
-          "special": false
-        },
-        {
-          "label": "My periods stopped because my ovaries were removed",
-          "special": false
-        },
-        {
-          "label": "My periods stopped because I received a medical treatment that put me into menopause (e.g., chemotherapy, radiation therapy)",
-          "special": false
-        },
-        {
-          "label": "None of the above",
-          "special": "none-above"
-        }
-      ]
-    }, 
-    {
-      "id": "Q-NH-last-period",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "When was your last period?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Less than 1 year ago",
-          "special": false
-        },
-        {
-          "label": "1-10 years ago",
-          "special": false
-        },
-
-        {
-          "label": "More than 10 years ago",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-NH-MSP",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "Do you take medication that stops your period?",
-      "description": "e.g., Mirena IUD, birth control pill, Lupron, Orilissa, Myfembree, Hormone Replacement Therapy (HRT)/Menopausal Hormone Therapy (MHT))",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-NH-SP",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "Did you have a surgical procedure",
-      "description": "(i.e., endometrial ablation) that stopped your periods?",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-NH-Tell",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "Tell us about your periods and when they stopped: ",
-      "description": "You are no longer getting a period, don’t take medication that stops your periods. You also didn’t have a surgical procedure to stop your periods.",
-      "type": "MC",
-      "options": [
-        {
-          "label": "",
-          "special": "free-text"
-        }
-      ]
-    }, 
-    {
-      "id": "Q-NH-MRP",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "Which medication do you use to regulate your periods?",
-      "description": "",
-      "type": "MS",
-      "options": [
-        {
-          "label": "Lupron, Orilissa, Myfembree",
-          "special": false
-        },
-        {
-          "label": "Visanne",
-          "special": false
-        },
-        {
-          "label": "Mirena IUD",
-          "special": false
-        },
-        {
-          "label": "Birth control pill, patch or ring",
-          "special": false
-        },
-        {
-          "label": "Hormone Replacement Therapy/Menopausal Hormone Therapy",
-          "special": false
-        }
-      ]
-    },
-    {
-      "id": "Q-OvHy",
-      "category": "",
-      "title": "Did you have your ovaries removed at the time of your hysterectomy?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes (ovaries out)",
-          "special": false
-        },
-        {
-          "label": "No (ovaries in)",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvIn-PeHy",
-      "category": "Ovaries In",
-      "title": "Were you getting periods leading up to your hysterectomy?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvIn-statements",
-      "category": "Ovaries In",
-      "title": "Which of these statements apply to you? ",
-      "description": "",
-      "type": "MC",
-      "options": [
-          {
-            "label": "My periods stopped naturally before my hysterectomy",
-            "special": false
-          },
-          {
-            "label": "My periods stopped because of a medical treatment that put me into menopause (e.g., chemotherapy, radiation therapy)",
-            "special": false
-          },
-          {
-            "label": "My periods stopped because I was using a medication that stopped them leading up to my hysterectomy  (e.g., birth control, Mirena IUD, Myfembree, Lupron, Orilissa, Visanne)",
-            "special": false
-          },
-          {
-            "label": "None of the above",
-            "special": "none-above"
-          }
-        ]
-    }, 
-    {
-      "id": "Q-OvIn-last-period",
-      "category": "Ovaries In",
-      "title": "When was your last period?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Less than 1 year ago",
-          "special": false
-        },
-        {
-          "label": "1-10 years ago",
-          "special": false
-        },
-
-        {
-          "label": "More than 10 years ago",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvIn-medical-treatment",
-      "category": "Ovaries In",
-      "title": "When was the medical treatment (e.g., chemotherapy, radiation therapy)  that stopped your periods and put  you into menopause?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Less than 1 year ago",
-          "special": false
-        },
-        {
-          "label": "1-10 years ago",
-          "special": false
-        },
-
-        {
-          "label": "More than 10 years ago",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvIn-surgical-procedure",
-      "category": "Ovaries In",
-      "title": "Did you have a surgical procedure (e.g.,  endometrial ablation, uterine artery embolization) that stopped your periods?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvIn-Tell",
-      "category": "Ovaries In",
-      "title": " Tell us about your periods and when they stopped: ",
-      "description": "You have told us the following about yourself: \nYou have had a hysterectomy\nYou were not getting periods before your hysterectomy\nYou haven’t received any treatments (medications or surgery)  that stopped your periods \nIf any of this is incorrect, please re-take the assessment",
-      "type": "MC",
-      "options": [
-        {
-          "label": "",
-          "special": "free-text"
-        }
-
-      ]
-    },
-    {
-      "id": "Q-OvOut-PeHy",
-      "category": "Ovaries Out",
-      "title": "Were you getting periods leading up to your hysterectomy and removal of your ovaries? ",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": "false"
-        },
-        {
-          "label": "No",
-          "special": "false"
-        }
-      ]
-    },
-    {
-      "id": "Q-OvOut-ovaries-removal",
-      "category": "Ovaries Out",
-      "title": "How long ago was your hysterectomy and removal of your ovaries?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "< 10 years ago",
-          "special": "false"
-        },
-        {
-          "label": "> 10 years ago",
-          "special": "false"
-        }
-      ]
-    },
-    {
-      "id": "Q-OvOut-statements",
-      "category": "Ovaries Out",
-      "title": "Which of these statements apply to you? ",
-      "description": "",
-      "type": "MS",
-      "options": [
-          {
-            "label": "My periods stopped naturally before my hysterectomy",
-            "special": false
-          },
-          {
-            "label": "My periods stopped because of a medical treatment that put me into menopause (e.g., chemotherapy, radiation therapy)",
-            "special": false
-          },
-          {
-            "label": "My periods stopped because I was using a medication that stopped them leading up to my hysterectomy  (e.g., birth control, Mirena IUD, Myfembree, Lupron, Orilissa, Visanne)",
-            "special": false
-          },
-          {
-            "label": "None of the above",
-            "special": "none-above"
-          }
-        ]
-    }, 
-    {
-      "id": "Q-OvOut-last-period",
-      "category": "Ovaries Out",
-      "title": "When was your last period?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Less than 1 year ago",
-          "special": false
-        },
-        {
-          "label": "1-10 years ago",
-          "special": false
-        },
-
-        {
-          "label": "More than 10 years ago",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvOut-medical-treatment",
-      "category": "Ovaries Out",
-      "title": "When was the medical treatment (e.g., chemotherapy, radiation therapy)  that stopped your periods and put  you into menopause?",
-      "description": "",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Less than 1 year ago",
-          "special": false
-        },
-        {
-          "label": "1-10 years ago",
-          "special": false
-        },
-
-        {
-          "label": "More than 10 years ago",
-          "special": false
-        }
-      ]
-    }, 
-    {
-      "id": "Q-OvOut-SP",
-      "category": "No Hysterectomy (Path 1)",
-      "title": "Did you have a surgical procedure that stopped your periods before your hysterectomy?",
-      "description": "(e.g.,  endometrial ablation, uterine artery embolization)",
-      "type": "MC",
-      "options": [
-        {
-          "label": "Yes",
-          "special": false
-        },
-        {
-          "label": "No",
-          "special": false
-        }
-      ]
-    },
-    {
-      "id": "Q-OvOut-Tell",
-      "category": "Ovaries Out",
-      "title": " Tell us about your periods and when they stopped: ",
-      "description": "You have told us the following about yourself: \nYou have had a hysterectomy\nYou were not getting periods before your hysterectomy \nYou have not received any treatments (medications or surgery) that stopped your periods \nIf any of this is incorrect, please re-take the assessment",
-      "type": "MC",
-      "options": [
-        {
-          "label": "",
-          "special": "free-text"
-        }
-      ]
-    } 
+      {
+        "label": "More than 10 years ago",
+        "special": "not-special"
+      }
+    ],
+    "column": "medical_treatment"
+  },
+  {
+    "id": "Q-OvOut-SP",
+    "category": "no_hysterectomy",
+    "title": "Did you have a surgical procedure that stopped your periods before your hysterectomy?",
+    "description": "(e.g.,  endometrial ablation, uterine artery embolization)",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ],
+    "column": "had_surgery"
+  },
+  {
+    "id": "Q-OvOut-Tell",
+    "category": "ovaries_out",
+    "title": " Tell us about your periods and when they stopped: ",
+    "description": "You have told us the following about yourself: \nYou have had a hysterectomy\nYou were not getting periods before your hysterectomy \nYou have not received any treatments (medications or surgery) that stopped your periods \nIf any of this is incorrect, please re-take the assessment",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Other",
+        "special": "free-text"
+      }
+    ],
+    "column": "other_tell"
+  }
 ]

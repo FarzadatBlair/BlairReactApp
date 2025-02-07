@@ -1,18 +1,73 @@
-import { Question } from '@/types/question';
+import { supabase } from './supabase/supabase';
+import { Question, Options } from '@/types/question';
 
-export const fetchQuestions = async (): Promise<Question[]> => {
-  const minDelay = 100; // Minimum delay in milliseconds
-  const maxDelay = 500; // Maximum delay in milliseconds
+export const fetchQuestions = async (mockDelay = 100): Promise<Question[]> => {
+  try {
+    // 1. Fetch only question IDs from Supabase
+    const { data: questionsData, error: questionsError } = await supabase
+      .schema('menopause_assessment')
+      .from('questions')
+      .select('id');
 
-  // Simulate network delay
-  const delay = Math.random() * (maxDelay - minDelay) + minDelay;
+    if (questionsError) {
+      console.error('❌ Error fetching questions:', questionsError);
+      throw new Error('Failed to fetch questions');
+    }
 
-  await new Promise((resolve) => setTimeout(resolve, delay)); // Delay for the simulated time
+    // 2. Fetch only necessary option data from Supabase
+    const { data: optionsData, error: optionsError } = await supabase
+      .schema('menopause_assessment')
+      .from('question_options')
+      .select('question_id, sequence, label, special')
+      .order('question_id', { ascending: true })
+      .order('sequence', { ascending: true });
 
-  // Fetch questions from the JSON file
-  const res = await fetch('/data/questions.json');
-  if (!res.ok) {
-    throw new Error('Failed to fetch questions');
+    if (optionsError) {
+      console.error('❌ Error fetching options:', optionsError);
+      throw new Error('Failed to fetch options');
+    }
+
+    // 3. Fetch questions.json as a network request
+    const response = await fetch('/data/questions.json');
+    if (!response.ok) throw new Error('Failed to fetch questions.json');
+
+    const cmsQuestions: Question[] = await response.json();
+
+    // Simulate network latency
+    await new Promise((resolve) => setTimeout(resolve, mockDelay));
+
+    // 4. Merge CMS Data with Supabase Data
+    const enrichedQuestions: Question[] = questionsData
+      .map(({ id }) => {
+        const cmsQuestion = cmsQuestions.find((q) => q.id === id);
+
+        if (!cmsQuestion) {
+          console.warn(`⚠️ Question ID ${id} not found in CMS. Skipping.`);
+          return null;
+        }
+
+        const linkedOptions: Options[] = optionsData
+          .filter((opt) => opt.question_id === id)
+          .map(({ label, special }) => ({
+            label,
+            special: special as 'free-text' | 'none-above' | 'not-special',
+          }));
+
+        return {
+          id,
+          category: cmsQuestion.category,
+          title: cmsQuestion.title,
+          description: cmsQuestion.description ?? '',
+          type: cmsQuestion.type,
+          options: linkedOptions,
+          column: cmsQuestion.column, // Include the column property from the JSON file
+        };
+      })
+      .filter(Boolean) as Question[];
+
+    return enrichedQuestions;
+  } catch (error) {
+    console.error('❌ Error in fetchQuestions:', error);
+    throw new Error('Failed to fetch and merge questions');
   }
-  return res.json();
 };

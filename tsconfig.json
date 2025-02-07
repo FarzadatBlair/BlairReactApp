@@ -27,6 +27,8 @@
       "@data/*": ["./public/data/*"],
       "@types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"],
+      "@store/*": ["./src/store/*"],
+      "@assets/*": ["./src/assets/*"],
       "@supabase/*": ["./src/@supabase/supabase/*"]
     }
   },

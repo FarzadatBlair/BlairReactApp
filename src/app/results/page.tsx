@@ -1,29 +1,112 @@
 'use client';
-import React from 'react';
-import resultsData from '@data/results.json';
-import GenericPage from '@components/layout/GenericPage';
+import React, { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { supabase } from '@utils/supabase/supabase';
 import Card from '@/components/ui/Card';
 import CardSections from '@/components/ui/CardSections';
 import { Clipboard, ThumbsUp } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import menopauseGraphic from '@assets/img/graphic.png';
+import Button from '@/components/common/Button';
+import { fetchResults } from '@/utils/fetchResults';
 
-const Page: React.FC = () => {
-  // Dynamically fetch the first result for now
-  const result = resultsData[0];
+const ResultsPage: React.FC = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const [result, setResult] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLatestResult = async () => {
+      try {
+        const { data: user, error: authError } = await supabase.auth.getUser();
+        if (authError || !user?.user?.id)
+          throw new Error('User not authenticated');
+
+        const user_id = user.user.id;
+
+        // Get the latest menopause assessment for the user
+        const { data: latestAssessment, error: fetchError } = await supabase
+          .schema('menopause_assessment')
+          .from('assess_results_user')
+          .select('result_id')
+          .eq('user_id', user_id)
+          .order('created_at', { ascending: false }) // Get latest assessment
+          .limit(1)
+          .single();
+
+        if (fetchError) {
+          if (fetchError.code === 'PGRST116') {
+            setError('No assessment found.');
+            return;
+          }
+          throw fetchError;
+        }
+
+        if (!latestAssessment?.result_id) {
+          setError('No assessment result found.');
+          return;
+        }
+
+        const resultId = latestAssessment.result_id;
+        console.log(`User ${user_id} latest result ID: ${resultId}`);
+
+        // Fetch the result details
+        const fetchedResult = await fetchResults(resultId);
+        if (!fetchedResult) {
+          setError(`Invalid result ID: ${resultId}`);
+          return;
+        }
+
+        setResult(fetchedResult);
+      } catch (err) {
+        console.error('Error fetching latest result:', err);
+        setError('Failed to fetch your assessment results.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestResult();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="flex h-screen items-center justify-center text-primary-900">
+        Loading results...
+      </div>
+    );
+
+  if (error) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center space-y-6 px-6 text-primary-900">
+        <h1 className="text-[2rem]">Oops! {error}</h1>
+        <p className="text-center">
+          {error === 'No assessment found.'
+            ? 'It looks like you haven’t completed the menopause assessment yet.'
+            : 'There was an issue retrieving your result.'}
+        </p>
+        <Button onClick={() => router.push('/menopause-assessment')}>
+          Take the Assessment
+        </Button>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className="w-full bg-secondary-100 py-9 text-center">
-        <h1>Assessment complete!</h1>
+    <div className="flex h-screen flex-col">
+      <div className="w-full bg-secondary-100 px-6 pb-6 pt-14">
+        <h1 className="text-[2.5rem]">Assessment complete!</h1>
       </div>
-      <GenericPage>
-        <div className="flex flex-col space-y-8">
+
+      <div className="flex flex-grow flex-col justify-between bg-background px-6 pb-16 pt-6 text-primary-900">
+        <div className="space-y-8">
           <Card>
             <CardSections
               title="Your Menopause Journey"
-              bodytext={result.desc}
-              custom={<img src="./img/graphic.png" alt="Doctor" />}
+              bodytext={result.description}
+              custom={<Image src={menopauseGraphic} alt="Menopause graphic" />}
             />
           </Card>
 
@@ -43,15 +126,11 @@ const Page: React.FC = () => {
             />
           </Card>
         </div>
-        <button
-          className="mt-4 w-full rounded-lg border border-[#6d4c41] bg-white px-4 py-2 font-semibold text-[#6d4c41] hover:bg-[#fbe9e7]"
-          onClick={() => router.push('/')}
-        >
-          Take me home
-        </button>
-      </GenericPage>
-    </>
+
+        <Button onClick={() => router.push('/')}>Take me home</Button>
+      </div>
+    </div>
   );
 };
 
-export default Page;
+export default ResultsPage;
