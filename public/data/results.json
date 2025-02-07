@@ -2,7 +2,7 @@
   {
     "id": "R1",
     "title": "You may be perimenopausal.",
-    "desc": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
+    "description": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -19,7 +19,7 @@
   {
     "id": "R2",
     "title": "You are likely in perimenopause or menopause.",
-    "desc": "Based on your answers, you are likely in perimenopause or menopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
+    "description": "Based on your answers, you are likely in perimenopause or menopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -36,7 +36,7 @@
   {
     "id": "R3",
     "title": "You may be in perimenopause but have abnormal bleeding. ",
-    "desc": "Based on your answers, you are likely in perimenopause, the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. Before seeking care from a specialist on our platform, it is important to have abnormal bleeding investigated by your doctor.",
+    "description": "Based on your answers, you are likely in perimenopause, the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. Before seeking care from a specialist on our platform, it is important to have abnormal bleeding investigated by your doctor.",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -52,7 +52,7 @@
   {
     "id": "R4",
     "title": "You are in perimenopause.",
-    "desc": "Based on your answers, you are likely in perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
+    "description": "Based on your answers, you are likely in perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -69,7 +69,7 @@
   {
     "id": "R5",
     "title": "You are in menopause.",
-    "desc": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms and periods to stop. ",
+    "description": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms and periods to stop. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -86,7 +86,7 @@
   {
     "id": "R6",
     "title": "You are in menopause.",
-    "desc": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms and periods to stop.  ",
+    "description": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms and periods to stop.  ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -103,7 +103,7 @@
   {
     "id": "R7",
     "title": "You are likely in perimenopause or menopause.",
-    "desc": "Based on your answers, you are likely in perimenopause or menopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms. It may be hard to know when your menopause is/was because you have had a hysterectomy.",
+    "description": "Based on your answers, you are likely in perimenopause or menopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms. It may be hard to know when your menopause is/was because you have had a hysterectomy.",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -119,7 +119,7 @@
   {
     "id": "R8",
     "title": "You are in perimenopause.",
-    "desc": "Based on your answers, you are likely in perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
+    "description": "Based on your answers, you are likely in perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -136,7 +136,7 @@
   {
     "id": "R9",
     "title": "You are in perimenopause.",
-    "desc": "Based on your answers, you are likely in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms and periods to stop. It may be hard to know when your menopause is/was because you have had a hysterectomy. ",
+    "description": "Based on your answers, you are likely in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms and periods to stop. It may be hard to know when your menopause is/was because you have had a hysterectomy. ",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -152,7 +152,7 @@
   {
     "id": "R10",
     "title": "You are in menopause.",
-    "desc": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms.",
+    "description": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms.",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",
@@ -168,7 +168,7 @@
   {
     "id": "R11",
     "title": "You are in menopause.",
-    "desc": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms.",
+    "description": "Based on your answers, you are in menopause. This is when the ovaries are no longer functioning and your body's level of estrogen significantly decreases. The loss of estrogen can cause menopausal symptoms.",
     "symptoms": [
       "Hot flashes or night sweats",
       "Trouble sleeping",

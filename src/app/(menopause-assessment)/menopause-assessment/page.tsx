@@ -7,6 +7,7 @@ import { supabase } from '@utils/supabase/supabase';
 import flowData from '@data/flow.json';
 import { useQuestionStore } from '@/store/useQuestionStore';
 import { getNextStep, getFinalResult } from '@/utils/flowManager';
+import { useRouter } from 'next/navigation';
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -18,6 +19,8 @@ const QuestionsPage: React.FC = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const flow = flowData as unknown as FlowStep[];
+
+  const router = useRouter();
 
   // Zustand store
   const { setAnswer, resetAnswers } = useQuestionStore();
@@ -132,6 +135,7 @@ const QuestionsPage: React.FC = () => {
 
       console.log(`Created assessment_id: ${assessment_id}`);
 
+      //TODO: fix any type
       const updatesByTable: Record<string, Record<string, any>> = {
         meno_assess_user_master: {},
         meno_assess_user_period: {},
@@ -179,6 +183,7 @@ const QuestionsPage: React.FC = () => {
       }
 
       console.log('User responses successfully saved.');
+      router.push('/results');
     } catch (err) {
       console.error('Error submitting responses:', err);
       setSubmitError(
