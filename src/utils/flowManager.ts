@@ -103,7 +103,8 @@ export const getFinalResult = async (
             (await evaluateCalculation(altStep.calculation))
           ) {
             console.log(`Using alternative result: ${altStep['to-result']}`);
-            return altStep['to-result'];
+            //TODO: investigate: The error Type 'string | undefined' is not assignable to type 'string | null' occurs because altStep['to-result'] might be undefined, but the function expects a string | null return type.
+            return altStep['to-result'] ?? null;
           }
         }
       }

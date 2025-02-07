@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@utils/supabase/supabase';
 import Card from '@/components/ui/Card';
 import CardSections from '@/components/ui/CardSections';
@@ -9,11 +9,11 @@ import Image from 'next/image';
 import menopauseGraphic from '@assets/img/graphic.png';
 import Button from '@/components/common/Button';
 import { fetchResults } from '@/utils/fetchResults';
+import { Result } from '@/types/results';
 
 const ResultsPage: React.FC = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const [result, setResult] = useState<any | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -105,7 +105,7 @@ const ResultsPage: React.FC = () => {
           <Card>
             <CardSections
               title="Your Menopause Journey"
-              bodytext={result.description}
+              bodytext={result?.description || 'Loading...'}
               custom={<Image src={menopauseGraphic} alt="Menopause graphic" />}
             />
           </Card>
@@ -114,14 +114,14 @@ const ResultsPage: React.FC = () => {
             <CardSections
               title="Common Symptoms"
               icon={<Clipboard />}
-              list={result.symptoms}
+              list={result?.symptoms || ['Loading...']}
             />
           </Card>
 
           <Card>
             <CardSections
               title="Next Steps"
-              list={result.nextSteps}
+              list={result?.nextSteps || ['Loading...']}
               icon={<ThumbsUp />}
             />
           </Card>

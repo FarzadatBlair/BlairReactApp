@@ -36,61 +36,22 @@ function NavBar({ className }: NavbarProps) {
   return (
     <div
       className={clsx(
-        'flex flex-row justify-between rounded-3xl bg-white px-10 py-2 text-primary-900',
+        'fixed bottom-0 left-1/2 w-full max-w-md -translate-x-1/2 bg-white px-6 py-4 text-primary-900 shadow-lg',
         className,
       )}
     >
-      {navButtonIcons.map(({ icon, dest_link }) => (
-        <NavButton
-          key={icon}
-          icon={icon}
-          dest_link={dest_link}
-          selected={pathname === dest_link}
-        />
-      ))}
+      <div className="flex w-full flex-row justify-between">
+        {navButtonIcons.map(({ icon, dest_link }) => (
+          <NavButton
+            key={icon}
+            icon={icon}
+            dest_link={dest_link}
+            selected={pathname === dest_link}
+          />
+        ))}
+      </div>
     </div>
   );
-
-  // return (
-  //   <div className="flex justify-around p-4 bg-white shadow-md">
-  //       <button
-  //         onClick={() => setActiveTab("Home")}
-  //         className={`text-sm ${
-  //           activeTab === "Home" ? "font-bold text-black" : "text-gray-500"
-  //         }`}
-  //       >
-  //         <Home className="w-6 h-6 mb-1" />
-  //         Home
-  //       </button>
-  //       <button
-  //         onClick={() => setActiveTab("Get Care")}
-  //         className={`text-sm ${
-  //           activeTab === "Get Care" ? "font-bold text-black" : "text-gray-500"
-  //         }`}
-  //       >
-  //         <Heart className="w-6 h-6 mb-1" />
-  //         Get Care
-  //       </button>
-  //       <button
-  //         onClick={() => setActiveTab("Learn")}
-  //         className={`text-sm ${
-  //           activeTab === "Learn" ? "font-bold text-black" : "text-gray-500"
-  //         }`}
-  //       >
-  //         <BookOpen className="w-6 h-6 mb-1" />
-  //         Learn
-  //       </button>
-  //       <button
-  //         onClick={() => setActiveTab("Profile")}
-  //         className={`text-sm ${
-  //           activeTab === "Profile" ? "font-bold text-black" : "text-gray-500"
-  //         }`}
-  //       >
-  //         <User className="w-6 h-6 mb-1" />
-  //         Profile
-  //       </button>
-  //     </div>
-  // )
 }
 
 function NavButton({ icon, dest_link, selected = false }: NavButtonProps) {

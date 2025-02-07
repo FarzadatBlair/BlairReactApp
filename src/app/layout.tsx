@@ -20,7 +20,7 @@ export default function RootLayout({
         <title>Blair Health</title>
       </head>
       <body className="bg-gray-100">
-        <div className="mx-auto min-h-screen max-w-md shadow-xl">
+        <div className="mx-auto flex min-h-screen max-w-md shadow-xl">
           {children}
         </div>
       </body>

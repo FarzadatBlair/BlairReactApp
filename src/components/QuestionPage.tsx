@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/common/Button';
-import GenericPage from './layout/GenericPage';
 import QuestionOption from '@/components/common/QuestionOption';
 import Input from '@/components/common/Input';
 import { Options } from '@/types/question';
