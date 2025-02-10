@@ -292,7 +292,7 @@ const GetStarted = () => {
             <Button onClick={handleSubmit} className="mt-6">
               Submit
             </Button>
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            {/* {errorMessage && <p className="text-red-500">{errorMessage}</p>} */}
             <div className="mt-4 text-center">
               <ButtonLink onClick={handleBack}>Back</ButtonLink>
               {' | '}
