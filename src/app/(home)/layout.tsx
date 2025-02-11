@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   //TODO: Implement activeTab state without passing prop into layout.tsx
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex w-full flex-col justify-between">
       {/* TopHeader receives the variant */}
       <TopHeader variant={'Home'} />
 
