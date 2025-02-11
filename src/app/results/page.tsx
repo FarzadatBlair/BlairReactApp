@@ -6,10 +6,11 @@ import { fetchLatestResult } from '@utils/fetchLatestResult';
 import Card from '@/components/ui/Card';
 import CardSection from '@/components/ui/CardSection';
 import { Clipboard, ThumbsUp } from 'lucide-react';
-import Image from 'next/image';
-import menopauseGraphic from '@assets/img/graphic.png';
 import Button from '@/components/common/Button';
 import { Result } from '@/types/results';
+
+// import Image from 'next/image';
+// import menopauseGraphic from '@assets/img/graphic.png';
 
 const ResultsPage: React.FC = () => {
   const router = useRouter();
@@ -41,15 +42,15 @@ const ResultsPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="flex h-screen flex-col items-center justify-center space-y-6 px-6 text-primary-900">
-        <h1 className="text-[2rem]">Oops! {error}</h1>
-        <p className="text-center">
+      <div className="flex h-screen w-full flex-col items-center justify-center space-y-6 bg-background px-6 text-primary-900">
+        <h2>Oops! {error}</h2>
+        <p className="text-center text-error-500">
           {error === 'No assessment found.'
-            ? 'It looks like you haven’t completed the menopause assessment yet.'
+            ? "It looks like you haven't completed the menopause assessment yet."
             : 'There was an issue retrieving your result.'}
         </p>
         <Button onClick={() => router.push('/menopause-assessment')}>
-          Take the Assessment
+          Take the menopause assessment
         </Button>
       </div>
     );
