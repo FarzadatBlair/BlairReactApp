@@ -17,9 +17,9 @@ const MenopauseAssessment: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const flow = flowData as unknown as FlowStep[];
-
   const router = useRouter();
 
   // Zustand store
@@ -51,8 +51,9 @@ const MenopauseAssessment: React.FC = () => {
   }, []);
 
   const handleContinue = async (answer: string[]) => {
+    if (isSubmitting || !currentQuestionId) return;
     setSubmitError(null);
-    if (!currentQuestionId) return;
+    setIsSubmitting(true);
 
     console.log(
       `Handling continue for question: ${currentQuestionId}, selected answers:`,
@@ -66,6 +67,7 @@ const MenopauseAssessment: React.FC = () => {
     if (!Array.isArray(questions)) {
       console.error('Error: `questions` is not an array!', questions);
       setSubmitError('Internal error: Unable to process questions.');
+      setIsSubmitting(false);
       return;
     }
 
@@ -75,6 +77,7 @@ const MenopauseAssessment: React.FC = () => {
         `Error: No valid next step found from ${currentQuestionId}`,
       );
       console.log(`No valid next step found from ${currentQuestionId}`);
+      setIsSubmitting(false);
       return;
     }
 
@@ -103,10 +106,12 @@ const MenopauseAssessment: React.FC = () => {
           `Submission error: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
         );
       }
+      setIsSubmitting(false);
       return;
     }
 
     setCurrentQuestionId(nextStep.to);
+    setIsSubmitting(false);
   };
 
   const submitUserResponses = async (
@@ -136,7 +141,7 @@ const MenopauseAssessment: React.FC = () => {
 
       console.log(`Created assessment_id: ${assessment_id}`);
 
-      //TODO: fix any type
+      // Map answers to correct tables
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updatesByTable: Record<string, Record<string, any>> = {
         meno_assess_user_master: {},
@@ -146,7 +151,6 @@ const MenopauseAssessment: React.FC = () => {
         meno_assess_user_ovaries_out: {},
       };
 
-      // Map answers to the correct table and column
       Object.entries(answers).forEach(([questionId, answer]) => {
         const question = questions.find((q) => q.id === questionId);
         if (!question) return;
@@ -156,17 +160,16 @@ const MenopauseAssessment: React.FC = () => {
 
         const tableName = `meno_assess_user_${category.toLowerCase()}`;
 
-        // Convert MC (single-choice) answers to Boolean
         if (type === 'MC') {
           updatesByTable[tableName][column] = answer[0] === 'Yes';
         } else {
-          updatesByTable[tableName][column] = answer;
+          updatesByTable[tableName][column] =
+            `{${answer.map((a) => `"${a}"`).join(',')}}`;
         }
       });
 
-      // Insert Data into Supabase
       for (const [tableName, updateData] of Object.entries(updatesByTable)) {
-        if (Object.keys(updateData).length < 2) continue; // Ensure we have data
+        if (Object.keys(updateData).length < 2) continue;
 
         updateData.user_id = user_id;
         updateData.assessment_id = assessment_id;
@@ -191,26 +194,29 @@ const MenopauseAssessment: React.FC = () => {
       setSubmitError(
         `Failed to submit responses: ${err instanceof Error ? err.message : JSON.stringify(err)}`,
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (error) return <div className="text-error-500">{error}</div>;
   if (!currentQuestionId) return <div>Questionnaire complete.</div>;
 
   const currentQuestion = questions.find((q) => q.id === currentQuestionId);
   if (!currentQuestion)
-    return <div className="text-red-500">Error: Question not found</div>;
+    return <div className="text-error-500">Error: Question not found</div>;
 
   return (
     <div>
-      {submitError && <div className="mt-4 text-red-500">{submitError}</div>}
+      {submitError && <div className="mt-4 text-error-500">{submitError}</div>}
       <QuestionPage
         title={currentQuestion.title}
         description={currentQuestion.description}
         type={currentQuestion.type}
         options={currentQuestion.options}
         onContinue={handleContinue}
+        disabled={isSubmitting}
       />
     </div>
   );

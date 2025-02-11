@@ -15,7 +15,7 @@ export const getUserAge = async (): Promise<number | null> => {
       .from('users')
       .select('dob')
       .eq('user_id', user_id)
-      .maybeSingle(); // ✅ Using maybeSingle() to prevent hard failures
+      .maybeSingle(); // maybeSingle() to prevent hard failures
 
     console.log(`Supabase response for user_id ${user_id}:`, data);
 

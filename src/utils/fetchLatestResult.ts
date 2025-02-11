@@ -41,7 +41,7 @@ export const fetchLatestResult = async (): Promise<Result | null> => {
 
     return fetchedResult;
   } catch (err) {
-    console.error('Error fetching latest result:', err);
+    // console.error('Error fetching latest result:', err);
     throw err;
   }
 };

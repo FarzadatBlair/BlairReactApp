@@ -11,6 +11,7 @@ interface QuestionPageProps {
   type: 'MC' | 'MS';
   options: Options[];
   onContinue: (answer: string[]) => void;
+  disabled: boolean;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
@@ -19,6 +20,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   type,
   options,
   onContinue,
+  disabled,
 }) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [otherValue, setOtherValue] = useState('');
@@ -115,7 +117,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
       <div className="flex flex-col items-center space-y-4">
         <Button
           onClick={handleContinue}
-          disabled={selected.length === 0 && !otherValue.trim()}
+          disabled={(selected.length === 0 && !otherValue.trim()) || disabled}
         >
           Continue
         </Button>
