@@ -3,6 +3,7 @@ import Button from '@/components/common/Button';
 import QuestionOption from '@/components/common/QuestionOption';
 import Input from '@/components/common/Input';
 import { Options } from '@/types/question';
+import Link from 'next/link';
 
 interface QuestionPageProps {
   title: string;
@@ -111,13 +112,22 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
         )}
       </div>
 
-      <div>
+      <div className="flex flex-col items-center space-y-4">
         <Button
           onClick={handleContinue}
           disabled={selected.length === 0 && !otherValue.trim()}
         >
           Continue
         </Button>
+        <div>
+          <Link href="/privacy" className="font-bold underline">
+            Privacy Policy
+          </Link>
+          {' | '}
+          <Link href="/terms" className="font-bold underline">
+            Terms of Service
+          </Link>
+        </div>
       </div>
     </div>
   );
