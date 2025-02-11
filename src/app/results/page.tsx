@@ -56,13 +56,13 @@ const ResultsPage: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="w-full bg-secondary-100 px-6 pb-6 pt-14">
+    <div className="flex min-h-screen flex-col">
+      <header className="w-full bg-secondary-100 px-6 pb-6 pt-14">
         <h1 className="text-[2.5rem]">Assessment complete!</h1>
-      </div>
+      </header>
 
-      <div className="flex flex-grow flex-col justify-between bg-background px-6 pb-16 pt-6 text-primary-900">
-        <div className="space-y-8">
+      <div className="flex flex-grow flex-col bg-background px-6 pb-16 pt-6 text-primary-900">
+        <div className="flex-grow space-y-6 pb-16">
           <Card>
             <CardSection
               title={result?.title || 'Loading...'}
