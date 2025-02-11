@@ -1,5 +1,22 @@
 [
   {
+    "id": "R-POI",
+    "title": "Our current treatment options aren't the right fit for you at this time.",
+    "description": "People who experience menopause before the age of 40 require specialized care and specific tests are often required. The Blair Health team feels it is in your best interest not to seek this care on a virtual platform. ",
+    "symptoms": [
+      "Hot flashes or night sweats",
+      "Trouble sleeping",
+      "Mood changes like irritability or anxiety",
+      "Vaginal dryness or discomfort",
+      "Irregular periods"
+    ],
+    "nextSteps": [
+      "Learn More: Explore resources to understand your symptoms.",
+      "Talk to a Specialist: Get advice on managing symptoms and treatment options.",
+      "Track Symptoms: Keep a log to spot patterns and share with your provider."
+    ]
+  },
+  {
     "id": "R1",
     "title": "You may be perimenopausal.",
     "description": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",

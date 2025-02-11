@@ -322,7 +322,7 @@
     "id": "Q-NH-Tell",
     "category": "no_hysterectomy",
     "title": "Tell us about your periods and when they stopped: ",
-    "description": "You are no longer getting a period, don’t take medication that stops your periods. You also didn’t have a surgical procedure to stop your periods.",
+    "description": "You are no longer getting a period, don't take medication that stops your periods. You also didn't have a surgical procedure to stop your periods.",
     "type": "MC",
     "options": [
       {
@@ -370,11 +370,11 @@
     "type": "MC",
     "options": [
       {
-        "label": "Yes (ovaries out)",
+        "label": "Yes, my ovaries are out",
         "special": "not-special"
       },
       {
-        "label": "No (ovaries in)",
+        "label": "No, I still have my ovaries",
         "special": "not-special"
       }
     ],
@@ -492,7 +492,7 @@
     "id": "Q-OvIn-Tell",
     "category": "ovaries_in",
     "title": " Tell us about your periods and when they stopped: ",
-    "description": "You have told us the following about yourself: \nYou have had a hysterectomy\nYou were not getting periods before your hysterectomy\nYou haven’t received any treatments (medications or surgery)  that stopped your periods \nIf any of this is incorrect, please re-take the assessment",
+    "description": "You have told us the following about yourself: \nYou have had a hysterectomy\nYou were not getting periods before your hysterectomy\nYou haven't received any treatments (medications or surgery)  that stopped your periods \nIf any of this is incorrect, please re-take the assessment",
     "type": "MC",
     "options": [
       {
