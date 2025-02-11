@@ -17,6 +17,13 @@
     ]
   },
   {
+    "id": "R-TELL",
+    "title": "You should take the assessment again.",
+    "description": "You have had a hysterectomy\nYou weren't getting periods before your hysterectomy\nYou haven't received any treatments (medications or surgery) that stopped your periods ",
+    "symptoms": [],
+    "nextSteps": []
+  },
+  {
     "id": "R1",
     "title": "You may be perimenopausal.",
     "description": "Based on your answers, you are likely in premenopause or perimenopause. Perimenopause is the phase leading up to menopause. This is when your body's level of estrogen fluctuates, which can cause menopausal symptoms and changes in your periods. ",

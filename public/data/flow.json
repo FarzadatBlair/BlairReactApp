@@ -273,7 +273,7 @@
   {
     "from": "Q-NH-Tell",
     "to": "",
-    "to-result": "RTell",
+    "to-result": "R-TELL",
     "includes": [],
     "excludes": [],
     "is-start": false,
@@ -489,7 +489,7 @@
   {
     "from": "Q-OvIn-Tell",
     "to": "",
-    "to-result": "RTell",
+    "to-result": "R-TELL",
     "includes": [],
     "excludes": [],
     "is-start": false,
@@ -627,7 +627,7 @@
   {
     "from": "Q-OvOut-Tell",
     "to": "",
-    "to-result": "RTell",
+    "to-result": "R-TELL",
     "includes": [],
     "excludes": [],
     "is-start": false,
