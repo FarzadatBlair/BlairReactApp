@@ -3,6 +3,7 @@ import Button from '@/components/common/Button';
 import QuestionOption from '@/components/common/QuestionOption';
 import Input from '@/components/common/Input';
 import { Options } from '@/types/question';
+import Link from 'next/link';
 
 interface QuestionPageProps {
   title: string;
@@ -10,6 +11,7 @@ interface QuestionPageProps {
   type: 'MC' | 'MS';
   options: Options[];
   onContinue: (answer: string[]) => void;
+  disabled: boolean;
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({
@@ -18,6 +20,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
   type,
   options,
   onContinue,
+  disabled,
 }) => {
   const [selected, setSelected] = useState<string[]>([]);
   const [otherValue, setOtherValue] = useState('');
@@ -111,13 +114,22 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
         )}
       </div>
 
-      <div>
+      <div className="flex flex-col items-center space-y-4">
         <Button
           onClick={handleContinue}
-          disabled={selected.length === 0 && !otherValue.trim()}
+          disabled={(selected.length === 0 && !otherValue.trim()) || disabled}
         >
           Continue
         </Button>
+        <div>
+          <Link href="/privacy" className="font-bold underline">
+            Privacy Policy
+          </Link>
+          {' | '}
+          <Link href="/terms" className="font-bold underline">
+            Terms of Service
+          </Link>
+        </div>
       </div>
     </div>
   );

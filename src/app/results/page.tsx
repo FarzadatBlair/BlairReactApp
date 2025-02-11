@@ -1,15 +1,16 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@utils/supabase/supabase';
+import { fetchLatestResult } from '@utils/fetchLatestResult';
 import Card from '@/components/ui/Card';
-import CardSections from '@/components/ui/CardSections';
+import CardSection from '@/components/ui/CardSection';
 import { Clipboard, ThumbsUp } from 'lucide-react';
-import Image from 'next/image';
-import menopauseGraphic from '@assets/img/graphic.png';
 import Button from '@/components/common/Button';
-import { fetchResults } from '@/utils/fetchResults';
 import { Result } from '@/types/results';
+
+// import Image from 'next/image';
+// import menopauseGraphic from '@assets/img/graphic.png';
 
 const ResultsPage: React.FC = () => {
   const router = useRouter();
@@ -18,57 +19,18 @@ const ResultsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchLatestResult = async () => {
+    const getResult = async () => {
       try {
-        const { data: user, error: authError } = await supabase.auth.getUser();
-        if (authError || !user?.user?.id)
-          throw new Error('User not authenticated');
-
-        const user_id = user.user.id;
-
-        // Get the latest menopause assessment for the user
-        const { data: latestAssessment, error: fetchError } = await supabase
-          .schema('menopause_assessment')
-          .from('assess_results_user')
-          .select('result_id')
-          .eq('user_id', user_id)
-          .order('created_at', { ascending: false }) // Get latest assessment
-          .limit(1)
-          .single();
-
-        if (fetchError) {
-          if (fetchError.code === 'PGRST116') {
-            setError('No assessment found.');
-            return;
-          }
-          throw fetchError;
-        }
-
-        if (!latestAssessment?.result_id) {
-          setError('No assessment result found.');
-          return;
-        }
-
-        const resultId = latestAssessment.result_id;
-        console.log(`User ${user_id} latest result ID: ${resultId}`);
-
-        // Fetch the result details
-        const fetchedResult = await fetchResults(resultId);
-        if (!fetchedResult) {
-          setError(`Invalid result ID: ${resultId}`);
-          return;
-        }
-
+        const fetchedResult = await fetchLatestResult();
         setResult(fetchedResult);
       } catch (err) {
-        console.error('Error fetching latest result:', err);
-        setError('Failed to fetch your assessment results.');
+        setError(err instanceof Error ? err.message : JSON.stringify(err));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchLatestResult();
+    getResult();
   }, []);
 
   if (loading)
@@ -80,38 +42,38 @@ const ResultsPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="flex h-screen flex-col items-center justify-center space-y-6 px-6 text-primary-900">
-        <h1 className="text-[2rem]">Oops! {error}</h1>
-        <p className="text-center">
+      <div className="flex h-screen w-full flex-col items-center justify-center space-y-6 bg-background px-6 text-primary-900">
+        <h2>Oops! {error}</h2>
+        <p className="text-center text-error-500">
           {error === 'No assessment found.'
-            ? 'It looks like you haven’t completed the menopause assessment yet.'
+            ? "It looks like you haven't completed the menopause assessment yet."
             : 'There was an issue retrieving your result.'}
         </p>
         <Button onClick={() => router.push('/menopause-assessment')}>
-          Take the Assessment
+          Take the menopause assessment
         </Button>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="w-full bg-secondary-100 px-6 pb-6 pt-14">
+    <div className="flex min-h-screen flex-col">
+      <header className="w-full bg-secondary-100 px-6 pb-6 pt-14">
         <h1 className="text-[2.5rem]">Assessment complete!</h1>
-      </div>
+      </header>
 
-      <div className="flex flex-grow flex-col justify-between bg-background px-6 pb-16 pt-6 text-primary-900">
-        <div className="space-y-8">
+      <div className="flex flex-grow flex-col bg-background px-6 pb-16 pt-6 text-primary-900">
+        <div className="flex-grow space-y-6 pb-16">
           <Card>
-            <CardSections
-              title="Your Menopause Journey"
+            <CardSection
+              title={result?.title || 'Loading...'}
               bodytext={result?.description || 'Loading...'}
-              custom={<Image src={menopauseGraphic} alt="Menopause graphic" />}
+              // custom={<Image src={menopauseGraphic} alt="Menopause graphic" />}
             />
           </Card>
 
           <Card>
-            <CardSections
+            <CardSection
               title="Common Symptoms"
               icon={<Clipboard />}
               list={result?.symptoms || ['Loading...']}
@@ -119,7 +81,7 @@ const ResultsPage: React.FC = () => {
           </Card>
 
           <Card>
-            <CardSections
+            <CardSection
               title="Next Steps"
               list={result?.nextSteps || ['Loading...']}
               icon={<ThumbsUp />}

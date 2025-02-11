@@ -36,8 +36,8 @@ const SignUp = () => {
         <div className="text-center">
           <h1 className="mb-2">Check your email!</h1>
           <p>
-            We’ve sent a verification link to <b>{email}</b>. Please check your
-            inbox to complete the sign-up process.
+            We&apos;ve sent a verification link to <b>{email}</b>. Please check
+            your inbox to complete the sign-up process.
           </p>
           <div className="mt-4 flex justify-center">
             <Link href={'/'} className="font-bold underline">

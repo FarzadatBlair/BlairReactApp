@@ -15,7 +15,7 @@ export const getUserAge = async (): Promise<number | null> => {
       .from('users')
       .select('dob')
       .eq('user_id', user_id)
-      .maybeSingle(); // ✅ Using maybeSingle() to prevent hard failures
+      .maybeSingle(); // maybeSingle() to prevent hard failures
 
     console.log(`Supabase response for user_id ${user_id}:`, data);
 
@@ -30,7 +30,21 @@ export const getUserAge = async (): Promise<number | null> => {
     }
 
     const dob = new Date(data.dob);
-    const age = new Date().getFullYear() - dob.getFullYear();
+    const today = new Date();
+
+    // Calculate the age based on the actual birthday
+    let age = today.getFullYear() - dob.getFullYear();
+
+    // Check if the birthday has occurred this year
+    const hasBirthdayOccurred =
+      today.getMonth() > dob.getMonth() ||
+      (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+
+    // If the birthday hasn't occurred yet, subtract 1 from the age
+    if (!hasBirthdayOccurred) {
+      age--;
+    }
+
     console.log(`Calculated age for user ${user_id}: ${age}`);
     return age;
   } catch (err) {
