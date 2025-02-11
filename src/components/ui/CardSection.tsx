@@ -20,9 +20,7 @@ const CardSections: React.FC<CardSectionProps> = ({
       {/* Title & Icon Row */}
       <div className="flex items-center gap-2">
         {icon && <div className="text-2xl text-secondary-500">{icon}</div>}
-        {title && (
-          <h5 className="font-sans font-black text-primary">{title}</h5>
-        )}
+        {title && <h2 className="text-[1.5rem] text-primary">{title}</h2>}
       </div>
 
       {/* Body Content */}
