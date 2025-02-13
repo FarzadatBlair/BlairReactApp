@@ -1,40 +1,92 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { login } from '@/utils/actions';
+import { loginOTP, verifyOTP } from '@/utils/actions';
 
 import welcomeImage from '@img/splashImage.jpeg';
 
 import GenericPage from '@components/layout/GenericPage';
 import Button from '@components/common/Button';
-import ButtonLink from '@/components/common/ButtonLink';
 import Input from '@components/common/Input';
-
-//TODO: HAVE THIS PAGE GO IN A /welcome ROUTE AND AUTO REDIRECT TO HOME PAGE IF LOGGED IN, NEEDS SERVER COMPONENT CHECK
+import ButtonLink from '@/components/common/ButtonLink';
 
 const WelcomePage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(false);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [error, setError] = useState<string>('');
+  const [inputError, setInputError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [countdown, setCountdown] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+
+  const SUPABASE_TOKEN_ERROR_MESSAGE = 'Token has expired or is invalid';
+  const otpRegex = /^\d{6}$/;
+
   const router = useRouter();
 
-  const handleLogin = async () => {
-    setError(''); // Clear any previous errors
-    const result = await login({ email, password });
+  // Handle countdown timer for OTP resend
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isOtpSent && countdown > 0) {
+      timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+    } else if (countdown === 0) {
+      setCanResend(true);
+    }
+    return () => clearTimeout(timer);
+  }, [isOtpSent, countdown]);
+
+  const handleSendOTP = async () => {
+    setError('');
+    if (isOtpSent) {
+      setIsResending(true);
+    } else {
+      setIsLoading(true);
+    }
+
+    const result = await loginOTP(email);
+
+    setIsLoading(false);
+    setIsResending(false);
 
     if (!result.success) {
-      if (result.error === 'Invalid login credentials') {
-        setError('The email and/or password is incorrect.');
+      setError(result.error || 'An unexpected error occurred.');
+    } else {
+      setIsOtpSent(true);
+      setCountdown(60);
+      setCanResend(false);
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    setError('');
+    setIsLoading(true);
+
+    const result = await verifyOTP(email, otp);
+
+    setIsLoading(false);
+
+    if (!result.success) {
+      if (result.error === SUPABASE_TOKEN_ERROR_MESSAGE) {
+        setError('The code entered is wrong or has expired. Please try again.');
       } else {
         setError(result.error || 'An unexpected error occurred.');
       }
     } else {
-      router.push('/get-started');
+      router.push('/get-started'); // Redirect after successful login
+    }
+  };
+
+  const handleOtpBlur = () => {
+    if (!otpRegex.test(otp)) {
+      setInputError('You must enter a 6-digit code. Example: 123456');
+    } else {
+      setInputError('');
     }
   };
 
@@ -42,7 +94,7 @@ const WelcomePage: React.FC = () => {
     <GenericPage bgCol="secondary" className="pt-20">
       <div className="mb-10 flex flex-1 flex-col space-y-6">
         {/* Welcome Text */}
-        <div className="">
+        <div>
           <h1 className="mb-2">
             Welcome to <span className="italic text-secondary-500">Blair</span>
           </h1>
@@ -56,55 +108,70 @@ const WelcomePage: React.FC = () => {
           <Image src={welcomeImage} alt="Illustration" className="w-full" />
         </div>
 
-        {/* Conditional Rendering */}
-        <div className="flex w-full flex-col">
-          {!isLogin ? (
-            // Signup View
-            <div className="space-y-4">
-              <Button onClick={() => router.push('/create-account')}>
-                Create an account
-              </Button>
-              <div className="text-center text-primary-900">
-                Already registered?{' '}
-                <ButtonLink onClick={() => setIsLogin(true)}>Log in</ButtonLink>
-              </div>
+        {/* Email Input Screen */}
+        {!isOtpSent ? (
+          <div className="space-y-4">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              color="secondary"
+            />
+            {error && <p className="mt-2 text-error">{error}</p>}
+            <Button
+              onClick={handleSendOTP}
+              className="mt-6"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Sending code...' : 'Continue'}
+            </Button>
+          </div>
+        ) : (
+          // OTP Verification Screen
+          <div className="space-y-4">
+            <div className="flex flex-col space-y-2">
+              <p>
+                A one-time code has been sent to <strong>{email}</strong>.
+                Please enter the six-digit code to continue.
+              </p>
+              <p>
+                The email with the code may take a couple minutes to arrive. If
+                you still have not received it, check your spam folder or send
+                another code.
+              </p>
             </div>
-          ) : (
-            // Login View
-            <div className="">
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                color="secondary"
-                className="mt-4"
-              />
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                color="secondary"
-                className="mt-4"
-              />
-              {error && <p className="mt-2 text-error">{error}</p>}{' '}
-              {/* Error message */}
-              <Button onClick={handleLogin} className="mt-6">
-                Continue
-              </Button>
-              <div className="mt-4 px-8 text-center text-primary-900">
-                <Link href="/reset-password" className="font-bold underline">
-                  Forgot Password
-                </Link>{' '}
-                |{' '}
-                <ButtonLink onClick={() => setIsLogin(false)}>
-                  Create Account
+            <Input
+              type="text"
+              placeholder="6-digit code"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              onBlur={handleOtpBlur}
+              color="secondary"
+              error={!!inputError}
+              errorMessage={inputError}
+            />
+            {error && <p className="mt-2 text-error">{error}</p>}
+            <Button
+              onClick={handleVerifyOTP}
+              className="mt-6"
+              disabled={isLoading || !otpRegex.test(otp)}
+            >
+              {isLoading ? 'Verifying...' : 'Confirm Code'}
+            </Button>
+
+            {/* Resend OTP */}
+            <div className="text-center text-primary-900">
+              {canResend ? (
+                <ButtonLink onClick={handleSendOTP}>
+                  {isResending ? 'Resending...' : 'Resend Code'}
                 </ButtonLink>
-              </div>
+              ) : (
+                <p>Resend available in {countdown}s</p>
+              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Terms & Privacy */}

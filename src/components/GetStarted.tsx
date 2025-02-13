@@ -144,11 +144,25 @@ const GetStarted = () => {
         healthcareNumber,
       } = formData;
 
-      const userId = (await supabase.auth.getUser()).data.user?.id;
+      // Get the logged-in user's ID and email from auth.users
+      const { data: authUser, error: authError } =
+        await supabase.auth.getUser();
 
+      if (authError || !authUser?.user) {
+        setErrorMessage(
+          'Failed to retrieve user authentication. Please try again.',
+        );
+        return;
+      }
+
+      const userId = authUser.user.id;
+      const userEmail = authUser.user.email;
+
+      // Insert into public.users with both user_id and email
       const { error: userInsertError } = await supabase.from('users').insert([
         {
           user_id: userId,
+          email: userEmail,
           first_name: firstName,
           last_name: lastName,
           dob,
