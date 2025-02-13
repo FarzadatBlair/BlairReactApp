@@ -1,0 +1,135 @@
+[
+  {
+    "id": "QMP-001",
+    "title": "How tall are you?",
+    "description": "",
+    "type": "NUM",
+    "column": "height"
+  },
+
+  {
+    "id": "QMP-002",
+    "title": "How much do you weigh?",
+    "type": "NUM",
+    "FYI": "Knowing your height and weight allows us to calculate your **body mass index (BMI)**. Some people have an elevated BMI, which makes certain menopausal treatments safer than others.",
+    "column": "weight"
+  },
+
+  {
+    "id": "QMP-003",
+    "title": "Do you have any of the following medical conditions?",
+    "description": "Select all that apply",
+    "type": "MS",
+    "FYI": "Some people want to use **systemic menopausal hormone therapy (MHT)** to treat their menopausal symptoms.  Systemic hormonal therapy means that hormones are given through the skin (i.e., patch or gel) or by mouth. If you have high blood pressure, migraine headaches and/or endometriosis, we can still prescribe systemic MHT but *how* we give it might be different from someone who does not have these conditions.",
+    "options": [
+      {
+        "label": "Diabetes",
+        "special": "not-special"
+      },
+      {
+        "label": "High Blood Pressure",
+        "special": "not-special"
+      },
+      {
+        "label": "High Cholesterol",
+        "special": "not-special"
+      },
+      {
+        "label": "Inflammatory Bowel Disease (e.g., Crohn's Disease or Ulcerative Colitis)",
+        "special": "not-special"
+      },
+      {
+        "label": "Migraine Headaches",
+        "special": "not-special"
+      }
+    ],
+    "column": "medical_conditions_current"
+  },
+  {
+    "id": "QMP-004",
+    "title": "Let us know if you currently have or have had any of these medical conditions?",
+    "description": "Select all that apply",
+    "type": "MS",
+    "options": [
+      {
+        "label": "Breast Cancer",
+        "special": "not-special"
+      },
+      {
+        "label": "Blood Clot (e.g., lung, elsewhere)",
+        "special": "not-special"
+      },
+      {
+        "label": "Endometrial cancer of any uterine cancer",
+        "special": "not-special"
+      },
+      {
+        "label": "Family hypertriglyceridemia (i.e., Familial hypercholesterolemia)",
+        "special": "not-special"
+      },
+      {
+        "label": "Heart disease (e.g., heart attack, atrial fibrillation)",
+        "special": "not-special"
+      },
+      {
+        "label": "Liver disease (e.g., cirrhosis, hepatitis, gall bladder disease)",
+        "special": "not-special"
+      },
+      {
+        "label": "Ovarian cancer",
+        "special": "not-special"
+      },
+      {
+        "label": "Porphyria cutanea tarda",
+        "special": "not-special"
+      },
+      {
+        "label": "Recurrent pregnancy loss (i.e., 3 or more miscarriages in the first trimester)",
+        "special": "not-special"
+      },
+      {
+        "label": "Stroke/TIA",
+        "special": "not-special"
+      },
+      {
+        "label": "Systemic Lupus Erythmatosus (SLE) with antiphospholipid antibodies",
+        "special": "not-special"
+      },
+      {
+        "label": "Seizures",
+        "special": "not-special"
+      },
+      {
+        "label": "Thrombophilia (i.e., Factor V Leiden or another condition where you have a higher chance of developing a blood clot in the legs or lungs)",
+        "special": "not-special"
+      }
+    ],
+    "column": "medical_conditions_history"
+  },
+  {
+    "id": "QMP-list-any-other",
+    "title": "Can you list any other medical or psychiatric conditions you have had now or in the past?",
+    "description": "Let’s make sure we aren’t missing anything about your health.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Tell us more",
+        "special": "free-text"
+      }
+    ],
+    "column": "other_conditions"
+  },
+  {
+    "id": "QMP-list-surgeries",
+    "title": "Please list any surgeries you have had.",
+    "type": "list-text",
+
+    "column": "list_surgeries"
+  },
+  {
+    "id": "QMP-medication",
+    "title": "Do you take any of the following medications?",
+    "type": "list-text",
+    "column": "list_surgeries"
+  }
+]

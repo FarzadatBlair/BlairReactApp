@@ -326,7 +326,7 @@
     "type": "MC",
     "options": [
       {
-        "label": "Other",
+        "label": "Tell us more",
         "special": "free-text"
       }
     ],

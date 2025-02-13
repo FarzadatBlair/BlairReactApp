@@ -9,7 +9,7 @@ interface InputProps {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  type?: 'text' | 'select' | 'date' | 'email' | 'password';
+  type?: 'text' | 'select' | 'date' | 'email' | 'password' | 'number';
   options?: { value: string; label: string }[]; // For select type
   color?: 'default' | 'secondary';
   disabled?: boolean;
