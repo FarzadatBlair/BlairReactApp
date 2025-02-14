@@ -124,7 +124,7 @@ const WelcomePage: React.FC = () => {
               className="mt-6"
               disabled={isLoading}
             >
-              {isLoading ? 'Sending code...' : 'Continue'}
+              Continue
             </Button>
           </div>
         ) : (
@@ -157,7 +157,7 @@ const WelcomePage: React.FC = () => {
               className="mt-6"
               disabled={isLoading || !otpRegex.test(otp)}
             >
-              {isLoading ? 'Verifying...' : 'Confirm Code'}
+              Confirm Code
             </Button>
 
             {/* Resend OTP */}

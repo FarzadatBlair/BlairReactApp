@@ -50,7 +50,7 @@ const SignUp = () => {
       {isSuccess ? (
         // Success Message
         <div className="text-center">
-          <h1 className="mb-2">You're signed in!</h1>
+          <h1 className="mb-2">You&apos;re signed in!</h1>
           <p>Welcome to Blair. You can now start using your account.</p>
           <div className="mt-4 flex justify-center">
             <Link href={'/'} className="font-bold underline">
@@ -63,7 +63,7 @@ const SignUp = () => {
         <>
           <h1 className="mb-2">Enter your verification code</h1>
           <p>
-            We've sent a one-time code to <b>{email}</b>. Check your inbox.
+            We&apos;ve sent a one-time code to <b>{email}</b>. Check your inbox.
           </p>
           <div className="mt-4 flex w-full flex-col space-y-4">
             <Input
