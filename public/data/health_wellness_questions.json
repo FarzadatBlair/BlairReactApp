@@ -11,7 +11,7 @@
     "id": "QMP-002",
     "title": "How much do you weigh?",
     "type": "NUM",
-    "FYI": "Knowing your height and weight allows us to calculate your **body mass index (BMI)**. Some people have an elevated BMI, which makes certain menopausal treatments safer than others.",
+    "info": "Knowing your height and weight allows us to calculate your **body mass index (BMI)**. Some people have an elevated BMI, which makes certain menopausal treatments safer than others.",
     "column": "weight"
   },
 
@@ -20,7 +20,7 @@
     "title": "Do you have any of the following medical conditions?",
     "description": "Select all that apply",
     "type": "MS",
-    "FYI": "Some people want to use **systemic menopausal hormone therapy (MHT)** to treat their menopausal symptoms.  Systemic hormonal therapy means that hormones are given through the skin (i.e., patch or gel) or by mouth. If you have high blood pressure, migraine headaches and/or endometriosis, we can still prescribe systemic MHT but *how* we give it might be different from someone who does not have these conditions.",
+    "info": "Some people want to use **systemic menopausal hormone therapy (MHT)** to treat their menopausal symptoms.  Systemic hormonal therapy means that hormones are given through the skin (i.e., patch or gel) or by mouth. If you have high blood pressure, migraine headaches and/or endometriosis, we can still prescribe systemic MHT but *how* we give it might be different from someone who does not have these conditions.",
     "options": [
       {
         "label": "Diabetes",
@@ -129,7 +129,8 @@
   {
     "id": "QMP-medication",
     "title": "Do you take any of the following medications?",
-    "type": "list-text",
-    "column": "list_surgeries"
+    "type": "MS",
+    "column": "medications",
+    "options": []
   }
 ]

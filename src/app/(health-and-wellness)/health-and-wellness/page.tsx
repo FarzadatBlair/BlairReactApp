@@ -1,9 +1,9 @@
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
-import MedicalProfileQuestions from '@/components/MedicalProfileQuestions';
+import MedicalProfileQuestions from '@/components/HealthWellnessQuestions';
 import { redirect } from 'next/navigation';
 
-export default async function MedicalProfileQuestionsPage() {
+export default async function HealthAndWellnessPage() {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
 

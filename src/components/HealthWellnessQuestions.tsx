@@ -1,11 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import MPQuestionPage from '@components/MPQuestionPage';
-import questions from '@data/questions_medical_profile.json';
+import MPQuestionPage from '@components/HWQuestionPage';
+import questions from '@data/health_wellness_questions.json';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@utils/supabase/supabase';
+import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
+import { HealthWellnessQuestion } from '@/types/HWquestion';
 
-const MedicalProfileQuestions: React.FC = () => {
+const HealthWellnessQuestions: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [responses, setResponses] = useState<{
     [key: string]: string | string[];
@@ -26,11 +28,11 @@ const MedicalProfileQuestions: React.FC = () => {
     } else {
       // Submit to Supabase after last question
       try {
-        const user = await supabase.auth.getUser();
-        const { data, error } = await supabase
-          .from('users')
-          .update(responses)
-          .eq('user_id', user.data.user?.id);
+        // const user = await supabase.auth.getUser();
+        // const { data, error } = await supabase
+        //   .from('users')
+        //   .update(responses)
+        //   .eq('user_id', user.data.user?.id);
 
         if (error) {
           setSubmitError('Error submitting responses. Please try again.');
@@ -52,7 +54,7 @@ const MedicalProfileQuestions: React.FC = () => {
           description={currentQuestion.description}
           type={currentQuestion.type}
           options={currentQuestion.options}
-          FYI={currentQuestion.FYI}
+          info={currentQuestion.info}
           unitType={
             currentQuestion.column === 'weight'
               ? 'weight'
@@ -68,4 +70,4 @@ const MedicalProfileQuestions: React.FC = () => {
   );
 };
 
-export default MedicalProfileQuestions;
+export default HealthWellnessQuestions;

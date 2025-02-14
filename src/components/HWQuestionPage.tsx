@@ -5,23 +5,23 @@ import Input from '@/components/common/Input';
 import { Options } from '@/types/question';
 import Link from 'next/link';
 
-interface MPQuestionPageProps {
+interface HealthWellnessQuestionPageProps {
   title: string;
   description?: string;
   type: 'MC' | 'MS' | 'NUM' | 'list-text';
   options?: Options[];
-  FYI?: string;
+  info?: string;
   unitType?: 'weight' | 'height'; // Determines unit selection for NUM type
   onContinue: (answer: string | string[]) => void;
   disabled: boolean;
 }
 
-const MPQuestionPage: React.FC<MPQuestionPageProps> = ({
+const HWQuestionPage: React.FC<HealthWellnessQuestionPageProps> = ({
   title,
   description,
   type,
-  options = [],
-  FYI,
+  options,
+  info,
   unitType,
   onContinue,
   disabled,
@@ -74,6 +74,7 @@ const MPQuestionPage: React.FC<MPQuestionPageProps> = ({
     } else {
       answer = selected;
       if (
+        options != undefined &&
         selected.some(
           (o) =>
             options.find((opt) => opt.label === o)?.special === 'free-text',
@@ -95,6 +96,7 @@ const MPQuestionPage: React.FC<MPQuestionPageProps> = ({
       <div className="flex flex-grow flex-col space-y-4">
         {/* Multiple Choice & Multi-Select */}
         {(type === 'MC' || type === 'MS') &&
+          options != undefined &&
           options.map((option, index) => (
             <QuestionOption
               key={index}
@@ -106,17 +108,18 @@ const MPQuestionPage: React.FC<MPQuestionPageProps> = ({
           ))}
 
         {/* Free Text Input for "Other" option */}
-        {selected.some(
-          (o) =>
-            options.find((opt) => opt.label === o)?.special === 'free-text',
-        ) && (
-          <Input
-            type="text"
-            placeholder="Other (please specify)"
-            value={otherValue}
-            onChange={(e) => setOtherValue(e.target.value)}
-          />
-        )}
+        {options != undefined &&
+          selected.some(
+            (o) =>
+              options.find((opt) => opt.label === o)?.special === 'free-text',
+          ) && (
+            <Input
+              type="text"
+              placeholder="Other (please specify)"
+              value={otherValue}
+              onChange={(e) => setOtherValue(e.target.value)}
+            />
+          )}
 
         {/* Numerical Input */}
         {type === 'NUM' && (
@@ -206,4 +209,4 @@ const MPQuestionPage: React.FC<MPQuestionPageProps> = ({
   );
 };
 
-export default MPQuestionPage;
+export default HWQuestionPage;
