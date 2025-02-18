@@ -1,6 +1,6 @@
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
-import MedicalProfileQuestions from '@/components/HealthWellnessQuestions';
+import MedicalProfileQuestions from '@/components/HealthWellnessAssessment';
 import { redirect } from 'next/navigation';
 
 export default async function HealthAndWellnessPage() {

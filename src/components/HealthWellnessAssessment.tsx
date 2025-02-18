@@ -1,13 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import MPQuestionPage from '@components/HWQuestionPage';
+import HWQuestionPage from '@components/HWQuestionPage';
 import questions from '@data/health_wellness_questions.json';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@utils/supabase/supabase';
 import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
 import { HealthWellnessQuestion } from '@/types/HWquestion';
 
-const HealthWellnessQuestions: React.FC = () => {
+const HealthWellnessAssessment: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [responses, setResponses] = useState<{
     [key: string]: string | string[];
@@ -49,7 +49,7 @@ const HealthWellnessQuestions: React.FC = () => {
     <div>
       {submitError && <div className="mt-4 text-error-500">{submitError}</div>}
       {currentQuestion && (
-        <MPQuestionPage
+        <HWQuestionPage
           title={currentQuestion.title}
           description={currentQuestion.description}
           type={currentQuestion.type}
@@ -70,4 +70,4 @@ const HealthWellnessQuestions: React.FC = () => {
   );
 };
 
-export default HealthWellnessQuestions;
+export default HealthWellnessAssessment;
