@@ -92,45 +92,43 @@ const WelcomePage: React.FC = () => {
 
   return (
     <GenericPage bgCol="secondary" className="pt-20">
-      <div className="mb-10 flex flex-1 flex-col space-y-6">
+      <div className="mb-6 flex flex-1 flex-col space-y-6">
         {/* Welcome Text */}
         <div>
-          <h1 className="mb-2">
+          <h1>
             Welcome to <span className="italic text-secondary-500">Blair</span>
           </h1>
-          <p className="text-primary-900">
+          <p className="mt-2 text-primary-900">
             Your partner in navigating midlife and beyond.
           </p>
         </div>
 
         {/* Graphic */}
-        <div className="my-24">
+        <div>
           <Image src={welcomeImage} alt="Illustration" className="w-full" />
         </div>
 
         {/* Email Input Screen */}
         {!isOtpSent ? (
           <div className="space-y-4">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              color="secondary"
-            />
-            {error && <p className="mt-2 text-error">{error}</p>}
-            <Button
-              onClick={handleSendOTP}
-              className="mt-6"
-              disabled={isLoading}
-            >
+            <div className="space-y-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                color="secondary"
+              />
+              {error && <p className="text-error">{error}</p>}
+            </div>
+            <Button onClick={handleSendOTP} disabled={isLoading}>
               Continue
             </Button>
           </div>
         ) : (
           // OTP Verification Screen
           <div className="space-y-4">
-            <div className="flex flex-col space-y-2">
+            <div className="space-y-2">
               <p>
                 A one-time code has been sent to <strong>{email}</strong>.
                 Please enter the six-digit code to continue.
@@ -141,17 +139,19 @@ const WelcomePage: React.FC = () => {
                 another code.
               </p>
             </div>
-            <Input
-              type="text"
-              placeholder="6-digit code"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              onBlur={handleOtpBlur}
-              color="secondary"
-              error={!!inputError}
-              errorMessage={inputError}
-            />
-            {error && <p className="mt-2 text-error">{error}</p>}
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder="6-digit code"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                onBlur={handleOtpBlur}
+                color="secondary"
+                error={!!inputError}
+                errorMessage={inputError}
+              />
+              {error && <p className="mt-2 text-error">{error}</p>}
+            </div>
             <Button
               onClick={handleVerifyOTP}
               className="mt-6"
