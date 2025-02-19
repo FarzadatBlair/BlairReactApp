@@ -49,6 +49,7 @@
     "id": "QMP-004",
     "title": "Let us know if you currently have or have had any of these medical conditions?",
     "description": "Select all that apply",
+    "info": "Some people want to use menopausal hormone therapy (MHT) to treat their menopausal symptoms. People with any of these conditions shouldn’t use systemic hormonal therapy (a.k.a., hormones by mouth or through the skin as a gel or patch). There may be instances where people with a history of uterus or ovarian cancer can use systemic hormone therapy. At Blair Health, we feel this should be prescribed on a case-by-case basis and not on a virtual healthcare platform.",
     "type": "MS",
     "options": [
       {
@@ -107,7 +108,24 @@
     "column": "medical_conditions_history"
   },
   {
-    "id": "QMP-list-any-other",
+    "id": "QMP-005",
+    "title": "Do you currently have any of the following?",
+    "description": "",
+    "type": "MS",
+    "options": [
+      {
+        "label": "Endometriosis",
+        "special": "not-special"
+      },
+      {
+        "label": "Fibroids",
+        "special": "not-special"
+      }
+    ],
+    "column": "other_conditions"
+  },
+  {
+    "id": "QMP-006",
     "title": "Can you list any other medical or psychiatric conditions you have had now or in the past?",
     "description": "Let’s make sure we aren’t missing anything about your health.",
     "type": "MC",
@@ -120,17 +138,287 @@
     "column": "other_conditions"
   },
   {
-    "id": "QMP-list-surgeries",
+    "id": "QMP-007",
     "title": "Please list any surgeries you have had.",
-    "type": "list-text",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Tell us more",
+        "special": "free-text"
+      }
+    ],
 
-    "column": "list_surgeries"
+    "column": "surgeries"
   },
   {
-    "id": "QMP-medication",
+    "id": "QMP-008",
     "title": "Do you take any of the following medications?",
     "type": "MS",
+    "info": "Some non-hormonal treatments (i.e., the SSRI class of medication) for menopausal symptoms interfere with the effectiveness of Tamoxifen. It’s important for us to know if you take this medication.",
     "column": "medications",
-    "options": []
+    "options": [
+      {
+        "label": "Tamoxifen",
+        "special": "not-special"
+      },
+      {
+        "label": "Medication for mood (e.g., anxiety or depression)",
+        "special": "not-special"
+      },
+      {
+        "label": "Thyroid medication",
+        "special": "not-special"
+      },
+      {
+        "label": "Blood pressure medication",
+        "special": "not-special"
+      },
+      {
+        "label": "Medication for chronic pain",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-009",
+    "title": "Please list any medications you take and the dosage, if possible.",
+    "description": "You're almost done.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Tell us more",
+        "special": "free-text"
+      }
+    ],
+    "column": "medications"
+  },
+  {
+    "id": "QMP-010",
+    "title": "When was your last mammogram?",
+    "description": "You're almost done.",
+    "info": "Mammograms are very important tests that screen for breast cancer. If you are due for a mammogram, it’s important for you to have one done with your own healthcare provider. Blair Health is not able to order this test on its virtual platform.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Less than 2 years ago",
+        "special": "not-special"
+      },
+      {
+        "label": "More than 2 years ago",
+        "special": "not-special"
+      },
+      {
+        "label": "I have never had a mammogram",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-010.2",
+    "title": "Which is true about your last mammogram? ",
+    "description": "",
+    "type": "MC",
+    "options": [
+      {
+        "label": "It was normal.",
+        "special": "not-special"
+      },
+      {
+        "label": "It was abnormal and you are currently having investigations (e.g., plan for earlier follow-up, ultrasound, and/or biopsy)",
+        "special": "not-special"
+      },
+      {
+        "label": "It was abnormal  but have been cleared after the investigations (e.g., ultrasound, and/or biopsy)",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-011",
+    "title": "If you have had a bone density scan, have you been told that you have low bone density (e.g., osteopenia or osteoporosis)?",
+    "description": "",
+    "info": "Bone density decreases with age and people develop low bone density. Bone density screening starts at different times, depending on risk factors. There are treatments for menopausal symptoms (i.e., menopausal hormone therapy) that can improve bone density. However, not all people are candidates for this treatment.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "I have never had a bone density scan.",
+        "special": "not-special"
+      },
+      {
+        "label": "I’ve had a bone density scan and it was normal.",
+        "special": "not-special"
+      },
+      {
+        "label": "I’ve had a bone density scan and I was told I had low bone density (e.g., osteopenia or osteoporosis).",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-012",
+    "title": "Have you ever been told you carry any of the following genes that may make you more likely to develop certain conditions?",
+    "description": "(Choose all that apply)",
+    "info": "Some people know they carry a specific gene that increases their personal risk of a certain health condition developing. Knowing this information about you is helpful to your Blair Health provider to make sure your treatment plan is the safest we can make it.",
+    "type": "MS",
+    "options": [
+      {
+        "label": "BRCA1 and/or BRCA 2",
+        "special": "not-special"
+      },
+      {
+        "label": "A gene that increases your  risk of blood clot (e.g., Factor V Leiden).",
+        "special": "not-special"
+      },
+      {
+        "label": "Lynch Syndrome",
+        "special": "not-special"
+      },
+      {
+        "label": "I have been told I carry another gene that increases my risk of developing a certain condition.",
+        "special": "not-special"
+      },
+      {
+        "label": "To the best of my knowledge, I do not carry any genes that increase my chance of developing a certain condition(s).",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-013",
+    "title": "Let us know if you are aware of a family history of any of the following conditions and which relative has/had the condition.",
+    "description": "(Choose all that apply)",
+    "info": "Family history of a particular condition may increase your personal risk of that condition compared to someone who does not have a family history. Some people wish to explore hormonal therapies to treat menopausal symptoms. Systemic hormone therapy (a.k.a., hormones by mouth or through the skin as a gel or patch) carries some risk of certain conditions, which may be higher in people with significant family history. ",
+    "type": "MS",
+    "options": [
+      {
+        "label": "Breast Cancer",
+        "special": "not-special"
+      },
+      {
+        "label": "Ovarian Cancer",
+        "special": "not-special"
+      },
+      {
+        "label": "Blood Clot (in the leg or lung)",
+        "special": "not-special"
+      },
+      {
+        "label": "Heart Attack",
+        "special": "not-special"
+      },
+      {
+        "label": "Stroke",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-014",
+    "title": "Do you currently smoke cigarettes?",
+    "description": "",
+    "info": "Smoking typically worsens menopausal symptoms such as hot flashes and night sweats.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-015",
+    "title": "Do you use cannabis?",
+    "description": "",
+    "info": "Cannabis helps some people with menopausal symptoms but can make other symptoms worse. ",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Yes",
+        "special": "not-special"
+      },
+      {
+        "label": "No",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-016",
+    "title": "How much alcohol do you drink in a week?",
+    "description": "",
+    "info": "Guidelines around alcohol are changing. Alcohol is a trigger for vasomotor symptoms (hot flashes and night sweats) and can negatively affect your sleep and mood.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "None",
+        "special": "not-special"
+      },
+      {
+        "label": "7 of fewer drinks per week",
+        "special": "not-special"
+      },
+      {
+        "label": "8 of more drinks per week",
+        "special": "not-special"
+      }
+    ]
+  },
+  {
+    "id": "QMP-017",
+    "title": "Are you allergic to any of the following?",
+    "description": "",
+    "info": "",
+    "type": "MS",
+    "options": [
+      {
+        "label": "Peanuts",
+        "special": "not-special"
+      },
+      {
+        "label": "Soy",
+        "special": "not-special"
+      },
+      {
+        "label": "Sunflower oil or seeds",
+        "special": "not-special"
+      },
+      {
+        "label": "Other",
+        "special": "free-text"
+      }
+    ]
+  },
+  {
+    "id": "QMP-018",
+    "title": "What was your last recorded blood pressure?",
+    "description": "",
+    "info": "It is important for us to be aware of a recent blood pressure to help us guide you on treatment options for menopausal symptoms.",
+    "type": "MC",
+    "options": [
+      {
+        "label": "Normal/Low: 120/80 or lower",
+        "special": "not-special"
+      },
+      {
+        "label": "Above Normal: 121/80 to 129/80",
+        "special": "not-special"
+      },
+      {
+        "label": "High: 130/81 to 139/89",
+        "special": "not-special"
+      },
+      {
+        "label": "Higher: 140/90 or higher",
+        "special": "not-special"
+      },
+      {
+        "label": "Not sure",
+        "special": "not-special"
+      }
+    ]
   }
 ]

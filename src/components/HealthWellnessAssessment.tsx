@@ -1,64 +1,131 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import HWQuestionPage from '@components/HWQuestionPage';
-import questions from '@data/health_wellness_questions.json';
+import QuestionsJson from '@data/health_wellness_questions.json';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@utils/supabase/supabase';
-import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
-import { HealthWellnessQuestion } from '@/types/HWquestion';
+// import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
+import {
+  HealthWellnessQuestion,
+  FlowStep,
+  parseHealthWellnessQuestions,
+} from '@/types/HWquestion';
+import flowData from '@data/health_wellness_flow.json';
+import { useQuestionStore } from '@/store/useQuestionStore';
+import { getNextStep } from '@/utils/flowHWManager';
 
 const HealthWellnessAssessment: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [responses, setResponses] = useState<{
-    [key: string]: string | string[];
-  }>({});
+  const [questions, setQuestions] = useState<HealthWellnessQuestion[]>([]);
+  const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(
+    null,
+  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const flow = flowData as unknown as FlowStep[];
   const router = useRouter();
 
-  const currentQuestion = questions[currentIndex];
+  const { setAnswer, resetAnswers } = useQuestionStore();
 
-  const handleContinue = async (answer: string | string[]) => {
-    setResponses((prev) => ({
-      ...prev,
-      [currentQuestion.column]: answer,
-    }));
-
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      // Submit to Supabase after last question
+  useEffect(() => {
+    const loadQuestions = async () => {
       try {
-        // const user = await supabase.auth.getUser();
-        // const { data, error } = await supabase
-        //   .from('users')
-        //   .update(responses)
-        //   .eq('user_id', user.data.user?.id);
+        const data: HealthWellnessQuestion[] =
+          parseHealthWellnessQuestions(QuestionsJson);
+        setQuestions(data);
 
-        if (error) {
-          setSubmitError('Error submitting responses. Please try again.');
-        } else {
-          router.push('/home'); // Redirect after completion
-        }
-      } catch (err) {
-        setSubmitError('An unexpected error occurred.');
+        console.log('QUESTION DATA', data);
+
+        // Find the start question
+        const startStep = flow.find((step) => step['is-start']);
+        if (!startStep) throw new Error('No start question found!');
+
+        setCurrentQuestionId(startStep.to);
+      } catch (err: unknown) {
+        if (err instanceof Error)
+          setError('Failed to load questions: ' + err.message);
+      } finally {
+        setLoading(false);
       }
+    };
+
+    loadQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleContinue = async (answer: string[] | string) => {
+    // Ensure answer is always treated as an array
+    const selectedAnswers = Array.isArray(answer) ? answer : [answer];
+
+    if (isSubmitting || !currentQuestionId) return;
+    setSubmitError(null);
+    setIsSubmitting(true);
+
+    console.log(
+      `Handling continue for question: ${currentQuestionId}, selected answers:`,
+      selectedAnswers,
+    );
+
+    setAnswer(currentQuestionId, selectedAnswers);
+    const updatedAnswers = useQuestionStore.getState().answers;
+    console.log(`Updated answers state:`, updatedAnswers);
+
+    if (!Array.isArray(questions)) {
+      console.error('Error: `questions` is not an array!', questions);
+      setSubmitError('Internal error: Unable to process questions.');
+      setIsSubmitting(false);
+      return;
     }
+
+    const nextStep = getNextStep(
+      flowData,
+      questions,
+      currentQuestionId,
+      selectedAnswers,
+    );
+    if (!nextStep) {
+      setSubmitError(
+        `Error: No valid next step found from ${currentQuestionId}`,
+      );
+      console.log(`No valid next step found from ${currentQuestionId}`);
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (nextStep['is-end']) {
+      console.log(`Reached final step.`);
+      console.log('Final answers:', updatedAnswers);
+
+      setIsSubmitting(false);
+      return;
+    }
+
+    setCurrentQuestionId(nextStep.to);
+    setIsSubmitting(false);
   };
 
   return (
     <div>
       {submitError && <div className="mt-4 text-error-500">{submitError}</div>}
-      {currentQuestion && (
+      {currentQuestionId && questions.length > 0 && (
         <HWQuestionPage
-          title={currentQuestion.title}
-          description={currentQuestion.description}
-          type={currentQuestion.type}
-          options={currentQuestion.options}
-          info={currentQuestion.info}
+          title={questions.find((q) => q.id === currentQuestionId)?.title || ''}
+          description={
+            questions.find((q) => q.id === currentQuestionId)?.description
+          }
+          type={questions.find((q) => q.id === currentQuestionId)?.type || 'MC'}
+          options={
+            questions.find((q) => q.id === currentQuestionId)?.options || []
+          }
+          info={questions.find((q) => q.id === currentQuestionId)?.info}
           unitType={
-            currentQuestion.column === 'weight'
+            questions.find((q) => q.id === currentQuestionId)?.unitType ===
+            'weight'
               ? 'weight'
-              : currentQuestion.column === 'height'
+              : questions.find((q) => q.id === currentQuestionId)?.unitType ===
+                  'height'
                 ? 'height'
                 : undefined
           }
