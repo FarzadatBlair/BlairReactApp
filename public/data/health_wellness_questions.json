@@ -4,6 +4,7 @@
     "title": "How tall are you?",
     "description": "",
     "type": "NUM",
+    "table": "user_medical_profile",
     "column": "height"
   },
 
@@ -12,6 +13,7 @@
     "title": "How much do you weigh?",
     "type": "NUM",
     "info": "Knowing your height and weight allows us to calculate your **body mass index (BMI)**. Some people have an elevated BMI, which makes certain menopausal treatments safer than others.",
+    "table": "user_medical_profile",
     "column": "weight"
   },
 
@@ -43,6 +45,7 @@
         "special": "not-special"
       }
     ],
+    "table": "user_medical_conditions",
     "column": "medical_conditions_current"
   },
   {

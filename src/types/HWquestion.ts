@@ -20,6 +20,8 @@ export interface HealthWellnessQuestion {
   info?: string;
   description?: string;
   type: 'MC' | 'MS' | 'NUM' | 'list-text';
+  table: string;
+  column: string;
   options?: Options[];
   unitType?: 'weight' | 'height'; // Determines unit selection for NUM type
   onContinue: (answer: string | string[]) => void;
@@ -32,12 +34,13 @@ export interface RawHealthWellnessQuestion {
   title: string;
   description?: string;
   type: 'MC' | 'MS' | 'NUM' | 'list-text';
+  table: string;
   info?: string;
   options?: {
     label: string;
     special?: 'free-text' | 'none-above' | 'not-special';
   }[];
-  column?: string;
+  column: string;
 }
 
 export const parseHealthWellnessQuestions = (
@@ -49,6 +52,8 @@ export const parseHealthWellnessQuestions = (
     info: question.info || undefined,
     description: question.description || undefined,
     type: question.type,
+    column: question.column,
+    table: question.table,
     options:
       question.options?.map((option) => ({
         label: option.label,

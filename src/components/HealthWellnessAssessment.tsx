@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 // import { useRouter } from 'next/navigation';
 import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
 import { useQuestionStore } from '@/store/useQuestionStore';
-
+import { supabase } from '@utils/supabase/supabase';
 import HWQuestionPage from '@components/HWQuestionPage';
 import flowData from '@data/health_wellness_flow.json';
 import { getNextStep } from '@/utils/flowHWManager';
@@ -95,6 +95,7 @@ const HealthWellnessAssessment: React.FC = () => {
 
     if (nextStep['is-end']) {
       console.log('Reached final step.', updatedAnswers);
+      await submitUserResponses(updatedAnswers);
       setIsSubmitting(false);
       resetAnswers();
       return;
@@ -102,6 +103,99 @@ const HealthWellnessAssessment: React.FC = () => {
 
     setCurrentQuestionId(nextStep.to);
     setIsSubmitting(false);
+  };
+
+  const submitUserResponses = async (answers: Record<string, string[]>) => {
+    try {
+      // Get the current user's ID
+      const { data: user, error: authError } = await supabase.auth.getUser();
+      if (authError || !user?.user?.id)
+        throw new Error('User not authenticated');
+
+      const user_id = user.user.id;
+      console.log(`User ID for submission: ${user_id}`);
+
+      // Iterate through each answer
+      for (const [questionId, answer] of Object.entries(answers)) {
+        // Find question metadata from the questions JSON
+        const question = questions.find((q) => q.id === questionId);
+        if (!question) {
+          console.warn(
+            `Question ID ${questionId} not found in questions JSON.`,
+          );
+          continue;
+        }
+
+        const { type, table, column } = question;
+
+        // Handle each type of question
+        if (type === 'NUM') {
+          // For numerical answers, take the value and insert into the appropriate table/column
+          const numericValue = parseFloat(answer[0]);
+          if (isNaN(numericValue)) {
+            console.warn(`Invalid numeric value for question ${questionId}.`);
+            continue;
+          }
+
+          await supabase
+            .from(table)
+            .upsert([{ user_id, [column]: numericValue }], {
+              onConflict: 'user_id',
+            });
+        } else if (type === 'MC') {
+          // For single-choice answers, look up the condition_id from the lookup table
+          const { data: conditionData, error: conditionError } = await supabase
+            .schema('lookup')
+            .from('condition')
+            .select('condition_id')
+            .eq('name', answer[0])
+            .single();
+
+          if (conditionError || !conditionData) {
+            console.warn(
+              `Condition not found for answer ${answer[0]} in question ${questionId}.`,
+            );
+            continue;
+          }
+
+          await supabase
+            .from(table)
+            .upsert([{ user_id, [column]: conditionData.condition_id }], {
+              onConflict: 'user_id',
+            });
+        } else if (type === 'MS') {
+          // For multi-select answers, insert multiple entries
+          for (const item of answer) {
+            const { data: conditionData, error: conditionError } =
+              await supabase
+                .schema('lookup')
+                .from('condition')
+                .select('condition_id')
+                .eq('name', item)
+                .single();
+
+            if (conditionError || !conditionData) {
+              console.warn(
+                `Condition not found for answer ${item} in question ${questionId}.`,
+              );
+              continue;
+            }
+
+            await supabase
+              .from(table)
+              .insert([{ user_id, [column]: conditionData.condition_id }]);
+          }
+        } else {
+          console.warn(
+            `Unsupported question type ${type} for question ${questionId}.`,
+          );
+        }
+      }
+
+      console.log('All answers submitted successfully!');
+    } catch (err) {
+      console.error('Error submitting user responses:', err);
+    }
   };
 
   const currentQuestion = questions.find((q) => q.id === currentQuestionId);

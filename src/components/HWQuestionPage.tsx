@@ -68,7 +68,7 @@ const HWQuestionPage: React.FC<HealthWellnessQuestionPageProps> = ({
   const handleContinue = () => {
     let answer: string | string[] = '';
     if (type === 'NUM') {
-      answer = `${numericValue} ${unit}`;
+      answer = `${numericValue}`;
     } else if (type === 'list-text') {
       answer = listText.filter((text) => text.trim().length > 0);
     } else {
