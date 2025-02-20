@@ -50,6 +50,9 @@ const GetStarted = () => {
       <Button onClick={() => router.push('/menopause-assessment')}>
         Take the menopause assessment
       </Button>
+      <Button onClick={() => router.push('/health-and-wellness')}>
+        Take the Health and Wellness assessment
+      </Button>
     </div>
   );
 };

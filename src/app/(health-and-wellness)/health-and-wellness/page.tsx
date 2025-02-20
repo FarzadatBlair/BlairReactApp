@@ -1,6 +1,6 @@
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
-import MedicalProfileQuestions from '@/components/HealthWellnessAssessment';
+import HealthWellnessAssessment from '@/components/HealthWellnessAssessment';
 import { redirect } from 'next/navigation';
 
 export default async function HealthAndWellnessPage() {
@@ -11,5 +11,5 @@ export default async function HealthAndWellnessPage() {
     redirect('/sign-in');
   }
 
-  return <MedicalProfileQuestions />;
+  return <HealthWellnessAssessment />;
 }
