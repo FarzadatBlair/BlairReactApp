@@ -208,7 +208,7 @@ const MenopauseAssessment: React.FC = () => {
     return <div className="text-error-500">Error: Question not found</div>;
 
   return (
-    <div>
+    <div className="w-full">
       {submitError && <div className="mt-4 text-error-500">{submitError}</div>}
       <QuestionPage
         title={currentQuestion.title}

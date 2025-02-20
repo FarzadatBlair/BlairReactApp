@@ -92,6 +92,7 @@ const HWQuestionPage: React.FC<HealthWellnessQuestionPageProps> = ({
         <h1>{title}</h1>
       </div>
       {description && <p>{description}</p>}
+      {info && <p>{info}</p>}
 
       <div className="flex flex-grow flex-col space-y-4">
         {/* Multiple Choice & Multi-Select */}
@@ -123,13 +124,14 @@ const HWQuestionPage: React.FC<HealthWellnessQuestionPageProps> = ({
 
         {/* Numerical Input */}
         {type === 'NUM' && (
+          // TODO: Make the input field take up the full width of the container
           <div className="flex flex-row space-x-4">
             <Input
               type="number"
               value={numericValue}
               onChange={(e) => setNumericValue(e.target.value)}
               placeholder="Enter value"
-              className="w-3/4"
+              className="w-full"
             />
             {/* Unit Selection */}
             {unitType && (

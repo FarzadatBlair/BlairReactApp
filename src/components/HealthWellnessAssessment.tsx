@@ -1,20 +1,17 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
-import HWQuestionPage from '@components/HWQuestionPage';
-import QuestionsJson from '@data/health_wellness_questions.json';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@utils/supabase/supabase';
-// import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
-import {
-  HealthWellnessQuestion,
-  FlowStep,
-  parseHealthWellnessQuestions,
-} from '@/types/HWquestion';
-import flowData from '@data/health_wellness_flow.json';
+// import { useRouter } from 'next/navigation';
+import { fetchHealthWellnessQuestions } from '@/utils/fetchHWQuestions';
 import { useQuestionStore } from '@/store/useQuestionStore';
+
+import HWQuestionPage from '@components/HWQuestionPage';
+import flowData from '@data/health_wellness_flow.json';
 import { getNextStep } from '@/utils/flowHWManager';
+import { HealthWellnessQuestion, FlowStep } from '@/types/HWquestion';
 
 const HealthWellnessAssessment: React.FC = () => {
+  // State management
   const [questions, setQuestions] = useState<HealthWellnessQuestion[]>([]);
   const [currentQuestionId, setCurrentQuestionId] = useState<string | null>(
     null,
@@ -24,28 +21,31 @@ const HealthWellnessAssessment: React.FC = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const flow = flowData as unknown as FlowStep[];
-  const router = useRouter();
+  // Flow data
+  const flow = flowData as FlowStep[];
+  // const router = useRouter();
 
+  // Zustand store
+  // TODO: create a separate store for health wellness questions
   const { setAnswer, resetAnswers } = useQuestionStore();
 
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const data: HealthWellnessQuestion[] =
-          parseHealthWellnessQuestions(QuestionsJson);
-        setQuestions(data);
+        const parsedQuestions: HealthWellnessQuestion[] =
+          await fetchHealthWellnessQuestions();
+        setQuestions(parsedQuestions);
 
-        console.log('QUESTION DATA', data);
+        console.log('QUESTION DATA:', parsedQuestions);
 
-        // Find the start question
+        // Find the start question in the flow
         const startStep = flow.find((step) => step['is-start']);
         if (!startStep) throw new Error('No start question found!');
 
         setCurrentQuestionId(startStep.to);
       } catch (err: unknown) {
         if (err instanceof Error)
-          setError('Failed to load questions: ' + err.message);
+          setError(`Failed to load questions: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -56,21 +56,20 @@ const HealthWellnessAssessment: React.FC = () => {
   }, []);
 
   const handleContinue = async (answer: string[] | string) => {
-    // Ensure answer is always treated as an array
-    const selectedAnswers = Array.isArray(answer) ? answer : [answer];
-
     if (isSubmitting || !currentQuestionId) return;
+
     setSubmitError(null);
     setIsSubmitting(true);
 
+    const selectedAnswers = Array.isArray(answer) ? answer : [answer];
     console.log(
-      `Handling continue for question: ${currentQuestionId}, selected answers:`,
+      `Handling question: ${currentQuestionId}, answers:`,
       selectedAnswers,
     );
 
     setAnswer(currentQuestionId, selectedAnswers);
     const updatedAnswers = useQuestionStore.getState().answers;
-    console.log(`Updated answers state:`, updatedAnswers);
+    console.log('Updated answers state:', updatedAnswers);
 
     if (!Array.isArray(questions)) {
       console.error('Error: `questions` is not an array!', questions);
@@ -89,16 +88,15 @@ const HealthWellnessAssessment: React.FC = () => {
       setSubmitError(
         `Error: No valid next step found from ${currentQuestionId}`,
       );
-      console.log(`No valid next step found from ${currentQuestionId}`);
+      console.log(`No valid next step from ${currentQuestionId}`);
       setIsSubmitting(false);
       return;
     }
 
     if (nextStep['is-end']) {
-      console.log(`Reached final step.`);
-      console.log('Final answers:', updatedAnswers);
-
+      console.log('Reached final step.', updatedAnswers);
       setIsSubmitting(false);
+      resetAnswers();
       return;
     }
 
@@ -106,28 +104,25 @@ const HealthWellnessAssessment: React.FC = () => {
     setIsSubmitting(false);
   };
 
+  const currentQuestion = questions.find((q) => q.id === currentQuestionId);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-error-500">{error}</div>;
+
   return (
-    <div>
+    <div className="w-full">
       {submitError && <div className="mt-4 text-error-500">{submitError}</div>}
-      {currentQuestionId && questions.length > 0 && (
+      {currentQuestion && (
         <HWQuestionPage
-          title={questions.find((q) => q.id === currentQuestionId)?.title || ''}
-          description={
-            questions.find((q) => q.id === currentQuestionId)?.description
-          }
-          type={questions.find((q) => q.id === currentQuestionId)?.type || 'MC'}
-          options={
-            questions.find((q) => q.id === currentQuestionId)?.options || []
-          }
-          info={questions.find((q) => q.id === currentQuestionId)?.info}
+          title={currentQuestion.title || ''}
+          description={currentQuestion.description}
+          type={currentQuestion.type || 'MC'}
+          options={currentQuestion.options || []}
+          info={currentQuestion.info}
           unitType={
-            questions.find((q) => q.id === currentQuestionId)?.unitType ===
-            'weight'
-              ? 'weight'
-              : questions.find((q) => q.id === currentQuestionId)?.unitType ===
-                  'height'
-                ? 'height'
-                : undefined
+            ['weight', 'height'].includes(currentQuestion.unitType ?? '')
+              ? currentQuestion.unitType
+              : undefined
           }
           onContinue={handleContinue}
           disabled={false}
