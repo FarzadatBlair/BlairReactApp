@@ -39,7 +39,11 @@ const HWQuestionPage: React.FC<HealthWellnessQuestionPageProps> = ({
     setListText([]);
   }, [title]);
 
+  console.log('OPTIONS', options);
+
   const handleOptionChange = (option: string) => {
+    console.log('OPTION SELECTED', option);
+
     if (type === 'MS') {
       setSelected((prev) =>
         prev.includes(option)
@@ -104,7 +108,12 @@ const HWQuestionPage: React.FC<HealthWellnessQuestionPageProps> = ({
               option={option.label}
               isSelected={selected.includes(option.label)}
               isMultiSelect={type === 'MS'}
-              onClick={() => handleOptionChange(option.label)}
+              onClick={() =>
+                handleOptionChange(
+                  option.lookup_id ?? option.enum_val ?? 'UNKNOWN',
+                )
+              } //! TODO: come back to this, better way?
+              //! BREAKING TODO: frontend active button no longer highlights correctly, because we're using the lookupid now
             />
           ))}
 

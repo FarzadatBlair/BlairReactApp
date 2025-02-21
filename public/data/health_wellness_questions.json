@@ -26,23 +26,28 @@
     "options": [
       {
         "label": "Diabetes",
-        "special": "not-special"
+        "special": "not-special",
+        "lookup_id": "1"
       },
       {
         "label": "High Blood Pressure",
-        "special": "not-special"
+        "special": "not-special",
+        "lookup_id": "2"
       },
       {
         "label": "High Cholesterol",
-        "special": "not-special"
+        "special": "not-special",
+        "lookup_id": "3"
       },
       {
         "label": "Inflammatory Bowel Disease (e.g., Crohn's Disease or Ulcerative Colitis)",
-        "special": "not-special"
+        "special": "not-special",
+        "lookup_id": "4"
       },
       {
         "label": "Migraine Headaches",
-        "special": "not-special"
+        "special": "not-special",
+        "lookup_id": "5"
       }
     ],
     "table": "user_medical_conditions",

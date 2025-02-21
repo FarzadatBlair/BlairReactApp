@@ -12,7 +12,7 @@ export interface Options {
   label: string;
   // 'text' for user text input, 'none' none of above, boolean for default
   special?: 'free-text' | 'none-above' | 'not-special';
-  enum_val?: string; //this is specifically a piece of the enum
+  enum_val?: string; // this is specifically a piece of the enum
   lookup_id?: string;
 }
 
@@ -41,6 +41,8 @@ export interface RawHealthWellnessQuestion {
   options?: {
     label: string;
     special?: 'free-text' | 'none-above' | 'not-special';
+    lookup_id?: string;
+    enum_val?: string;
   }[];
   column: string;
 }
@@ -60,6 +62,8 @@ export const parseHealthWellnessQuestions = (
       question.options?.map((option) => ({
         label: option.label,
         special: option.special || 'not-special',
+        lookup_id: option.lookup_id || undefined,
+        enum_val: option.enum_val || undefined,
       })) || [],
     onContinue: (answer) =>
       console.log(`Answer submitted for ${question.id}:`, answer),
