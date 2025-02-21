@@ -108,6 +108,7 @@
         "special": "not-special"
       }
     ],
+    "table": "",
     "column": "medical_conditions_history"
   },
   {
@@ -330,7 +331,9 @@
         "label": "No",
         "special": "not-special"
       }
-    ]
+    ],
+    "table": "user_medical_profile",
+    "column": "cigarettes"
   },
   {
     "id": "QMP-015",
@@ -347,7 +350,9 @@
         "label": "No",
         "special": "not-special"
       }
-    ]
+    ],
+    "table": "user_medical_profile",
+    "column": "cannabis"
   },
   {
     "id": "QMP-016",
@@ -358,17 +363,22 @@
     "options": [
       {
         "label": "None",
-        "special": "not-special"
+        "special": "not-special",
+        "enum_val": "NO_ALCOHOL"
       },
       {
         "label": "7 of fewer drinks per week",
-        "special": "not-special"
+        "special": "not-special",
+        "enum_val": "7_OR_FEWER_PER_WEEK"
       },
       {
         "label": "8 of more drinks per week",
-        "special": "not-special"
+        "special": "not-special",
+        "enum_val": "8_OR_MORE_PER_WEEK"
       }
-    ]
+    ],
+    "table": "user_medical_profile",
+    "column": "alcohol"
   },
   {
     "id": "QMP-017",
@@ -422,6 +432,8 @@
         "label": "Not sure",
         "special": "not-special"
       }
-    ]
+    ],
+    "table": "user_medical_profile",
+    "column": "blood_pressure"
   }
 ]

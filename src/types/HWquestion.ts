@@ -12,6 +12,8 @@ export interface Options {
   label: string;
   // 'text' for user text input, 'none' none of above, boolean for default
   special?: 'free-text' | 'none-above' | 'not-special';
+  enum_val?: string; //this is specifically a piece of the enum
+  lookup_id?: string;
 }
 
 export interface HealthWellnessQuestion {
